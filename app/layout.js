@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
         <canvas id="world" width="auto" height="auto"></canvas>
         <Header />
         {children}
+        <Footer />
         {/* Use next/script for including external JavaScript */}
         <Script src="./utils/PageAnimation.js" strategy="afterInteractive" />
       </body>
