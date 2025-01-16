@@ -11,7 +11,18 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        schoolbell: ['"Schoolbell"', "sans-serif"],
+        bubblegum: ['"Bubblegum Sans"', "sans-serif"],
+        nunito: ['"nunito"', "sans-serif"],
+        modak:['"Modak"', 'sans-serif'],
+        lucky:['"Luckiest Guy"', 'sans-serif'],
+        sniglet:['"Sniglet"', 'sans-serif'],
+        jua:['"Jua"', 'sans-serif'],
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-animated')
+  ],
 };
