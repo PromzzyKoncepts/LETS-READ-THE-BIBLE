@@ -5,19 +5,21 @@ import { usePathname } from "next/navigation";
 import { BiArrowToTop, BiLogoFacebook } from "react-icons/bi";
 import { CiMail, CiPhone } from "react-icons/ci";
 import { FaWhatsapp, FaXTwitter } from "react-icons/fa6";
+import FloatingAnimation from "../utils/FloatingAnimation";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const pathname = usePathname();
 
   return (
-    <div className={`${pathname == "/" ? "bg -[#631260] " : ""} `}>
+    <div className={`${pathname == "/" ? "bg -[#631260] " : ""} relative `}>
       <section className="section">
         <div className="wave wave1"></div>
         <div className="wave wave2"></div>
         <div className="wave wave3"></div>
         <div className="wave wave4"></div>
       </section>
+      <FloatingAnimation />
 
       <div className="bg-[#631260] font-sniglet roun ded-t-[3rem] px-5  pb-7 sm:px-24">
         <div className=" text-white flex flex-wrap items-start justify-between gap-6">
