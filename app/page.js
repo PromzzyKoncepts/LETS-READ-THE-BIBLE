@@ -97,7 +97,7 @@ export default function Home() {
   return (
     <div className="">
       <canvas id="miCanvas"></canvas>
-      <video src="/bganimation.mp4" autoPlay muted loop className="brightness-90 w-full saturate-100 object-cover h-screen absolute top-0"/>
+      <video src="/pinkbg.mp4" autoPlay muted loop className="brightness-90 w-full saturate-100 object-cover h-screen absolute top-0"/>
       {/* <Image
         src="/images/home.jpg"
         alt="bg image"
