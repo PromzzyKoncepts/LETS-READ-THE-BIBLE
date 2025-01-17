@@ -116,7 +116,7 @@ export default function Home() {
             height={1000}
             className="w-full  md:w-[67vw] object-contain"
           />
-          <div className="absolute top-16 right-16 flex flex-col justify-between items-end gap-5">
+          <div className="absolute top-16 right-16 flex flex-col justify-between items-end gap-5 z-[19]">
             <Image
               src="/images/readthebible.png"
               alt="bg image"

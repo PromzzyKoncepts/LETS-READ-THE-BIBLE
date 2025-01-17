@@ -13,7 +13,7 @@ const Header = () => {
 
   return (
     <div
-      className={`bg-slate-800 backdrop fixed left-0 right-0 w-fit px-10 text-lg font-sniglet rounded-full mx-auto z-50 shadow-lg transition-all duration-500 flex items-center gap-20 ${
+      className={`bg-[#631260] backdrop-blur-md bg-opacity-50 fixed left-0 right-0 w-fit px-10 text-lg font-sniglet rounded-full mx-auto z-50 shadow-lg transition-all duration-500 flex items-center gap-20 ${
         animate ? 'top-5' : '-top-20'
       }`}
     >
