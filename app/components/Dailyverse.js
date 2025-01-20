@@ -33,7 +33,7 @@ const DailyVerse = () => {
   }, []);
 
   if (loading) return (
-  <div className="flex flex-col  items-end gap-2 w-full">
+  <div className="flex flex-col  items-start gap-2 w-full">
     <div className="w-1/3  rounded-md h-10 bg-white bg-opacity-20 animate-pulse"></div>
     <div className="rounded-md h-10 w-full bg-white bg-opacity-20 animate-pulse"></div>
     <div className="rounded-md h-10 w-full bg-white bg-opacity-20 animate-pulse"></div>
@@ -46,18 +46,21 @@ const DailyVerse = () => {
 
   return (
     <div>
-    {verse && (<div className="font-sniglet text-white flex flex-col justify-end items-end">
-      <h2 className="text-2xl font-semibold font-sniglet">Today`s Scripture</h2>
-      <div className="font-bubblegum text-xl max-w-[35rem] mt-3 flex items-end justify-items-end text-justify">
+    {verse && (<div className="font-sniglet text-white mt-[115px] flex flex-col justify-start items-start">
+      <h2 className="text-lg  font-lucky text-[#EEA236]">Today`s Scripture</h2>
+      <div className="font-bubblegum text-base max-w-[35rem] flex items-end justify-items-end text-left">
         <TextAnimation>
 
         {verse || "No content available."}
         </TextAnimation>
       </div>
+      <div className="text-[#EEA236]">
+
         <TextAnimation>
 
         {reference}
         </TextAnimation>
+      </div>
     </div>
   )}
   </div>

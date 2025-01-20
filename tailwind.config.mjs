@@ -9,6 +9,8 @@ export default {
     extend: {
       colors: {
         background: "var(--background)",
+        darkbg: "#661361",
+        pinkbg: "#CA6446",
         foreground: "var(--foreground)",
       },
       fontFamily: {
