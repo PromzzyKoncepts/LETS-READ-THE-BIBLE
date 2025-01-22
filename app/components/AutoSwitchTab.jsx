@@ -42,6 +42,7 @@ const TabSwitcher = () => {
     },
   ];
 
+  
   const [activeTab, setActiveTab] = useState(0);
 
   // Automatically switch tabs every 10 seconds
