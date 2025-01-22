@@ -71,7 +71,7 @@ const FloatingAnimation = () => {
     }, []);
 
     return (
-        <div>
+        <div className="">
             <canvas
                 id="miCanvas"
             ></canvas>
