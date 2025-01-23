@@ -59,17 +59,17 @@ export default function Home() {
         <div className="flex absolute z-[49] -top-24 gap-16 colors font-sniglet  items-center justify-center bg-slate-100 w-fit py-20  rounded-xl  px-16 shadow-lg shadow-gray-700 m-auto">
           <div className="flex flex-col gap-2 text-xl items-center">
 
-            <AnimatedCounter targetNumber={130} fontSize={5} />
+            <AnimatedCounter targetNumber={130} fontSize={"5"} />
             Participating Countries & Cities
           </div>
           <div className="flex flex-col gap-2 text-xl items-center">
 
-            <AnimatedCounter targetNumber={930000000} fontSize={8} />
+            <AnimatedCounter targetNumber={930000000} fontSize={"8"} />
             Kids Read the Bible
           </div>
           <div className="flex flex-col gap-2 text-xl items-center">
 
-            <AnimatedCounter targetNumber={10000} fontSize={5} />
+            <AnimatedCounter targetNumber={10000} fontSize={"5"} />
             Videos Uploaded
           </div>
 
