@@ -12,7 +12,7 @@ const Footer = () => {
   const pathname = usePathname();
 
   return (
-    <div className={`${pathname == "/" ? "bg-[#F4C2C2] " : ""} relative `}>
+    <div className={`${pathname == "/" ? "bg-[#8E8EB1] " : ""} relative `}>
       <section className="section ">
         <div className="wave wave1"></div>
         <div className="wave wave2"></div>
@@ -22,7 +22,7 @@ const Footer = () => {
       <FloatingAnimation />
 
       <div className="bg-[#631260] font-sniglet roun ded-t-[3rem] px-5  pb-7 sm:px-24">
-        <div className=" text-white flex flex-wrap items-start justify-between gap-6">
+        <div className=" text-white  flex flex-wrap items-start justify-between gap-6">
           <div className="flex flex-col">
             <h3 className="text-2xl text-orange pb-3">Quick Links</h3>
             <Link href="/orders">LiveTV</Link>
