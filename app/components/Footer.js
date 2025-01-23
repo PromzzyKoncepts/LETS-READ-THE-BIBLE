@@ -12,8 +12,8 @@ const Footer = () => {
   const pathname = usePathname();
 
   return (
-    <div className={`${pathname == "/" ? "bg -[#631260] " : ""} relative `}>
-      <section className="section">
+    <div className={`${pathname == "/" ? "bg-[#F4C2C2] " : ""} relative `}>
+      <section className="section ">
         <div className="wave wave1"></div>
         <div className="wave wave2"></div>
         <div className="wave wave3"></div>

@@ -23,6 +23,27 @@
   height:100%;
 }
 
+.colors {
+  /* margin: 0 auto; */
+  /* height: 80px; */
+  animation: animatecolors 10s 0s infinite ease-in-out;
+}
+
+@keyframes animatecolors {
+  0% {
+    background-color: #F44336;
+  }
+  33% {
+    background-color: #3F51B5;
+  }
+  66% {
+    background-color: #009688;
+  }
+  100% {
+    background-color: #F44336;
+  }
+} 
+
 
 .relative {
   position: relative;
@@ -138,3 +159,79 @@
     background-position-x: -100vw;
   }
 }
+
+
+
+
+
+
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 90deg;
+  inherits: false;
+}
+
+:root {
+  --bg-background: #111827;
+  --clr-card: #1f2937;
+  --clr-1: #6420aa;
+  --clr-2: #ff3ea5;
+  --clr-3: #ff7ed4;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+
+
+
+.card {
+  /* position: relative; */
+  /* height: 24rem; */
+  /* width: 16rem; */
+  /* border-radius: 0.25rem; */
+  cursor: pointer;
+  /* z-index: 49; */
+  /* background-color: var(--clr-card); */
+}
+
+.card::after,
+.card::before {
+  content: " ";
+  position: absolute;
+  z-index: -1;
+  inset: -0.5rem;
+  background: conic-gradient(
+    from var(--gradient-angle),
+    var(--clr-card),
+    var(--clr-1),
+    var(--clr-2),
+    var(--clr-3),
+    var(--clr-2),
+    var(--clr-1),
+    var(--clr-card)
+  );
+  border-radius: inherit;
+  animation: rotate 2.5s linear infinite;
+}
+
+.card::after {
+  filter: blur(3rem);
+}
+
+@keyframes rotate {
+  0% {
+    --gradient-angle: 0deg;
+  }
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+
+

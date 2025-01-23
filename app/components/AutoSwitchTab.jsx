@@ -59,7 +59,7 @@ const TabSwitcher = () => {
       <FloatingAnimation />
 
       <div
-        className={`w-full min-h-[60vh] relative z-20 lg:px-28 mx-auto py-16 ${
+        className={`w-full h-[90vh] relative z-20 lg:px-28 mx-auto py-16 ${
           activeTab == 0 && "bg-darkbg"
         }  ${activeTab == 2 && "bg-[#229AE0]"} ${
           activeTab == 1 && "bg-pinkbg"
@@ -69,7 +69,7 @@ const TabSwitcher = () => {
       >
         {/* Tab Navigation */}
         <h1
-          className={`text-5xl text-center font-lucky tracking-wide capitalize pb-7 font-bold ${
+          className={`text-5xl text-center font-lucky tracking-wider capitalize pb-7 font-bold ${
             activeTab == 0 && "text-[#EEA236]"
           } ${activeTab == 1 && "text-darkbg"} ${
             activeTab == 2 && "text-white"
@@ -84,15 +84,13 @@ const TabSwitcher = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(index)}
-              className={`w-full cursor-pointer font-lucky text-white  flex-shrink-0 md:flex-shrink mx-auto ${
+              className={`w-full  cursor-pointer font-lucky text-white  flex-shrink-0 md:flex-shrink mx-auto ${
                 activeTab === 0 && "md:rounded-l-full"
               }  ${
                 activeTab === 4 && "md:rounded-r-full"
               } font-medium flex items-center justify-center text-xl ${
                 activeTab === index
-                  ? `${activeTab == 0 && "bg-[#EEA236]"} text-white ${
-                      activeTab == 2 && "bg-[#E06822]"
-                    } ${activeTab == 1 && "bg-[#46ACCA]"}`
+                  ? `bg-white colors`
                   : " "
               } transition-colors`}
             >
@@ -114,7 +112,7 @@ const TabSwitcher = () => {
 
         {/* Tab Content */}
         <div
-          className={`${activeTab == 0 && "bg-[#EEA236]"} ${
+          className={`colors ${activeTab == 0 && "bg-[#EEA236]"} ${
             activeTab == 2 && "bg-[#E06822]"
           } ${activeTab == 1 && "bg-[#46ACCA]"}  ${
             activeTab == 4 && "bg-[#C96345] text-white"
@@ -127,9 +125,9 @@ const TabSwitcher = () => {
           } py-5 px-7 rounded-2xl  gap-3 flex flex-col md:flex-row items-center md:items-start w-fit shadow-md shadow-gray-800`}
         >
           <div className="font-sniglet">
-            <h2 className="text-xl  font-bold">{tabs[activeTab].title}</h2>
+            <h2 className="text-2xl font-lucky tracking-wider text-white font-bold">{tabs[activeTab].title}</h2>
             <p
-              className={`mt-2 ${activeTab == 0 ? "w-[45rem]" : "w-[25rem]"} `}
+              className={`mt-2 ${activeTab == 0 ? "w-[45rem]" : "w-[27rem]"} `}
             >
               {tabs[activeTab].content}
             </p>
