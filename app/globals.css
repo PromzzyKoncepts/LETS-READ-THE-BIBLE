@@ -235,3 +235,24 @@
 }
 
 
+
+
+
+
+
+
+
+
+#container{
+  -webkit-appearance: none;
+  transform: rotateY(180deg);
+}
+
+#container video::-webkit-media-controls{
+  transform: rotateY(180deg) !important;
+}
+
+.stroke {
+  -webkit-text-stroke: .5px #28282861;
+}
+

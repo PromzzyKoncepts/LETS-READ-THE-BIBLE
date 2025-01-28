@@ -1,18 +1,18 @@
-import { Geist, Geist_Mono } from "next/font/google";
+// import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
 
 export const metadata = {
   title: "Lets Read the Bible Campaign",
@@ -30,12 +30,12 @@ export default function RootLayout({ children }) {
 
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={` antialiased`}
       >
         <canvas id="world" width="auto" height="auto"></canvas>
         <Header />
         {children}
-        <Footer />
+        {/* <Footer /> */}
         {/* Use next/script for including external JavaScript */}
         <Script src="./utils/PageAnimation.js" strategy="afterInteractive" />
       </body>

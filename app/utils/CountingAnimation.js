@@ -60,7 +60,7 @@ const AnimatedCounter = ({ targetNumber, fontSize }) => {
   return (
     <div
       ref={counterRef}
-      className={`font-bold text-${fontSize}xl transition-all duration-300 ease-in-out font-lucky text-white tracking-wider`}
+      className={`font-bold ${fontSize === "8" ? "text-8xl" : "text-5xl"} transition-all duration-300 ease-in-out font-lucky text-white tracking-wider`}
     >
       {formatNumber(count)}+
     </div>
