@@ -118,7 +118,7 @@ const VideoRecorder = () => {
             ></video>
           </div>
         )}
-        {countdown !== null && countdown < 0 && (
+        {countdown !== null && countdown !== 0 && (
           <div className="flex justify-center items-center absolute">
             <p className="text-7xl font-bold text-[#EE7822]  stroke   animate-ping">{countdown}</p>
           </div>
