@@ -2,17 +2,8 @@
 import Script from "next/script";
 import "./globals.css";
 import Header from "./components/Header";
-import Footer from "./components/Footer";
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
 
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
 
 export const metadata = {
   title: "Lets Read the Bible Campaign",
@@ -35,7 +26,6 @@ export default function RootLayout({ children }) {
         <canvas id="world" width="0" height="0"></canvas>
         <Header />
         {children}
-        {/* <Footer /> */}
         {/* Use next/script for including external JavaScript */}
         <Script src="./utils/PageAnimation.js" strategy="afterInteractive" />
       </body>
