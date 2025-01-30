@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback } from 'react';
 import { BiLoaderCircle, BiSolidCloudUpload } from 'react-icons/bi';
+import Link from 'next/link'
 
 const Page = () => {
   const [videoSrc, setVideoSrc] = useState('');
@@ -52,7 +53,7 @@ const Page = () => {
   return (
     <div  className="m-auto object-contain brightness-10  min-h-screen flex flex-col gap-2 text-center justify-center items-center bg-gradient-to-b from-amber-300 to-[#c9822c] font-sniglet pt-20">
       <h2 className="text-7xl font-lucky text-slate-900">Upload your video</h2>
-      
+        <h3 className="text-xl ">Or you can choose to <Link href="/record" className="font-bold text-darkbg">Record your video</Link></h3>
 
       {!videoSrc ? (
         <label
@@ -74,7 +75,7 @@ const Page = () => {
           
           <label
             htmlFor="fileInput"
-            className="px-2 py-4 mt-8 text-white text-[15px] w-[80%] rounded-full colors"
+            className="px-2 py-4 mt-8 text-black font-bold text-[15px] w-[80%] rounded-full colors"
           >
             Select the File
           </label>

@@ -33,9 +33,8 @@ const DailyVerse = () => {
   }, []);
 
   if (loading) return (
-  <div className="flex flex-col  items-start gap-2 w-full">
+  <div className="flex flex-col mt-6  items-start gap-2 w-full">
     <div className="w-1/3  rounded-md h-7 bg-white bg-opacity-20 animate-pulse"></div>
-    <div className="rounded-md h-7 w-full bg-white bg-opacity-20 animate-pulse"></div>
     <div className="rounded-md h-7 w-full bg-white bg-opacity-20 animate-pulse"></div>
     <div className="w-2/3  rounded-md h-7 bg-white bg-opacity-20 animate-pulse"></div>
   </div>

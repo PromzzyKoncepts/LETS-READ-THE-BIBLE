@@ -7,6 +7,8 @@ import Swiper from "./components/Swiper";
 import TabSwitcher from "./components/AutoSwitchTab";
 import AnimatedCounter from "./utils/CountingAnimation";
 import InteractiveFigures from "./components/InteractiveFigures";
+import Footer from "@/app/components/Footer";
+
 
 export default function Home() {
 
@@ -14,10 +16,9 @@ export default function Home() {
   return (
     <div className="">
       <FloatingAnimation />
-      <video src="/pinkbg.mp4" autoPlay muted loop className="brightness-90 w-full saturate-100 object-cover h-screen absolute top-0" />
-      <main className="">
+      <video src="/pinkbg.mp4" autoPlay muted loop className=" w-full saturate-100 object-cover h-full absolute top-0" />
         {/* Kids Background Image */}
-        <div className="relative -top-14 h-max w-fit mx-auto inset-0 flex items-center justify-center">
+        <div className="relative  h-screen w-fit mx-auto inset-0 flex items-center justify-center">
           <Image
             src="/images/kidsbg.png"
             alt="bg image"
@@ -25,7 +26,7 @@ export default function Home() {
             height={1000}
             className="w-full  md:w-[67vw] object-contain"
           />
-          <div className="absolute top-16 px-10 grid grid-cols-7 gap-x-8 grid-rows-3 justify-between items-  z-[19]">
+          <div className="absolute top-36 px-10 grid grid-cols-7 gap-x-8 grid-rows-3 justify-between items-  z-[19]">
             <Image
               src="/images/readthebible.png"
               alt="bg image"
@@ -41,13 +42,12 @@ export default function Home() {
               alt="bg image"
               width={1000}
               height={1000}
-              className="w-[57rem] col-start-5 col-end-8  animate-pulse  -mt-0 animate-infinite animate-duration-[5000ms] animate-ease-in-out animate-normal  duration-200"
+              className="w-[57rem] col-start-5 col-end-8"
             />
           </div>
         </div>
 
         {/* Read the Bible Image */}
-      </main>
       <div className=" ">
         <TabSwitcher />
       </div>
@@ -86,7 +86,7 @@ export default function Home() {
           <p className="text-lg font-sniglet text-center py-2">Share your life-transforming testimonies and any feedbacks with us</p>
 
 
-          <div className="col-span-2 mt-10 flex flex-col gap-4 bg-[#fff] rounded-2xl shadow-lg p-10">
+          <div className="col-span-2 mt-10 mx-auto w-[70%] flex flex-col gap-4 bg-[#fff] rounded-2xl shadow-lg p-10">
           <h3 className="text-3xl text-primary font-lucky">
             We are just one chat away!
           </h3>
@@ -122,7 +122,7 @@ export default function Home() {
         </div>
         </div>
 
-
+<Footer />
     </div>
   );
 }

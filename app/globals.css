@@ -31,16 +31,20 @@
 
 @keyframes animatecolors {
   0% {
-    background-color: #F44336;
+    background-color: #f5e4dc;
+    color: black!important;
   }
   33% {
-    background-color: #3F51B5;
+    background-color: #9ec4c5;
+    color: black!important;
   }
   66% {
     background-color: #009688;
+    color: white!important;
   }
   100% {
-    background-color: #F44336;
+    background-color: #8e8eb1;
+    color: black!important;
   }
 } 
 
