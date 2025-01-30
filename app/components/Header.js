@@ -32,7 +32,7 @@ const Header = () => {
           Sponsor
         </Link>
         <Link href={`upload`} className="text-slate-800 border font-bold bg-gradient-to-tr from-[#EE7822] to-[#EFB741] hover:bg-gradient-to-bl rounded-full px-5 py-2 transition-all duration-300 ease">
-          Upload Video
+          Join Campaign
         </Link>
       </div>
     </div>
