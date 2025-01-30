@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
       <body
         className={` antialiased`}
       >
-        <canvas id="world" width="auto" height="auto"></canvas>
+        <canvas id="world" width="0" height="0"></canvas>
         <Header />
         {children}
         {/* <Footer /> */}
