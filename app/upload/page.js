@@ -111,7 +111,6 @@ const Page = () => {
     <div style={{ backgroundImage: `url(/images/ava3.jpg)`, backgroundOpacity: '50', objectFit: "fill", backgroundRepeat: "no-repeat", backgroundSize: "cover" }} className="m-auto object-contain brightness-10  min-h-screen flex flex-col gap-2 text-center justify-cente r px-28 items-center bg-gradient-to-b from-amber-300 to-[#c9822c] font-sniglet pt-24">
       <h2 className="text-2xl md:text-6xl py font-lucky text-slate-900">Upload your video</h2>
       <h3 className="text-lg my-1.5">Or you can choose to <Link href="/record" className="font-bold text-white bg-pinkbg px-5 py-2 rounded-2xl">Record your video</Link></h3>
-
       {!videoSrc ? (
         <label
           htmlFor="fileInput"
