@@ -51,14 +51,14 @@ const Page = () => {
   }, []);
 
   return (
-    <div  className="m-auto object-contain brightness-10  min-h-screen flex flex-col gap-2 text-center justify-center items-center bg-gradient-to-b from-amber-300 to-[#c9822c] font-sniglet pt-20">
-      <h2 className="text-7xl font-lucky text-slate-900">Upload your video</h2>
+    <div  style={{ backgroundImage: `url(/images/ava2.jpg)`, backgroundOpacity: '50', objectFit: "fill", backgroundRepeat: "no-repeat", backgroundSize: "cover" }}  className="m-auto object-contain brightness-10  min-h-screen flex flex-col gap-2 text-center justify-center items-center bg-gradient-to-b from-amber-300 to-[#c9822c] font-sniglet pt-20">
+      <h2 className="text-2xl md:text-6xl  font-lucky text-slate-900">Upload your video</h2>
         <h3 className="text-xl ">Or you can choose to <Link href="/record" className="font-bold text-darkbg">Record your video</Link></h3>
 
       {!videoSrc ? (
         <label
           htmlFor="fileInput"
-          className={`md:mx-0 mx-auto mt-4 mb-6 flex flex-col items-center justify-center w-full max-w-[50%] md:h-[500px] shadow-lg shadow-gray-800 bg-amber-200  text-center p-3 border-2 border-dashed rounded-lg cursor-pointer ${
+          className={`md:mx-0 mx-auto  flex flex-col items-center justify-center w-full max-w-[50%] md:h-[500px] shadow-lg shadow-gray-800 bg-amber-200  text-center  border-2 border-dashed rounded-lg cursor-pointer ${
             dragging ? 'border-red-500 bg-amber-100' : 'border-gray-300 hover:bg-amber-100'
           }`}
           onDragOver={handleDragOver}
@@ -88,7 +88,7 @@ const Page = () => {
           />
         </label>
       ) : (
-        <div className="md:mx-0 md:mb-12 mx-auto mb-16 mt-4 flex items-center  p-3 cursor-pointer rounded-2xl relative w-ful l max- w-[40%] md:h-[30rem]">
+        <div className="md:mx-0  mx-auto flex items-center  p-3 cursor-pointer rounded-2xl relative  max- w-[40%] md:h-[30rem]">
           <video
             ref={videoRef}
             src={videoSrc}
