@@ -1,18 +1,9 @@
-import { Geist, Geist_Mono } from "next/font/google";
+// import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Header from "./components/Header";
-import Footer from "./components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata = {
   title: "Lets Read the Bible Campaign",
@@ -25,17 +16,16 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
       <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true"/>
 <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Jua&family=Lexend:wght@100..900&family=Luckiest+Guy&family=Modak&family=Sniglet&family=Manrope:wght@200..800&display=swap" rel="stylesheet"/>
 
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={` antialiased`}
       >
-        <canvas id="world" width="auto" height="auto"></canvas>
+        <canvas id="world" width="0" height="0"></canvas>
         <Header />
         {children}
-        <Footer />
         {/* Use next/script for including external JavaScript */}
         <Script src="./utils/PageAnimation.js" strategy="afterInteractive" />
       </body>

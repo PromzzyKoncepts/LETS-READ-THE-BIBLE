@@ -14,6 +14,18 @@
   }
 }
 
+.m_8a5d1357 {
+  font-weight:400!important;
+  font-size: 19px!important;
+  padding: 5px 0!important;
+  font-family: "Sniglet", sans-serif;
+}
+
+.mantine-ScrollArea-viewport{
+  background-color: #F4C2C2!important;
+  z-index: 9;
+}
+
 #miCanvas {
   position: absolute;
   top: 0px;
@@ -31,16 +43,20 @@
 
 @keyframes animatecolors {
   0% {
-    background-color: #F44336;
+    background-color: #f5e4dc;
+    color: black!important;
   }
   33% {
-    background-color: #3F51B5;
+    background-color: #9ec4c5;
+    color: black!important;
   }
   66% {
     background-color: #009688;
+    color: white!important;
   }
   100% {
-    background-color: #F44336;
+    background-color: #8e8eb1;
+    color: black!important;
   }
 } 
 
@@ -234,4 +250,25 @@
   }
 }
 
+
+
+
+
+
+
+
+
+
+#container{
+  -webkit-appearance: none;
+  transform: rotateY(180deg);
+}
+
+#container video::-webkit-media-controls{
+  transform: rotateY(180deg) !important;
+}
+
+.stroke {
+  -webkit-text-stroke: .5px #28282861;
+}
 

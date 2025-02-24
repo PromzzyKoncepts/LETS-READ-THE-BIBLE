@@ -1,0 +1,224 @@
+/* Included color classes.. 
+	.red 
+	.blue 
+	.yellow 
+	.green
+	.navy
+	.orange
+*/
+/* Icon set - http://ionicons.com */
+
+@import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,800);
+figure.snip1146 {
+  /* font-family: 'Raleway', Arial, sans-serif; */
+  position: relative;
+  overflow: hidden;
+  margin: 10px;
+  min-width: 220px;
+  max-width: 310px;
+  max-height: 310px;
+  width: 100%;
+  background: #000000;
+  text-align: right;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+figure.snip1146 * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+figure.snip1146 img {
+  max-width: 100%;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+figure.snip1146 span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 65px;
+  height: 65px;
+  line-height: 65px;
+  opacity: 0;
+  padding-left: 50px;
+  padding-right: 20px;
+  border-radius: 65px;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0);
+}
+
+figure.snip1146 span:before,
+figure.snip1146 span:after {
+  content: '';
+  -webkit-transform: scale(0.75);
+  transform: scale(0.75);
+  height: 65px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 65px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+figure.snip1146 span:before {
+  width: 65px;
+  opacity: 0;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+figure.snip1146 span:after {
+  width: 100%;
+}
+
+figure.snip1146 i {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 34px;
+  color: #000000;
+  width: 65px;
+  height: 65px;
+  line-height: 65px;
+  text-align: center;
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+figure.snip1146 a {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+}
+
+figure.snip1146.blue {
+  background-color: #2472a4;
+}
+
+figure.snip1146.blue i {
+  color: #20638f;
+}
+
+figure.snip1146.red {
+  background-color: #ab3326;
+}
+
+figure.snip1146.red i {
+  color: #962d22;
+}
+
+figure.snip1146.yellow {
+  background-color: #e08e0b;
+}
+
+figure.snip1146.yellow i {
+  color: #c87f0a;
+}
+
+figure.snip1146.green {
+  background-color: #229955;
+}
+
+figure.snip1146.green i {
+  color: #1e8449;
+}
+
+figure.snip1146.orange {
+  background-color: #d67118;
+}
+
+figure.snip1146.orange i {
+  color: #bf6516;
+}
+
+figure.snip1146.navy {
+  background-color: #2b3c4e;
+}
+
+figure.snip1146.navy i {
+  color: #222f3d;
+}
+
+figure.snip1146:hover img,
+figure.snip1146.hover img {
+  opacity: 0.3;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+
+figure.snip1146:hover span,
+figure.snip1146.hover span {
+  opacity: 1;
+  -webkit-animation: animateIn1146 0.8s 0.1s forwards;
+  animation: animateIn1146 0.8s 0.1s forwards;
+}
+
+figure.snip1146:hover span:before,
+figure.snip1146.hover span:before {
+  opacity: 1;
+}
+
+figure.snip1146:hover span:after,
+figure.snip1146.hover span:after {
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+figure.snip1146:hover span i,
+figure.snip1146.hover span i {
+  -webkit-transition-delay: 0.25s;
+  transition-delay: 0.25s;
+  -webkit-transform: rotate(0);
+  transform: rotate(0);
+}
+
+@-webkit-keyframes animateIn1146 {
+  0% {
+    color: rgba(255, 255, 255, 0);
+    width: 65px;
+  }
+  20% {
+    color: rgba(255, 255, 255, 0);
+    width: 65px;
+  }
+  70% {
+    color: rgba(255, 255, 255, 0);
+    width: 200px;
+  }
+  100% {
+    color: #ffffff;
+    width: 200px;
+  }
+}
+
+@keyframes animateIn1146 {
+  0% {
+    color: rgba(255, 255, 255, 0);
+    width: 65px;
+  }
+  20% {
+    color: rgba(255, 255, 255, 0);
+    width: 65px;
+  }
+  70% {
+    color: rgba(255, 255, 255, 0);
+    width: 200px;
+  }
+  100% {
+    color: #ffffff;
+    width: 200px;
+  }
+}
+

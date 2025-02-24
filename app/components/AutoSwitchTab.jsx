@@ -59,18 +59,18 @@ const TabSwitcher = () => {
       <FloatingAnimation />
 
       <div
-        className={`w-full h-[90vh] relative z-20 lg:px-28 mx-auto py-16 ${
-          activeTab == 0 && "bg-darkbg"
-        }  ${activeTab == 2 && "bg-[#229AE0]"} ${
+        className={`w-full h-[85vh] relative z-20 lg:px-28 mx-auto py-16 ${
+          activeTab == 0 && "bg-[#B559F6]"
+        }  ${activeTab == 2 && "bg-[#6E99F4]"} ${
           activeTab == 1 && "bg-pinkbg"
         }  ${activeTab == 3 && "bg-[#8e8eb1]"} ${
-          activeTab == 4 && "bg-[#404040]"
+          activeTab == 4 && "bg-[#8079A5]"
         } `}
       >
         {/* Tab Navigation */}
         <h1
           className={`text-5xl text-center font-lucky tracking-wider capitalize pb-7 font-bold ${
-            activeTab == 0 && "text-[#EEA236]"
+            activeTab == 0 && "text-darkbg"
           } ${activeTab == 1 && "text-darkbg"} ${
             activeTab == 2 && "text-white"
           } ${activeTab == 3 && "text-darkbg"}  ${

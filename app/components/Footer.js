@@ -12,7 +12,7 @@ const Footer = () => {
   const pathname = usePathname();
 
   return (
-    <div className={`${pathname == "/" ? "bg-[#F4C2C2] " : ""} relative `}>
+    <div className={`${pathname == "/" ? "bg-[#8E8EB1] " : ""} relative `}>
       <section className="section ">
         <div className="wave wave1"></div>
         <div className="wave wave2"></div>
@@ -22,25 +22,25 @@ const Footer = () => {
       <FloatingAnimation />
 
       <div className="bg-[#631260] font-sniglet roun ded-t-[3rem] px-5  pb-7 sm:px-24">
-        <div className=" text-white flex flex-wrap items-start justify-between gap-6">
+        <div className=" text-white  flex flex-wrap items-start justify-between gap-6">
           <div className="flex flex-col">
-            <h3 className="text-2xl text-orange pb-3">Quick Links</h3>
+            <h3 className="text-2xl font-bold text-orange pb-3">Quick Links</h3>
             <Link href="/orders">LiveTV</Link>
-            <Link href="/user">Watc h Videos</Link>
-            <Link href="/auth/login">Give a seed</Link>
-            <Link href="/favorites">KingsChat</Link>
-            <Link href="/favorites">Login | Register</Link>
+            <Link href="/user">Watch Videos</Link>
+            <Link href="/auth/login">Sponsor this campaign</Link>
+            <Link href="/favorites">Record your video</Link>
+            <Link href="/favorites">Upload a Video</Link>
           </div>
           <div className="flex flex-col">
-            <h3 className="text-2xl text-orange pb-3">Enquiry</h3>
+            <h3 className="text-2xl text-orange font-bold  pb-3">Enquiry</h3>
             <Link href="/about">About Us</Link>
             <Link href="/contact">Contact Us</Link>
-            <Link href="/contact">Our Channels</Link>
+            <Link href="/contact">Read the bible</Link>
             <Link href="/t&c">Terms and Conditions</Link>
             <Link href="/faqs">FAQS</Link>
           </div>
           <div className="flex flex-col">
-            <h3 className="text-2xl text-orange pb-3">Support</h3>
+            <h3 className="text-2xl text-orange font-bold  pb-3">Support</h3>
             <Link href="/about" className="flex items-center gap-1">
               <CiMail /> Email Support
             </Link>
@@ -48,18 +48,18 @@ const Footer = () => {
               <CiPhone /> Phone Support
             </Link>
             <Link href="/dashboard" className="flex items-center gap-1">
-              <Image src="/assets/png/kingschat.webp" alt="Kingschat logo icon" width={20} height={20}/>
+              <Image src="/images/kingschat.webp" alt="Kingschat logo icon" width={20} height={20}/>
                KingsChat Support
             </Link>
           </div>
           <div className="">
-            <h3 className="text-xl text-orange pb-3">Connect with Us</h3>
+            <h3 className="text-xl text-orange pb-3 font-bold ">Connect with Us</h3>
             <div className="flex gap-3">
               <Link
                 href="/about"
                 className=""
               >
-                <Image src="/assets/png/kingschat.webp" alt="Kingschat logo icon" width={40} height={40}/>
+                <Image src="/images/kingschat.webp" alt="Kingschat logo icon" width={40} height={40}/>
               </Link>
               <Link
                 href="/contact"
@@ -93,7 +93,7 @@ const Footer = () => {
         <hr className="my-6 border-slate-500" />
 
         <div className="text-xs text-center  text-slate-400 sm:float-right">
-          Copyright &copy; {currentYear} Loveworld Kiddies Network All Rights
+          Copyright &copy; {currentYear} Lovetoons TV All Rights
           Reserved
         </div>
       </div>
