@@ -14,6 +14,18 @@
   }
 }
 
+.m_8a5d1357 {
+  font-weight:400!important;
+  font-size: 19px!important;
+  padding: 5px 0!important;
+  font-family: "Sniglet", sans-serif;
+}
+
+.mantine-ScrollArea-viewport{
+  background-color: #F4C2C2!important;
+  z-index: 9;
+}
+
 #miCanvas {
   position: absolute;
   top: 0px;
