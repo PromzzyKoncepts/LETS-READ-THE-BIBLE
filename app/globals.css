@@ -7,6 +7,24 @@
   --foreground: #171717;
 }
 
+
+.example::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+}
+
+/* Track */
+.example::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 10px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+.example::-webkit-scrollbar-thumb {
+  background: #973B53;
+  border-radius: 20px;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;

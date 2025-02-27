@@ -4,7 +4,7 @@ import DailyVerse from "./components/Dailyverse";
 import { useEffect } from "react";
 import FloatingAnimation from "./utils/FloatingAnimation";
 import Swiper from "./components/Swiper";
-import TabSwitcher from "./components/AutoSwitchTab";
+import Tab from "./components/Tab";
 import AnimatedCounter from "./utils/CountingAnimation";
 import InteractiveFigures from "./components/InteractiveFigures";
 import Footer from "@/app/components/Footer";
@@ -48,15 +48,21 @@ export default function Home() {
         </div>
 
         {/* Read the Bible Image */}
-      <div className=" ">
+      {/* <div className=" ">
         <TabSwitcher />
-      </div>
+      </div> */}
+
+        <Tab />
 
       {/* <Swiper /> */}
       <div className="relative flex items-center justify-center">
 
 
-        <div className="flex absolute z-[49] -top-24 gap-16 colors font-sniglet  items-center justify-center bg-slate-100 w-fit py-20  rounded-xl  px-16 shadow-lg shadow-gray-700 m-auto">
+      </div>
+
+
+        <div className=" bg-[#F4C2C2] pt-10">
+        <div className="flex  gap-16 colors font-sniglet  items-center justify-center bg-slate-100 w-fit py-20  rounded-xl  px-16 shadow-lg shadow-gray-700 m-auto">
           <div className="flex flex-col gap-2 text-xl items-center">
 
             <AnimatedCounter targetNumber={130} fontSize={"5"} />
@@ -74,13 +80,11 @@ export default function Home() {
           </div>
 
         </div>
-      </div>
-
-
-        <div className=" bg-[#F4C2C2]">
-          <h1 className="text-6xl text-center pt-56 text-slate-900 font-lucky">Explore Our Videos</h1>
+          <h1 className="text-6xl text-center mt-10 text-slate-900 font-lucky">Explore Our Videos</h1>
           <InteractiveFigures/>
         </div>
+
+
         <div className=" bg-[#8E8EB1] px-28 pt-16 min-h-screen">
           <h1 className="text-6xl text-center  text-slate-900 font-lucky">testimonies and feedbacks</h1>
           <p className="text-lg font-sniglet text-center py-2">Share your life-transforming testimonies and any feedbacks with us</p>
