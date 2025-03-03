@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { getBooks, getChapters } from '../components/read/readApi';
 import axios from 'axios';
 
-const baseUrl = process.env.BASE_URL
+const baseUrl = "https://lets-read-the-bible.vercel.app"
 
 const UploadVideo = () => {
   const [videoSrc, setVideoSrc] = useState('');

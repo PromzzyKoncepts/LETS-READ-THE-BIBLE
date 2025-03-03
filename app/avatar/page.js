@@ -9,7 +9,7 @@ import { FaTrash } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import { WhatsappIcon, WhatsappShareButton, TelegramShareButton, TelegramIcon } from "react-share";
 
-const baseUrl = process.env.BASE_URL
+const baseUrl = "https://lets-read-the-bible.vercel.app"
 
 export default function AvatarUploader() {
   const [image, setImage] = useState(null);
@@ -30,6 +30,7 @@ export default function AvatarUploader() {
       reader.readAsDataURL(file);
     }
   };
+  console.log(`${baseUrl}/api/generate-avatar`)
 
   const onCropComplete = useCallback((_, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);

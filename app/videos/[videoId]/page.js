@@ -1,7 +1,7 @@
 "use client"
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-const baseUrl = process.env.BASE_URL
+const baseUrl = "https://lets-read-the-bible.vercel.app"
 const Page = () => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
