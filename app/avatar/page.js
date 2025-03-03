@@ -9,6 +9,8 @@ import { FaTrash } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import { WhatsappIcon, WhatsappShareButton, TelegramShareButton, TelegramIcon } from "react-share";
 
+const baseUrl = process.env.BASE_URL
+
 export default function AvatarUploader() {
   const [image, setImage] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
@@ -45,7 +47,7 @@ export default function AvatarUploader() {
     if (!croppedImage) return;
 
     try {
-      const response = await axios.post("/api/generate-avatar", { image: croppedImage });
+      const response = await axios.post(`${baseUrl}/api/generate-avatar`, { image: croppedImage });
 
       console.log(response.data, "resssss");
 

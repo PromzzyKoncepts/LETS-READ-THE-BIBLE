@@ -1,17 +1,18 @@
-'use client';
-
-import { useState, useEffect, useRef, useCallback } from 'react';
+"use client"
+import { useState, useEffect, useRef } from 'react';
 import { BiLoaderCircle, BiSolidCloudUpload } from 'react-icons/bi';
-import Link from 'next/link'
+import Link from 'next/link';
 import { getBooks, getChapters } from '../components/read/readApi';
+import axios from 'axios';
 
-const Page = () => {
+const baseUrl = process.env.BASE_URL
 
-
+const UploadVideo = () => {
   const [videoSrc, setVideoSrc] = useState('');
+  const [videoFile, setVideoFile] = useState('');
   const [dragging, setDragging] = useState(false);
   const videoRef = useRef(null);
-
+  const fileInputRef = useRef(null);
 
   const [books, setBooks] = useState([]);
   const [selectedBook, setSelectedBook] = useState('');
@@ -19,21 +20,20 @@ const Page = () => {
   const [selectedChapterStart, setSelectedChapterStart] = useState('');
   const [selectedChapterEnd, setSelectedChapterEnd] = useState('');
   const [isSingleChapter, setIsSingleChapter] = useState(false);
+  const [kidFullname, setKidFullname] = useState('');
+  const [parentFullname, setParentFullname] = useState('');
 
-  // const [books, setBooks] = useState([]);
-  // const [selectedBook, setSelectedBook] = useState('');
-  // const [chapters, setChapters] = useState([]);
-  const [selectedChapter, setSelectedChapter] = useState('');
-
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploaded, setUploaded] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    // Fetch the list of books when the component mounts
     const fetchedBooks = getBooks();
     setBooks(fetchedBooks);
   }, []);
 
   useEffect(() => {
-    // Fetch the chapters for the selected book
     if (selectedBook) {
       const fetchedChapters = getChapters(selectedBook);
       setChapters(fetchedChapters);
@@ -42,7 +42,7 @@ const Page = () => {
 
   const handleBookChange = (event) => {
     setSelectedBook(event.target.value);
-    setSelectedChapterStart(''); // Reset the selected chapters when the book changes
+    setSelectedChapterStart('');
     setSelectedChapterEnd('');
   };
 
@@ -55,16 +55,11 @@ const Page = () => {
   };
 
   const handleCheckboxChange = () => {
-    setIsSingleChapter(!isSingleChapter); // Toggle the checkbox state
+    setIsSingleChapter(!isSingleChapter);
     if (!isSingleChapter) {
-      setSelectedChapterEnd(''); // Clear the second chapter if switching to single chapter mode
+      setSelectedChapterEnd('');
     }
   };
-
-
-
-
-  // another side
 
   const handleFile = (file) => {
     if (!file) return;
@@ -88,27 +83,110 @@ const Page = () => {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+    setVideoFile(file);
     handleFile(file);
   };
 
-  const handleDragOver = useCallback((event) => {
+  const handleDragOver = (event) => {
     event.preventDefault();
     setDragging(true);
-  }, []);
+  };
 
-  const handleDragLeave = useCallback(() => {
+  const handleDragLeave = () => {
     setDragging(false);
-  }, []);
+  };
 
-  const handleDrop = useCallback((event) => {
+  const handleDrop = (event) => {
     event.preventDefault();
     setDragging(false);
     const file = event.dataTransfer.files[0];
     handleFile(file);
-  }, []);
+  };
+
+  const handleUpload = async () => {
+    if (!videoFile) {
+      alert('No video file selected.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', videoFile);
+    formData.append('kid_fullname', kidFullname);
+    formData.append('parent_fullname', parentFullname);
+    formData.append('book', selectedBook);
+    formData.append('chapter_start', selectedChapterStart);
+    formData.append('chapter_end', selectedChapterEnd);
+
+    setIsUploading(true);
+    setShowModal(true);
+
+    try {
+      const response = await axios.post(`${baseUrl}/api/upload`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setUploadProgress(percentCompleted);
+        },
+      });
+
+      if (response.status === 200) {
+        alert('Video uploaded successfully!');
+        setUploaded(true)
+      } else {
+        setUploaded(false);
+      }
+    } catch (error) {
+      console.error('Error uploading video:', error);
+      alert('Failed to upload video.');
+    } finally {
+      setIsUploading(false);
+      setShowModal(false);
+    }
+  };
 
   return (
     <div style={{ backgroundImage: `url(/images/ava3.jpg)`, backgroundOpacity: '50', objectFit: "fill", backgroundRepeat: "no-repeat", backgroundSize: "cover" }} className="m-auto object-contain brightness-10  min-h-screen flex flex-col gap-2 text-center justify-cente r px-28 items-center bg-gradient-to-b from-amber-300 to-[#c9822c] font-sniglet pt-24">
+
+      {uploaded == true && (
+         <div className="absolute inset-0 bg-darkbg bg-opacity-50 flex items-center justify-center">
+         <div className="bg-white py-8 px-16 z-[9999] rounded-lg shadow-lg flex flex-col items-center justify-center gap-1">
+           <h3 className="text-2xl md:text-7xl text-center font-modak text-pinkbg">Gloraaay!</h3>
+           <p className="text-center font-lucky font-light text-darkbg text-lg">Great Job! Your video has been successfully uploaded</p>
+           <p className="text-center text-darkbg text-lg">Thank you for being a part of this Glorious campaign</p>
+           <small className="text-center">Due to our <Link href="/t&c" className="hover:underline text-blue-600">Guidelines and conditions</Link>, your video is currently being reviewed. <br/> Please Wait... </small>
+
+           <button onClick={
+             () => {
+               setUploaded(false)
+               setVideoSrc(null)
+             }
+           } className="bg-darkbg  px-5 py-2 rounded-xl text-white mt-5">Upload again</button>
+           <Link href="/record" className="underline mt-3">Record Instead</Link>
+         </div>
+       </div>
+      )}
+
+      {uploaded == false && (
+         <div className="absolute inset-0 bg-darkbg bg-opacity-50 flex items-center justify-center">
+         <div className="bg-white py-8 px-16 z-[9999] rounded-lg shadow-lg flex flex-col items-center justify-center gap-1">
+           <h3 className="text-2xl md:text-7xl text-center font-modak text-pinkbg">Oops!</h3>
+           <p className="text-center font-lucky font-light text-darkbg text-lg">We are sad to say that your video did not successfully upload</p>
+           <p className="text-center text-darkbg text-lg">Please Try Again</p>
+           
+
+           <button onClick={
+             () => {
+               setUploaded(false)
+               setVideoSrc(null)
+             }
+           } className="bg-darkbg  px-5 py-2 rounded-xl text-white mt-5">Try Again</button>
+           <Link href="/record" className="underline mt-3">Record Instead</Link>
+         </div>
+       </div>
+      )}
+
       <h2 className="text-2xl md:text-6xl py font-lucky text-slate-900">Upload your video</h2>
       <h3 className="text-lg my-1.5">Or you can choose to <Link href="/record" className="font-bold text-white bg-pinkbg px-5 py-2 rounded-2xl">Record your video</Link></h3>
       {!videoSrc ? (
@@ -139,6 +217,7 @@ const Page = () => {
             id="fileInput"
             onChange={handleFileChange}
             hidden
+            ref={fileInputRef}
             accept=".mp4,.mov,.webm"
           />
         </label>
@@ -159,16 +238,14 @@ const Page = () => {
             <h2 className="font-lucky text-3xl text-center text-darkbg">Bible Reading Details</h2>
             <div className="flex flex-col gap-2">
               <label htmlFor='fullname'>Kids Full name</label>
-              <input type="text" name="fullname" placeholder="Enter full name" className='p-3 focus:outline-pinkbg focus:outline-1' />
+              <input type="text" name="fullname" placeholder="Enter full name" className='p-3 focus:outline-pinkbg focus:outline-1' value={kidFullname} onChange={(e) => setKidFullname(e.target.value)} />
             </div>
 
             <div className="flex flex-col gap-2">
               <label htmlFor='fullname'>Parent or Guardians Full name</label>
-              <input type="text" placeholder="Parent(s) or Guardian's Name(optional)" className='p-3 focus:outline-pinkbg focus:outline-1' />
+              <input type="text" placeholder="Parent(s) or Guardian's Name(optional)" className='p-3 focus:outline-pinkbg focus:outline-1' value={parentFullname} onChange={(e) => setParentFullname(e.target.value)} />
             </div>
 
-
-            {/* Book Selector */}
             <label htmlFor='fullname'>Which Book of the bible did you read?</label>
             <select value={selectedBook} className='p-3' onChange={handleBookChange}>
               <option value="">Select a Book</option>
@@ -179,7 +256,6 @@ const Page = () => {
               ))}
             </select>
 
-            {/* Chapter Selector */}
             <label htmlFor='fullname'>What chapter(s) did you read?</label>
             <div className="flex items-center gap-4">
               <select  className='p-3 w-24 disabled:opacity-50 disabled:bg-slate-200' value={selectedChapterStart} onChange={handleChapterStartChange} disabled={!selectedBook}>
@@ -195,7 +271,7 @@ const Page = () => {
                 className="p-3 w-24 disabled:opacity-50 disabled:bg-slate-200"
                 value={selectedChapterEnd}
                 onChange={handleChapterEndChange}
-                disabled={!selectedBook || isSingleChapter} // Disable if single chapter is checked
+                disabled={!selectedBook || isSingleChapter}
               >
                 <option value="">Select a Chapter</option>
                 {chapters.map((chapter, index) => (
@@ -205,7 +281,6 @@ const Page = () => {
                 ))}
               </select>
 
-              {/* <input type="checkbox"/> Only one chapter */}
               <div className="flex items-center gap-2">
                 <input
                   type="checkbox"
@@ -216,7 +291,24 @@ const Page = () => {
               </div>
 
             </div>
-            <button disabled={!selectedBook && !selectedChapterStart } className=" text-black rounded-md px-5 py-2.5 text-xl font-lucky  bg-gradient-to-tr from-[#EE7822] to-[#EFB741] active:bg-gradient-to-bl hover:rounded disabled:opacity-20">Upload Video</button>
+            <button onClick={handleUpload} disabled={!selectedBook && !selectedChapterStart } className=" text-black rounded-md px-5 py-2.5 text-xl font-lucky  bg-gradient-to-tr from-[#EE7822] to-[#EFB741] active:bg-gradient-to-bl hover:rounded disabled:opacity-20">Upload Video</button>
+          </div>
+        </div>
+      )}
+
+      {!showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white py-6 px-10 rounded-lg shadow-lg">
+            <h2 className="text-4xl font-bold mb-4 font-lucky text-pinkbg">Uploading Video...</h2>
+            <div className="w-72 h-6 mx-auto bg-gray-200 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-blue-500"
+                style={{ width: `${uploadProgress}%` }}
+              ></div>
+            </div>
+            <p className="mt-2">{uploadProgress}%</p>
+            <small>Please wait...</small>
+            {/* {isUploading && <BiLoaderCircle className="animate-spin mt-4" size={24} />} */}
           </div>
         </div>
       )}
@@ -224,4 +316,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default UploadVideo;
