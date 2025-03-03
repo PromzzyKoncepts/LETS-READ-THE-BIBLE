@@ -4,7 +4,7 @@ import DOMPurify from "dompurify";
 import parse from "html-react-parser";
 import TextAnimation from "@/app/utils/TextAnimation";
 
-
+const baseUrl = process.env.BASE_URL
 const DailyVerse = () => {
   const [verse, setVerse] = useState(null);
   const [reference, setReference] = useState(null);
@@ -14,7 +14,7 @@ const DailyVerse = () => {
   useEffect(() => {
     const fetchVerse = async () => {
       try {
-        const response = await fetch("/api/getVerse"); // Ensure this matches the API route
+        const response = await fetch(`${baseUrl}/api/getVerse`); // Ensure this matches the API route
         if (!response.ok) throw new Error("Failed to fetch verse");
         const data = await response.json();
         console.log(data)

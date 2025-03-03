@@ -1,10 +1,14 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import Link from "next/link"
 import { CgMediaLive } from "react-icons/cg";
+import { FaMicrophone, FaCamera } from "react-icons/fa6";
+import { useFileUpload } from "../utils/useFileUpload";
 
-const mimeType = "video/webm";
+const mimeType = "video/mp4";
 
 const VideoRecorder = () => {
+  const { uploadFile, uploadProgress } = useFileUpload();
   const [permission, setPermission] = useState(false);
   const [devices, setDevices] = useState({ audio: [], video: [] });
   const [selectedAudioDevice, setSelectedAudioDevice] = useState(null);
@@ -16,6 +20,9 @@ const VideoRecorder = () => {
   const [videoChunks, setVideoChunks] = useState([]);
   const [recordedVideo, setRecordedVideo] = useState(null);
   const [countdown, setCountdown] = useState(null);
+  const [audioContext, setAudioContext] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploaded, setUploaded] = useState(false);
 
   const getAvailableDevices = async () => {
     try {
@@ -43,6 +50,8 @@ const VideoRecorder = () => {
         };
         const audioConstraints = {
           deviceId: selectedAudioDevice ? { exact: selectedAudioDevice } : undefined,
+          noiseSuppression: true,
+          echoCancellation: true,
         };
 
         const audioStream = await navigator.mediaDevices.getUserMedia({ audio: audioConstraints });
@@ -50,10 +59,18 @@ const VideoRecorder = () => {
 
         setPermission(true);
 
+        const audioContext = new AudioContext();
+        setAudioContext(audioContext);
+
+        const source = audioContext.createMediaStreamSource(audioStream);
+        const destination = audioContext.createMediaStreamDestination();
+        source.connect(destination);
+
         const combinedStream = new MediaStream([
           ...videoStream.getVideoTracks(),
-          ...audioStream.getAudioTracks(),
+          ...destination.stream.getAudioTracks(),
         ]);
+
         setStream(combinedStream);
         liveVideoFeed.current.srcObject = videoStream;
       } catch (err) {
@@ -65,7 +82,7 @@ const VideoRecorder = () => {
   };
 
   const startRecording = async () => {
-    setCountdown(5); // Start countdown from 5
+    setCountdown(5);
   };
 
   useEffect(() => {
@@ -98,11 +115,84 @@ const VideoRecorder = () => {
       const videoUrl = URL.createObjectURL(videoBlob);
       setRecordedVideo(videoUrl);
       setVideoChunks([]);
+
+      if (audioContext) {
+        audioContext.close();
+      }
     };
+  };
+
+  useEffect(() => {
+    return () => {
+      if (audioContext) {
+        audioContext.close();
+      }
+    };
+  }, [audioContext]);
+
+  const handleUpload = async () => {
+    if (!recordedVideo) {
+      console.error("No recorded video available for upload.");
+      return;
+    }
+
+    setIsUploading(true);
+
+    const response = await fetch(recordedVideo);
+    const videoBlob = await response.blob();
+
+    const videoFile = new File([videoBlob], `recorded-video-${Date.now()}.mp4`, {
+      type: mimeType,
+    });
+
+    const uploadOk = await uploadFile({ filename: videoFile.name, file: videoFile });
+
+    if (uploadOk) {
+      console.log("Upload successful!");
+      setUploaded(true)
+    } else {
+      console.error("Upload failed.");
+      setUploaded(false)
+    }
+
+    setIsUploading(false);
   };
 
   return (
     <div className="font-sniglet">
+      {isUploading && (
+        <div className="fixed inset-0 bg-darkbg bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white py-6 px-10 rounded-lg shadow-lg">
+            <h2 className="text-xl font-bold mb-4">Uploading...</h2>
+            <div className="w-64 h-4 bg-gray-200 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-darkbg transition-all ease-in-out duration-300"
+                style={{ width: `${uploadProgress}%` }}
+              ></div>
+            </div>
+            <p className="mt-2 text-center">{uploadProgress}%</p>
+          </div>
+        </div>
+      )}
+
+      {!isUploading && recordedVideo  && uploaded &&  (
+        <div className="absolute inset-0 bg-darkbg bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white py-8 px-16 z-[9999] rounded-lg shadow-lg flex flex-col items-center justify-center gap-1">
+            <h3 className="text-2xl md:text-7xl text-center font-modak text-pinkbg">Gloraaay!</h3>
+            <p className="text-center font-lucky font-light text-darkbg text-lg">Great Job! Your video has been successfully uploaded</p>
+            <p className="text-center text-darkbg text-lg">Thank you for being a part of this Glorious campaign</p>
+            <small className="text-center">Due to our <Link href="/t&c" className="hover:underline text-blue-600">Guidelines and conditions</Link>, your video is currently being reviewed. <br/> Please Wait... </small>
+
+            <button onClick={
+              () => {
+                setUploaded(false)
+                setRecordedVideo(null)
+              }
+            } className="bg-darkbg  px-5 py-2 rounded-xl text-white mt-5">Record again</button>
+            <Link href="/upload" className="underline mt-3">Upload Instead</Link>
+          </div>
+        </div>
+      )}
       <div className="video-player flex items-center flex-col justify-center">
         {!recordedVideo && (
           <div className="relative">
@@ -120,7 +210,7 @@ const VideoRecorder = () => {
         )}
         {countdown !== null && countdown !== 0 && (
           <div className="flex justify-center items-center absolute">
-            <p className="text-7xl font-bold text-[#282828]  stroke   animate-ping">{countdown}</p>
+            <p className="text-7xl font-bold text-[#282828] stroke animate-ping">{countdown}</p>
           </div>
         )}
         {recordedVideo && (
@@ -134,40 +224,45 @@ const VideoRecorder = () => {
         )}
       </div>
       <main>
-        <div className="md:flex  mt-5 gap-3 items-center justify-center">
-          {!recordedVideo && (<div className="flex flex-col items-start">
-            <select
-              id="audioSelect"
-              value={selectedAudioDevice}
-              onChange={(e) => setSelectedAudioDevice(e.target.value)}
-              className="rounded p-2 w-[15rem] md:w-full"
-            >
-              {devices.audio.map((device) => (
-                <option key={device.deviceId} value={device.deviceId}>
-                  {device.label || `Microphone ${device.deviceId}`}
-                </option>
-              ))}
-            </select>
-          </div>)}
-          {!recordedVideo && (<div className="flex flex-col items-start">
-            
-            <select
-              id="videoSelect"
-              value={selectedVideoDevice}
-              onChange={(e) => setSelectedVideoDevice(e.target.value)}
-              className="rounded p-2"
-            >
-              {devices.video.map((device) => (
-                <option key={device.deviceId} value={device.deviceId}>
-                  {device.label || `Camera ${device.deviceId}`}
-                </option>
-              ))}
-            </select>
-          </div>)}
+        <div className="md:flex mt-5 gap-3 items-center justify-center">
+          {!recordedVideo && (
+            <div className="flex flex-row items-center">
+              <div className="bg-darkbg p-2.5"><FaMicrophone color="white" /></div>
+              <select
+                id="audioSelect"
+                value={selectedAudioDevice || "Microphone Device"}
+                onChange={(e) => setSelectedAudioDevice(e.target.value)}
+                className="rounded-r p-2 w-[10rem] md:w-[25rem]"
+              >
+                {devices.audio.map((device) => (
+                  <option key={device.deviceId} value={device.deviceId}>
+                    {device.label || `Microphone ${device.deviceId}`}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+          {!recordedVideo && (
+            <div className="flex flex-row items-start">
+              <div className="bg-darkbg p-2.5"><FaCamera color="white" /></div>
+              <select
+                id="videoSelect"
+                value={selectedVideoDevice || "Camera Device"}
+                onChange={(e) => setSelectedVideoDevice(e.target.value)}
+                className="rounded p-2"
+              >
+                {devices.video.map((device) => (
+                  <option key={device.deviceId} value={device.deviceId}>
+                    {device.label || `Camera ${device.deviceId}`}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
           {!permission && (
             <button
               onClick={getCameraPermission}
-              className="bg-gradie nt-to-tr colors from-[#EE7822] text-slate-100 to-[#EFB741] font-bold rounded-full px-7 py-2 shadow-md"
+              className="bg-gradient-to-tr shadow-slate-600 from-[#ac6430] text-white to-[#f4b120] font-bold rounded-full px-7 py-2 shadow-md"
             >
               {recordedVideo ? "Try Again" : "Preview Camera"}
             </button>
@@ -175,7 +270,7 @@ const VideoRecorder = () => {
           {permission && recordingStatus === "inactive" && (
             <button
               onClick={startRecording}
-              className="bg-gradie nt-to-tr colors from-[#EE7822] text-slate-100 to-[#EFB741] font-bold  rounded-full px-7 py-2 shadow-md"
+              className="bg-gradient-to-tr colors from-[#EE7822] text-slate-100 to-[#EFB741] font-bold rounded-full px-7 py-2 shadow-md"
             >
               Start Recording
             </button>
@@ -188,7 +283,6 @@ const VideoRecorder = () => {
               Stop Recording
             </button>
           )}
-          
           {recordedVideo && (
             <a
               download
@@ -198,10 +292,9 @@ const VideoRecorder = () => {
               Download
             </a>
           )}
-
-{recordedVideo  && (
+          {recordedVideo && (
             <button
-              onClick={stopRecording}
+              onClick={handleUpload}
               className="bg-gradient-to-b from-green-600 to-green-900 hover:shadow-md hover:shadow-black text-white rounded-full px-7 py-2 shadow-md"
             >
               Upload

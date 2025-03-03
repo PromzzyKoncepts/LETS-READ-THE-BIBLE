@@ -1,0 +1,8 @@
+[
+    {
+      "origin": ["http://localhost:3000", "https://lets-read-the-bible.vercel.app/"],
+      "method": ["POST"],
+      "responseHeader": ["Content-Type"],
+      "maxAgeSeconds": 3600
+    }
+]
