@@ -296,7 +296,7 @@ const UploadVideo = () => {
         </div>
       )}
 
-      {!showModal && (
+      {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white py-6 px-10 rounded-lg shadow-lg">
             <h2 className="text-4xl font-bold mb-4 font-lucky text-pinkbg">Uploading Video...</h2>

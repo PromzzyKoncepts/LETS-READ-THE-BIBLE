@@ -1,11 +1,12 @@
 "use client"
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+const baseUrl = process.env.BASE_URL
 const Page = () => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
 
   useEffect(() => {
     const fetchVideos = async () => {
