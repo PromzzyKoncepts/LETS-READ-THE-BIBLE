@@ -4,7 +4,7 @@ import DOMPurify from "dompurify";
 import parse from "html-react-parser";
 import TextAnimation from "@/app/utils/TextAnimation";
 
-const baseUrl = process.env.BASE_URL
+const baseUrl = "https://lets-read-the-bible.vercel.app"
 const DailyVerse = () => {
   const [verse, setVerse] = useState(null);
   const [reference, setReference] = useState(null);

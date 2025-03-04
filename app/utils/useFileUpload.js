@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-const baseUrl = process.env.BASE_URL
+const baseUrl = "https://lets-read-the-bible.vercel.app"
 export function useFileUpload() {
   const [isFFmpegLoaded, setIsFFmpegLoaded] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
