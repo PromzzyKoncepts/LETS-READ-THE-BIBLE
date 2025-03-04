@@ -13,6 +13,9 @@ import { RiForward10Fill } from "react-icons/ri";
 import { FaRotateLeft } from "react-icons/fa6";
 import { getChapter, getChaptersInRange, getVersesInChapter } from "@/app/components/read/readApi";
 
+const baseUrl = "https://lets-read-the-bible.vercel.app"
+
+
 const VideoDetailsPage = () => {
   const [hasEnded, setHasEnded] = useState(false);
   const { videoId } = useParams();
@@ -45,7 +48,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchVideos = async () => {
     try {
-      const response = await axios.get(`/api/videos`);
+      const response = await axios.get(`${baseUrl}/api/videos`);
       if (response.status !== 200) {
         throw new Error("Failed to fetch videos");
       }
@@ -64,7 +67,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchVideo = async () => {
     try {
-      const response = await axios.get(`/api/videos/${videoId}`);
+      const response = await axios.get(`${baseUrl}/api/videos/${videoId}`);
       if (response.status !== 200) {
         throw new Error("Failed to fetch video details");
       }
@@ -220,9 +223,9 @@ const handleChapterClick = (chapter) => {
   }
 
   return (
-    <div  style={{ backgroundImage: `url(/images/record.jpg)`, backgroundSize: 'cover' }}
-    className="md:px-28 px-5 py-20 bg-[#b4c6c6] font-sniglet" className="px-5 md:px-24 pt-28 min-h-screen">
-      <div className="  grid md:grid-cols-3 items-start">
+    <div style={{ backgroundImage: `url(/images/pngbg.png)`, backgroundSize: 'cover' }}
+    className="px-5 bg-[#F4C2C2] md:px-24 pt-28 min-h-screen">
+      <div className="  grid md:grid-cols-3 gap-5 items-start">
       <div
         className=" col-span-2 relative bg-white w-fit md:w-[55rem] h-[35rem] shadow-lg shadow-darkbg border-2 border-white rounded-3xl overflow-hidden"
         onClick={handleHover}
@@ -300,8 +303,8 @@ const handleChapterClick = (chapter) => {
         </div>
 
         <p className={`absolute bg-darkbg bg-opacity-20 top-4 font-sniglet px-5 py-2 rounded-full backdr op-blur-md right-4 slide-in-right ${isVisible ? 'visible' : ''}`}>
-          <span className="font-bold font-jua text-white text-2xl tracking-wider">{video.book} : </span>{"  "}
-          <span className="font-bold font-jua text-white text-2xl">
+          <span className="font-bold font-jua text-white text-xl tracking-wider">{video.book} : </span>{"  "}
+          <span className="font-bold font-jua text-white text-xl">
           {" "}{video.chapter_start}{" "}
             {video.chapter_end && video.chapter_end !== video.chapter_start && ` - ${video.chapter_end}`}
           </span>
@@ -342,8 +345,8 @@ const handleChapterClick = (chapter) => {
       </div>
       </div>
       
-      <h2 className="font-lucky text-center text-5xl">Explore More Videos</h2>
-      <div className="py-20 grid md:grid-cols-3 gap-4 ">
+      <h2 className="font-lucky text-center text-5xl py-10">Explore More Videos</h2>
+      <div className=" grid md:grid-cols-3 gap-4 ">
         {videos.map((item, index) => (
           <Link 
           key={item.id} 
@@ -352,13 +355,16 @@ const handleChapterClick = (chapter) => {
             <div
             className="w-full h-full hover:group"
               onMouseEnter={(e) => {
-                const video = e.currentTarget.querySelector('video');
+                const video = e.currentTarget.querySelector('.video');
+                console.log(video)
                 if (video) {
                   video.play();
                 }
               }}
               onMouseLeave={(e) => {
-                const video = e.currentTarget.querySelector('video');
+                const video = e.currentTarget.querySelector('.video');
+                console.log(video)
+
                 if (video) {
                   video.pause();
                   video.currentTime = 0; // Reset video to the beginning
@@ -369,7 +375,7 @@ const handleChapterClick = (chapter) => {
                 src={item.url}
                 width={200}
                 height={200}
-                className="w-full object-cover h-full rounded-2xl"
+                className="w-full object-cover video h-full rounded-2xl"
                 muted={false} // Ensure audio is enabled
                 controls={false} // Hide controls
                 loop={true}

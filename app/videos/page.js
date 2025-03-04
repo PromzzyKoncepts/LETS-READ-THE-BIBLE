@@ -18,64 +18,7 @@ const getRandomColor = () => {
 };
 
 const Page = () => {
-  const images = [
-    {
-      book: 'Genesis',
-      chapterStart: '1',
-      chapterEnd: '2',
-      src: '/images/sample.jpg',
-      country: 'NGN',
-    },
-    {
-      book: 'Genesis',
-      chapterStart: '1',
-      chapterEnd: '2',
-      src: '/images/sample.jpg',
-      country: 'NGN',
-    },
-    {
-      book: 'Revelation',
-      chapterStart: '1',
-      chapterEnd: '2',
-      src: '/images/sample.jpg',
-      country: 'NGN',
-    },
-    {
-      book: 'Esther',
-      chapterStart: '1',
-      chapterEnd: '2',
-      src: '/images/sample.jpg',
-      country: 'NGN',
-    },
-    {
-      book: 'Deuteronomy',
-      chapterStart: '1',
-      chapterEnd: '2',
-      src: '/images/sample.jpg',
-      country: 'NGN',
-    },
-    {
-      book: 'Revelation',
-      chapterStart: '1',
-      chapterEnd: '2',
-      src: '/images/sample.jpg',
-      country: 'NGN',
-    },
-    {
-      book: 'Esther',
-      chapterStart: '1',
-      chapterEnd: '2',
-      src: '/images/sample.jpg',
-      country: 'NGN',
-    },
-    {
-      book: 'Deuteronomy',
-      chapterStart: '1',
-      chapterEnd: '2',
-      src: '/images/sample.jpg',
-      country: 'NGN',
-    },
-  ];
+  
 
 
   const [videos, setVideos] = useState([]);
@@ -86,7 +29,7 @@ const Page = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get(`/api/videos`);
+        const response = await axios.get(`${baseUrl}/api/videos`);
         if (response.status !== 200) {
           throw new Error("Failed to fetch videos");
         }
