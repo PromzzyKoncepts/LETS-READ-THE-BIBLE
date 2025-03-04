@@ -47,6 +47,38 @@ export const getChapters = (thebook) => {
   ];
 };
 
+export const getChapter = (thebook, thechapter) => {
+  return data
+    .filter(
+      (book) => book.book_name === thebook && book.chapter === thechapter
+    )
+    .map((book) => ({
+      verse: book.verse,
+      text: book.text
+    }));
+};
+
+export const getChaptersInRange = (thebook, startChapter, endChapter) => {
+  const chaptersInRange = data
+    .filter(
+      (book) =>
+        book.book_name === thebook &&
+        book.chapter >= startChapter &&
+        book.chapter <= endChapter
+    )
+    .reduce((acc, book) => {
+      if (!acc.some(chapter => chapter.chapter === book.chapter)) {
+        acc.push({
+          book_name: book.book_name,
+          chapter: book.chapter,
+        });
+      }
+      return acc;
+    }, []);
+
+  return chaptersInRange;
+};
+
 export const getVerses = (thebook, thechapter) => {
   return data
     .filter(
