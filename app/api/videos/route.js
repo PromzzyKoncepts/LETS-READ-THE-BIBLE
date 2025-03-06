@@ -1,42 +1,37 @@
-import { Storage } from "@google-cloud/storage";
+import Video from "@/app/api/models/Video"; // Adjust the path as necessary
+import dbConnect from "@/app/lib/mongodb"; // Adjust the path as necessary
 
 export async function GET(req, res) {
     const { method } = req;
-    // console.log(method,"eofihwdjfbsf" )
+
     if (method !== "GET") {
-    return res.status(405).json({ error: "Method not allowed" });
-}
+        return new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405 });
+    }
 
-  const storage = new Storage({
-    projectId: process.env.PROJECT_ID,
-    credentials: {
-      client_email: process.env.CLIENT_EMAIL,
-      private_key: process.env.PRIVATE_KEY.replace(/\\n/g, "\n"), // Handle newlines in private key
-    },
-  });
+    try {
+        // Connect to MongoDB
+        await dbConnect();
 
-  const bucket = storage.bucket(process.env.BUCKET_NAME);
+        // Fetch all videos from MongoDB
+        const videos = await Video.find({});
 
-  try {
-    // List all files in the bucket
-    const [files] = await bucket.getFiles();
-    
-    // Filter for video files (e.g., files with .mp4 extension)
-    // const videoFiles = files.filter((file) => file.name.endsWith(".mp4"));
-    // Generate signed URLs for each video file
-    const videos = files.map((file) => {
-        const publicUrl = `https://storage.googleapis.com/${bucket.name}/${file.name}`;
-        return {
-          name: file.name,
-          url: publicUrl,
-        };
-      });
-
-    return new Response(JSON.stringify(videos), {
-        status: 200,
-      });
-  } catch (error) {
-    console.error("Error fetching videos:", error);
-    return new Response(JSON.stringify({ error: "Failed to fetch videos" }), { status: 500 });
-  }
+        // Format the response
+        const formattedVideos = videos.map(video => ({
+            id: video._id,
+            name: video.kid_fullname, // Assuming you want to use the kid's fullname as the name
+            url: video.video_url,
+            kid_fullname: video.kid_fullname,
+            parent_fullname: video.parent_fullname,
+            book: video.book,
+            chapter_start: video.chapter_start,
+            chapter_end: video.chapter_end,
+        }));
+        console.log(formattedVideos)
+        return new Response(JSON.stringify(formattedVideos), {
+            status: 200,
+        });
+    } catch (error) {
+        console.error("Error fetching videos:", error);
+        return new Response(JSON.stringify({ error: "Failed to fetch videos" }), { status: 500 });
+    }
 }

@@ -22,19 +22,19 @@ const Header = () => {
       >
         <Link href="/"><Image src="/images/readthebible.png" width={100} height={100} alt="read the bible logo" /></Link>
         <div className="flex items-center gap-10 justify-center py-3">
-          <Link href={`read`} className="text-white hover:text-slate-800 hover:border transition-all duration-500 ease hover:font-bold hover:bg-gradient-to-tr from-[#EE7822] to-[#EFB741] active:bg-gradient-to-bl hover:rounded-full hover:px-5 hover:py-2">
+          <Link href={`/read`} className="text-white hover:text-slate-800 hover:border transition-all duration-500 ease hover:font-bold hover:bg-gradient-to-tr from-[#EE7822] to-[#EFB741] active:bg-gradient-to-bl hover:rounded-full hover:px-5 hover:py-2">
             Read
           </Link>
           <button onClick={() => setShare(true)} className="text-white hover:text-slate-800 hover:border transition-all duration-500 ease hover:font-bold hover:bg-gradient-to-tr from-[#EE7822] to-[#EFB741] active:bg-gradient-to-bl hover:rounded-full hover:px-5 hover:py-2">
             Share
           </button> 
-          <Link href={`avatar`} className="text-white hover:text-slate-800 hover:border transition-all duration-500 ease hover:font-bold hover:bg-gradient-to-tr from-[#EE7822] to-[#EFB741] active:bg-gradient-to-bl hover:rounded-full hover:px-5 hover:py-2">
+          <Link href={`/avatar`} className="text-white hover:text-slate-800 hover:border transition-all duration-500 ease hover:font-bold hover:bg-gradient-to-tr from-[#EE7822] to-[#EFB741] active:bg-gradient-to-bl hover:rounded-full hover:px-5 hover:py-2">
             Avatar
           </Link>
-          <Link href={`videos`} className="text-white hover:text-slate-800 hover:border  transition-all duration-500 ease hover:font-bold hover:bg-gradient-to-tr from-[#EE7822] to-[#EFB741] active:bg-gradient-to-bl hover:rounded-full hover:px-5 hover:py-2">
+          <Link href={`/videos`} className="text-white hover:text-slate-800 hover:border  transition-all duration-500 ease hover:font-bold hover:bg-gradient-to-tr from-[#EE7822] to-[#EFB741] active:bg-gradient-to-bl hover:rounded-full hover:px-5 hover:py-2">
             Videos
           </Link>
-          <Link href={`upload`} className="text-slate-800 border font-bold bg-gradient-to-tr from-[#EE7822] to-[#EFB741] hover:bg-gradient-to-bl rounded-full px-5 py-2 transition-all duration-300 ease">
+          <Link href={`/upload`} className="text-slate-800 border font-bold bg-gradient-to-tr from-[#EE7822] to-[#EFB741] hover:bg-gradient-to-bl rounded-full px-5 py-2 transition-all duration-300 ease">
             Join Campaign
           </Link>
         </div>

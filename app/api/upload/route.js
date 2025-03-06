@@ -35,27 +35,18 @@ export async function POST(req) {
   const filename = `${book}_${chapter_start}`;
   const blob = bucket.file(filename);
 
-
-  const options = {
-    expires: Date.now() + 60 * 60 * 1000, // 5 minutes
-    fields: { "x-goog-meta-source": "lets-read-the-bible-451415" },
-  };
-
-
   try {
-    const [response] = await blob.generateSignedPostPolicyV4(options);
+    // Read the file as an ArrayBuffer
+    const fileBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(fileBuffer);
 
-    const { url, fields } = await response;
-    const formData = new FormData();
-    Object.entries({ ...fields, file }).forEach(([key, value]) => {
-      formData.append(key, value );
-    });
-    const upload = await fetch(url, {
-      method: "POST",
-      body: formData,
+    // Upload the file to Google Cloud Storage
+    await blob.save(buffer, {
+      metadata: {
+        contentType: file.type, // Set the content type of the file
+      },
     });
 
-    console.log(upload)
     const videoUrl = `https://storage.googleapis.com/${process.env.BUCKET_NAME}/${filename}`;
 
     // Connect to MongoDB
@@ -73,9 +64,7 @@ export async function POST(req) {
 
     await newVideo.save();
 
-    return new Response(JSON.stringify(response), {
-      status: 200,
-    });
+    return NextResponse.json({ success: true, videoUrl }, { status: 200 });
   } catch (error) {
     console.error("Error uploading file or saving to MongoDB:", error);
     return NextResponse.json({ error: "Failed to upload file or save to MongoDB" }, { status: 500 });
