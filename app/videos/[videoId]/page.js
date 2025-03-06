@@ -13,8 +13,8 @@ import { RiForward10Fill } from "react-icons/ri";
 import { FaRotateLeft } from "react-icons/fa6";
 import { getChapter, getChaptersInRange, getVersesInChapter } from "@/app/components/read/readApi";
 
-const baseUrl = "http://localhost:3000"
-// const baseUrl = "https://lets-read-the-bible.vercel.app"
+// const baseUrl = "http://localhost:3000"
+const baseUrl = "https://lets-read-the-bible.vercel.app"
 
 
 const VideoDetailsPage = () => {

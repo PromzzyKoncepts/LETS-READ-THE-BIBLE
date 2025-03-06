@@ -2,8 +2,9 @@
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import { getBooks } from '../components/read/readApi';
+import { MdArrowRight, MdArrowLeft } from "react-icons/md";
 
 const baseUrl = "https://lets-read-the-bible.vercel.app"
 
@@ -25,11 +26,26 @@ const Page = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const scrollContainerRef = useRef(null);
+
+  // Function to scroll left
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -200, behavior: "smooth" });
+    }
+  };
+
+  // Function to scroll right
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 200, behavior: "smooth" });
+    }
+  };
 
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/api/videos`);
+        const response = await axios.get(`/api/videos`);
         if (response.status !== 200) {
           throw new Error("Failed to fetch videos");
         }
@@ -75,11 +91,24 @@ const Page = () => {
   return (
     <div
       style={{ backgroundImage: `url(/images/pngbg.png)`, backgroundSize: 'cover' }}
-      className="md:px-28 px-5 py-20 bg-[#b4c6c6] font-sniglet"
+      className="md:px-24 px-5 py-20 bg-[#b4c6c6] font-sniglet"
     >
       <h1 className="text-2xl md:text-7xl text-darkbg text-center font-lucky py-5">Bible reading Videos</h1>
       {/* Book List with Random Background Colors */}
-      <div className="flex items-center example cursor-pointer gap-3 md:w-[55rem] py-5 px-10 mx-auto overflow-x-auto backdrop-blur-md bg-darkbg bg-opacity-10 [mask-image:_linear-gradient(to_right,transparent_0,_black_150px,_black_calc(100%-150px),transparent_100%)]">
+      <div className="relative flex items-center justify-center gap-10">
+      {/* Left Scroll Button */}
+      <button
+        onClick={scrollLeft}
+        className=" bg-darkbg bg-opacity-50 text-white p-2 rounded-full z-10 hover:bg-opacity-70"
+      >
+        <MdArrowLeft />
+      </button>
+
+      {/* Scrollable Container */}
+      <div
+        ref={scrollContainerRef}
+        className="flex items-center example cursor-pointer gap-3 md:w-[55rem] py-5 px-10 mx-auto overflow-x-auto backdrop-blur-md bg-darkbg bg-opacity-10 [mask-image:_linear-gradient(to_right,transparent_0,_black_150px,_black_calc(100%-150px),transparent_100%)]"
+      >
         {getBooks().map((item) => {
           const randomColor = getRandomColor(); // Generate a random color for each book
           return (
@@ -94,15 +123,24 @@ const Page = () => {
         })}
       </div>
 
+      {/* Right Scroll Button */}
+      <button
+        onClick={scrollRight}
+        className=" bg-darkbg bg-opacity-50 text-white p-2 rounded-full z-10 hover:bg-opacity-70"
+      >
+        <MdArrowRight />
+      </button>
+    </div>
+
       {/* Image Grid */}
-      <div className="grid md:grid-cols-3 gap-4 pt-4">
+      <div className="grid md:grid-cols-3 gap-3 pt-4">
         {videos.map((item, index) => (
           <Link 
           key={item.id} 
           href={`/videos/${item.id}`} 
           className="relative hover:group hover: cursor-pointer hover:border-2 border-white bg-slate-500 rounded-2xl hover:shadow-md hover:shadow-slate-600">
             <div
-            className="w-full h-full hover:group"
+            className="w-full h-[20rem] hover:group"
               onMouseEnter={(e) => {
                 const video = e.currentTarget.querySelector('video');
                 if (video) {
