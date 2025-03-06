@@ -1,0 +1,11 @@
+{
+    "functions": {
+      "app/test.js": {
+        "memory": 3009
+      },
+      "app/*.js": {
+        "memory": 3009,
+        "maxDuration": 30
+      }
+    }
+  }
