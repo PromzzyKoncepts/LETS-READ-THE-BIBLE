@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { getBooks, getChapters } from '../components/read/readApi';
 import axios from 'axios';
 
-const baseUrl = "http://localhost:3000"
-// const baseUrl = "https://lets-read-the-bible.vercel.app"
+// const baseUrl = "http://localhost:3000"
+const baseUrl = "https://lets-read-the-bible.vercel.app"
 
 const UploadVideo = () => {
   const [videoSrc, setVideoSrc] = useState('');
@@ -169,7 +169,7 @@ const UploadVideo = () => {
        </div>
       )}
 
-      {uploaded == false && (
+      {/* {uploaded == false && (
          <div className="absolute inset-0 bg-darkbg bg-opacity-50 flex items-center justify-center">
          <div className="bg-white py-8 px-16 z-[9999] rounded-lg shadow-lg flex flex-col items-center justify-center gap-1">
            <h3 className="text-2xl md:text-7xl text-center font-modak text-pinkbg">Oops!</h3>
@@ -186,7 +186,7 @@ const UploadVideo = () => {
            <Link href="/record" className="underline mt-3">Record Instead</Link>
          </div>
        </div>
-      )}
+      )} */}
 
       <h2 className="text-2xl md:text-6xl py font-lucky text-slate-900">Upload your video</h2>
       <h3 className="text-lg my-1.5">Or you can choose to <Link href="/record" className="font-bold text-white bg-pinkbg px-5 py-2 rounded-2xl">Record your video</Link></h3>
