@@ -32,20 +32,42 @@ export async function POST(req) {
   });
 
   const bucket = storage.bucket(process.env.BUCKET_NAME);
-  const filename = `${book}_${chapter_start}`;
+  const filename = `${book}_${chapter_start}_${new Date().toISOString().replace(/[:.]/g, '-')}`;
   const blob = bucket.file(filename);
 
   try {
     // Read the file as an ArrayBuffer
-    const fileBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(fileBuffer);
+    // const fileBuffer = await file.arrayBuffer();
+    // const buffer = Buffer.from(fileBuffer);
 
-    // Upload the file to Google Cloud Storage
-    await blob.save(buffer, {
-      metadata: {
-        contentType: file.type, // Set the content type of the file
-      },
+    // // Upload the file to Google Cloud Storage
+    // await blob.save(buffer, {
+    //   metadata: {
+    //     contentType: file.type, // Set the content type of the file
+    //   },
+    // });
+
+    const expires = Date.now() + 60 * 60 * 1000; //  10 minutes
+    const options = {
+      expires,
+      fields: {'x-goog-meta-test': 'data'},
+    };
+
+
+    // Get a v4 signed policy for uploading file
+    const [response] = await blob.generateSignedPostPolicyV4(options);
+    console.log(response)
+
+    const { url, fields } = await response;
+    const videoformData = new FormData();
+    Object.entries({ ...fields, file }).forEach(([key, value]) => {
+      videoformData.append(key, value );
     });
+    const upload = await fetch(url, {
+      method: "POST",
+      body: videoformData,
+    });
+    console.log(upload)
 
     const videoUrl = `https://storage.googleapis.com/${process.env.BUCKET_NAME}/${filename}`;
 

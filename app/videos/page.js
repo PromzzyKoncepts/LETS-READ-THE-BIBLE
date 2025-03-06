@@ -95,7 +95,7 @@ const Page = () => {
     >
       <h1 className="text-2xl md:text-7xl text-darkbg text-center font-lucky py-5">Bible reading Videos</h1>
       {/* Book List with Random Background Colors */}
-      <div className="relative flex items-center justify-center gap-10">
+      <div className="relative flex items-center justify-center ">
       {/* Left Scroll Button */}
       <button
         onClick={scrollLeft}
