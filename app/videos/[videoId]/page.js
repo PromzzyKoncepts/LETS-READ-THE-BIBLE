@@ -14,6 +14,7 @@ import { FaRotateLeft } from "react-icons/fa6";
 import { getChapter, getChaptersInRange, getVersesInChapter } from "@/app/components/read/readApi";
 
 const baseUrl = "https://lets-read-the-bible.vercel.app"
+// const baseUrl = "http://localhost:3000"
 
 
 const VideoDetailsPage = () => {
@@ -42,7 +43,7 @@ const VideoDetailsPage = () => {
   const [videos, setVideos] = useState([]);
   
 useEffect(() => {
-  setIsVisible(true); // Trigger the animation when the component mounts
+  setIsVisible(true); 
 }, []);
 
 useEffect(() => {
@@ -241,7 +242,7 @@ const handleChapterClick = (chapter) => {
         />
         {isHovered && (
           <div>
-          <div className="absolute inset-0 flex items-center gap-5 bg-darkbg bg-opacity-10 justify-center ">
+          <div className="absolute inset-0 flex items-center gap-5 bg-darkbg bg-opacity-20 justify-center ">
             <button
               onClick={() => skip(-10)}
               className="text-white text-4xl ml-4"
@@ -303,7 +304,7 @@ const handleChapterClick = (chapter) => {
         </div>
 
         <p className={`absolute bg-darkbg bg-opacity-20 top-4 font-sniglet px-5 py-2 rounded-full backdr op-blur-md right-4 slide-in-right ${isVisible ? 'visible' : ''}`}>
-          <span className="font-bold font-jua text-white text-xl tracking-wider">{video.book} : </span>{"  "}
+          <span className="font-bold font-jua text-white text-xl tracking-wider">{video.book} CH </span>{"  "}
           <span className="font-bold font-jua text-white text-xl">
           {" "}{video.chapter_start}{" "}
             {video.chapter_end && video.chapter_end !== video.chapter_start && ` - ${video.chapter_end}`}
@@ -320,7 +321,7 @@ const handleChapterClick = (chapter) => {
 
       {/* do the component here please */}
       <div className="bg-white font-sniglet rounded-3xl">
-        <div className="flex space-x-2 font-lucky text-xl">
+        <div className="flex space-x-2 font-lucky text-xl w-[20rem] overflow-x-auto">
           {chapters.map((chapter, index) => (
             <button
               key={index}
@@ -329,7 +330,7 @@ const handleChapterClick = (chapter) => {
                 selectedChapter === chapter.chapter ? 'bg-gray-100 rounded--3xl border-t-2 border-l-2 border-r-2 text-darkbg' : ' text-slate-700'
               }`}
             >
-             {chapter.book_name} Chapter {chapter.chapter}
+             {chapter.book_name}  {chapter.chapter}
             </button>
           ))}
         </div>

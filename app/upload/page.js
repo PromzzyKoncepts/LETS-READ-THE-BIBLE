@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { getBooks, getChapters } from '../components/read/readApi';
 import axios from 'axios';
 
+// const baseUrl = "http://localhost:3000"
 const baseUrl = "https://lets-read-the-bible.vercel.app"
 
 const UploadVideo = () => {
@@ -66,7 +67,7 @@ const UploadVideo = () => {
 
     const validTypes = ['video/mp4', 'video/mov', 'video/webm'];
     if (!validTypes.includes(file.type)) {
-      alert('Invalid file type. Only MP4, MOV, and WEBM are allowed.');
+      console.log('Invalid file type. Only MP4, MOV, and WEBM are allowed.');
       return;
     }
 
@@ -105,7 +106,7 @@ const UploadVideo = () => {
 
   const handleUpload = async () => {
     if (!videoFile) {
-      alert('No video file selected.');
+      console.log('No video file selected.');
       return;
     }
 
@@ -132,14 +133,14 @@ const UploadVideo = () => {
       });
 
       if (response.status === 200) {
-        alert('Video uploaded successfully!');
+        console.log('Video uploaded successfully!');
         setUploaded(true)
       } else {
         setUploaded(false);
       }
     } catch (error) {
       console.error('Error uploading video:', error);
-      alert('Failed to upload video.');
+      console.log('Failed to upload video.');
     } finally {
       setIsUploading(false);
       setShowModal(false);

@@ -25,7 +25,7 @@ const Navbar = ({ setOpened }) => {
     if (activeBook) {
       setChapters(getChapters(activeBook));
     }
-    // alert(chapters)
+    // console.log(chapters)
   }, [activeBook]);
 
   useEffect(() => {

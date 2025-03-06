@@ -67,7 +67,7 @@ export default function AvatarUploader() {
 
     const validTypes = ['image/png', 'image/jpg', 'image/jpeg'];
     if (!validTypes.includes(file.type)) {
-      alert('Invalid file type. Only PNG, JPG, and JPEG images are allowed.');
+      console.log('Invalid file type. Only PNG, JPG, and JPEG images are allowed.');
       return;
     }
 
