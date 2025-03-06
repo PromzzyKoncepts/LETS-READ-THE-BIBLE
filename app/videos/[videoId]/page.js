@@ -228,7 +228,7 @@ const handleChapterClick = (chapter) => {
     className="px-5 bg-[#F4C2C2] md:px-24 pt-28 min-h-screen">
       <div className="  grid md:grid-cols-3 gap-5 items-start">
       <div
-        className=" col-span-2 relative bg-white w-fit md:w-[55rem] h-[35rem] shadow-lg shadow-darkbg border-2 border-white rounded-3xl overflow-hidden"
+        className=" col-span-2 relative bg-white w-fit md:w-[55rem] h-[37rem] shadow-lg shadow-darkbg border-2 border-white rounded-3xl overflow-hidden"
         onClick={handleHover}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
