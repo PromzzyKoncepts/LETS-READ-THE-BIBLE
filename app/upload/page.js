@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { getBooks, getChapters } from '../components/read/readApi';
 import axios from 'axios';
 
-const baseUrl = "http://localhost:3000"
-// const baseUrl = "https://lets-read-the-bible.vercel.app"
+// const baseUrl = "http://localhost:3000"
+const baseUrl = "https://lets-read-the-bible.vercel.app"
 
 const UploadVideo = () => {
   const [videoSrc, setVideoSrc] = useState('');
