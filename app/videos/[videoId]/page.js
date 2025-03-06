@@ -321,12 +321,12 @@ const handleChapterClick = (chapter) => {
 
       {/* do the component here please */}
       <div className="bg-white font-sniglet rounded-3xl">
-        <div className="flex space-x-2 font-lucky text-xl w-[20rem] overflow-x-auto">
+        <div className="flex space-x-2 font-lucky text-lg max-w-[25rem] overflow-x-auto">
           {chapters.map((chapter, index) => (
             <button
               key={index}
               onClick={() => handleChapterClick(chapter.chapter)}
-              className={`px-4 py-2  ${
+              className={`px-2 py-2  ${
                 selectedChapter === chapter.chapter ? 'bg-gray-100 rounded--3xl border-t-2 border-l-2 border-r-2 text-darkbg' : ' text-slate-700'
               }`}
             >
