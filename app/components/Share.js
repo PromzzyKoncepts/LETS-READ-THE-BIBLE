@@ -43,7 +43,7 @@ const Share = ({setShare}) => {
 						<TelegramIcon size={40} round={true} />
 					</TelegramShareButton>
 
-					<a target='_blank' href={'https://www.kingschat.online'}>
+					<a target='_blank' href={'https://kingschat.online'}>
 						<Image src="/images/kingschat.webp" alt="Share" width={500} className='w-20' height={500} />
 					</a>
 					<TwitterShareButton url={shareUrl}>

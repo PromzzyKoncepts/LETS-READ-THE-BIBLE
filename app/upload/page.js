@@ -189,7 +189,7 @@ const UploadVideo = () => {
       )} */}
 
       <h2 className="text-2xl md:text-6xl py font-lucky text-slate-900">Upload your video</h2>
-      <h3 className="text-lg my-1.5">Or you can choose to <Link href="/record" className="font-bold text-white bg-pinkbg px-5 py-2 rounded-2xl">Record your video</Link></h3>
+      <h3 className="text-2xl my-1.5 font-lucky text-darkbg">Or you can choose to <Link href="/record" className="font-bold text-white tracking-wider bg-pinkbg px-5 py-2 rounded-2xl">Record your video</Link></h3>
       {!videoSrc ? (
         <label
           htmlFor="fileInput"
@@ -202,10 +202,10 @@ const UploadVideo = () => {
           <BiSolidCloudUpload size={50} color={dragging ? '#EE9F35' : '#333'} />
           <p className="mt-4 text-2xl text-slate-800 font-bold">Select Video to Upload</p>
           <p className="mt-1.5 text-gray-800 text-[13px]">Or Drag and Drop a File</p>
-          <p className="mt-12 text-gray-500 text-sm">MP4, MOV, WEBM videos only</p>
+          <p className="mt-12 text-gray-500 text-sm">MP4, WEBM videos only</p>
           <p className="mt-12 text-gray-500 text-sm">720x1280 resolution or higher</p>
           <p className="mt-2 text-[#FE2C55] text-[13px] font-medium">Up to 10 minutes</p>
-          <p className="mt-2 text-gray-500 text-[13px]">Less than 200MB</p>
+          <p className="mt-2 text-gray-500 text-[13px]">Less than 100MB</p>
 
           <label
             htmlFor="fileInput"
@@ -275,7 +275,7 @@ const UploadVideo = () => {
                 disabled={!selectedBook || isSingleChapter}
               >
                 <option value="">Select a Chapter</option>
-                {chapters.map((chapter, index) => (
+                {chapters.filter((chapter) => chapter > selectedChapterStart).map((chapter, index) => (
                   <option key={index} value={chapter}>
                     {chapter}
                   </option>

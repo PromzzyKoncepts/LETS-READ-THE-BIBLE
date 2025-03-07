@@ -48,7 +48,7 @@ const Verse = ({ verse, text }) => {
       id={"verse-" + verse}
       ref={activeVerse === verse ? ref : null}
     >
-      <Text className="!font-sniglet !text-sm !pr-1.5 !text-slate-700 !font-medium" fw="bold" mr={3}>
+      <Text className="!font-sniglet !text-sm !pr-1.5 !text-slate-700 !font-medium " fw="bold" mr={3}>
         {verse}
       </Text>
       <Title order={3} className="!font-sniglet" fw="light"  title={activeBook+ " chapter " + activeChapter +":" + verse}>

@@ -105,8 +105,9 @@ export default function Home() {
           </div>
 
         </div>
-        <h1 className="text-6xl text-center mt-10 text-slate-900 font-lucky">Explore Our Videos</h1>
-        <div className="grid md:grid-cols-3 gap-3 pt-4 px-5 md:px-28">
+        { videos && (<div>
+          <h1 className="text-6xl text-center mt-10 text-slate-900 font-lucky">Explore Our Videos</h1>
+          <div className="grid md:grid-cols-3 gap-3 pt-4 px-5 md:px-28">
           {videos.map((item, index) => (
             <Link
               key={item.id}
@@ -145,7 +146,10 @@ export default function Home() {
               </div>
             </Link>
           ))}
-        </div>
+          </div>
+        </div>)}
+
+        <div className="py-10"><Link href="/videos" className="font-lucky text-lg px-6 py-2 text-white bg-darkbg rounded-full mx-auto flex items-center justify-center flex-col w-fit ">View all Videos</Link></div>
       </div>
 
 

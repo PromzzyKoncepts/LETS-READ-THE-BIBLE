@@ -5,6 +5,7 @@ import { getBooks } from "./readApi";
 import { ActionIcon, rem } from "@mantine/core";
 import { IconPlayerPlay, IconPlayerStop } from "@tabler/icons-react";
 import '@mantine/core/styles.css';
+import { FaPlay, FaPause } from "react-icons/fa6";
 const Audio = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [audio, setAudio] = useState(null);
@@ -44,9 +45,9 @@ const Audio = () => {
       onClick={() => setIsPlaying((value) => !value)}
     >
       {isPlaying ? (
-        <IconPlayerStop size={rem(20)} />
+        <FaPause color="white" size={rem(20)} />
       ) : (
-        <IconPlayerPlay size={rem(20)} />
+        <FaPlay color="white" size={rem(20)} />
       )}
     </ActionIcon>
   );

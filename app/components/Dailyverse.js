@@ -46,7 +46,7 @@ const DailyVerse = () => {
   return (
     <div>
     {verse && (<div className="font-sniglet text-white  flex flex-col justify-start items-start">
-      <h2 className="text-lg  font-lucky text-[#EEA236]">Today`s Scripture</h2>
+      <h2 className="text-lg  font-lucky text-[#EEA236]">Memory Verse</h2>
       <div className="font-bubblegum text-base max-w-[35rem] flex items-end justify-items-end text-left">
         <TextAnimation>
 

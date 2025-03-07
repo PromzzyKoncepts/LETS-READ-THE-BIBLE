@@ -9,7 +9,7 @@ const Tab = () => {
 			icon: "/images/boyread.png",
 			title: "read",
 			content:
-				"parents can read alongside their children while recording the activity. This 'Read-to-me' option is a good way to engage younger children so that no child is left out.",
+				"Dive into the Word! Join our 'Let's Read the Bible' campaign and explore the Bible like never before on our platform. Start your journey today!",
 			btn: "Read the bible",
 		},
 		{
@@ -17,7 +17,7 @@ const Tab = () => {
 			icon: "/images/uploadIcon.png",
 			title: "upload",
 			content:
-				"This beautiful campaign gives every child an opportunity to read at least one chapter of the Bible of his/her choice, get recorded while reading, upload his/her video and share the link to other children.",
+				"Spread the light! Share your favorite Bible verses and inspire others by posting on social media with #LetsReadTheBible. Let’s make the Word go viral!",
 			btn: "Upload now!",
 		},
 		{
@@ -25,7 +25,7 @@ const Tab = () => {
 			icon: "/images/share.png",
 			title: "share",
 			content:
-				"Forcythe is seriously amazing when it comes to coming up with new ideas. They took our rough ideas and turned them into something incredible online. Their team’s commitment to our vision was evident every step of the way.",
+				"Create your unique campaign flyer! Personalize your 'Let’s Read the Bible' avatar and share it with your community to encourage everyone to join the movement.",
 			btn: "Share with friends",
 		},
 		{
@@ -33,7 +33,7 @@ const Tab = () => {
 			icon: "/images/child.png",
 			title: "avatar",
 			content:
-				"The moment we engaged Forcythe, it was clear they were in a league of their own. Their strategic approach to our project not only enhanced our online platform but also enriched our brand’s story, captivating our audience like never before.",
+				"Your voice matters! Record or upload your own video reading the Bible and be part of our global campaign. Let’s bring the Scriptures to life together!",
 			btn: "Create my avatar",
 		},
 	];

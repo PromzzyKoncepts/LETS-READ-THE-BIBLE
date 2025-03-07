@@ -23,11 +23,13 @@ const Passage = ({ open }) => {
         h="100vh"
       >
         <ScrollArea h="100vh" viewportRef={viewport}>
+          <div className="py-20">
           {getVersesInChapter(activeBook, activeChapter).map(
             ({ verse, text }) => (
               <Verse verse={verse} key={verse} text={text} />
             )
           )}
+          </div>
         </ScrollArea>
       </Box>
     </Box>
