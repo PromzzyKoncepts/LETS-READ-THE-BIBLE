@@ -105,7 +105,7 @@ const Page = () => {
       </button>
 
       {/* Scrollable Container */}
-      <div
+      {/* <div
         ref={scrollContainerRef}
         className="flex items-center example cursor-pointer gap-3 md:w-[55rem] py-5 px-10 mx-auto overflow-x-auto backdrop-blur-md bg-darkbg bg-opacity-10 [mask-image:_linear-gradient(to_right,transparent_0,_black_150px,_black_calc(100%-150px),transparent_100%)]"
       >
@@ -121,7 +121,7 @@ const Page = () => {
             </div>
           );
         })}
-      </div>
+      </div> */}
 
       {/* Right Scroll Button */}
       <button
