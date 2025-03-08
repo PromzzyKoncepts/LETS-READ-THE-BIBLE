@@ -105,23 +105,23 @@ const Page = () => {
       </button>
 
       {/* Scrollable Container */}
-      {/* <div
+      <div
         ref={scrollContainerRef}
         className="flex items-center example cursor-pointer gap-3 md:w-[55rem] py-5 px-10 mx-auto overflow-x-auto backdrop-blur-md bg-darkbg bg-opacity-10 [mask-image:_linear-gradient(to_right,transparent_0,_black_150px,_black_calc(100%-150px),transparent_100%)]"
       >
         {getBooks().map((item) => {
-          const randomColor = getRandomColor(); // Generate a random color for each book
+          const randomColor = getRandomColor(); 
           return (
             <div
               key={item.book_id}
-              style={{ backgroundColor: randomColor }} // Apply the random color as inline style
+              style={{ backgroundColor: randomColor }} 
               className="text-white px-4 text-nowrap py-2 rounded-full text-center"
             >
               {item.book_name}
             </div>
           );
         })}
-      </div> */}
+      </div>
 
       {/* Right Scroll Button */}
       <button

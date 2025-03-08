@@ -43,7 +43,7 @@ const Tab = () => {
 	return (
 		<div className="grid md:grid-cols-4 items-stretch font-sniglet justify-between h-full w-full">
 			{tabs.map((item, index) => (
-				<div key={index} className={`${index == 0 && "bg-gradient-to-tl  from-[#7dbad8] to-[#88CEDF]"} ${index == 1 && "bg-gradient-to-bl  from-[#c7c7e0] to-[#8E8EB1]"} ${index == 2 && "bg-gradient-to-bl  from-[#FFCDB4] to-[#ED6073]"} ${index == 3 && "bg-gradient-to-tl  from-[#EA8937] to-[#F8C254]"} flex items-start h-full pl-5 py-3`} >
+				<div key={index} className={`${index == 0 && "bg-gradient-to-tl  from-[#7dbad8] to-[#88CEDF]"} ${index == 1 && "bg-gradient-to-bl  from-[#c7c7e0] to-[#8E8EB1]"} ${index == 2 && "bg-gradient-to-bl  from-[#FFCDB4] to-[#ED6073]"} ${index == 3 && "bg-gradient-to-tl  from-[#EA8937] to-[#F8C254]"} flex items-start h-full pl-5 py-5`} >
 					<div className="flex flex-col justify-between items-start h-full">
 						<h1 className="font-lucky text-4xl text-darkbg">{item.title}</h1>
 						<p className="w-full">{item.content}</p>
@@ -51,7 +51,7 @@ const Tab = () => {
 							: (<button className="px-4 py-2 bg-darkbg text-white rounded-full hover:animate-pulse" onClick={() => setShare(true)}>Share with Friends</button>)}
 					</div>
 
-					<Image src={item.icon} alt="image" className="w-44  my-auto flex items-center justify-center" width={300} height={300} />
+					<Image src={item.icon} alt="image" className="w-40  my-auto flex items-center justify-center" width={300} height={300} />
 
 				</div>
 			))}

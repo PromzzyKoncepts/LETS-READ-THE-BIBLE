@@ -10,6 +10,7 @@ import Tab from "./components/Tab";
 import AnimatedCounter from "./utils/CountingAnimation";
 import InteractiveFigures from "./components/InteractiveFigures";
 import Footer from "@/app/components/Footer";
+import BottomBar from "@/app/components/MobileNav";
 
 const baseUrl = "https://lets-read-the-bible.vercel.app"
 
@@ -41,33 +42,33 @@ export default function Home() {
   return (
     <div className="">
       <FloatingAnimation />
-      <video src="/pinkbg.mp4" autoPlay muted loop className=" w-full saturate-100 object-cover h-full absolute top-0" />
+      <video src="/pinkbg.mp4" autoPlay muted loop className=" w-full saturate-100 object-cover  min-h-[14rem] md:h-full absolute top-0" />
       {/* Kids Background Image */}
-      <div className="relative  h-screen w-fit mx-auto inset-0 flex items-center justify-center">
+      <div className="relative  md:h-screen pt-5 md:pt-0 w-fit mx-auto inset-0 flex items-center justify-center">
         <Image
           src="/images/kidsbg.png"
           alt="bg image"
           width={1000}
           height={1000}
-          className="w-full  md:w-[67vw] object-contain"
+          className="w-[95%]  md:w-[67vw] object-contain"
         />
-        <div className="absolute top-36 px-10 grid grid-cols-7 gap-x-8 grid-rows-3 justify-between items-  z-[19]">
+        <div className="absolute md:top-36 top-12 px-10 grid md:grid-cols-7 grid-cols-6 gap-x-8 grid-rows-3 justify-between items-  z-[19]">
           <Image
             src="/images/readthebible.png"
             alt="bg image"
-            width={500}
-            height={500}
-            className="w-[25rem] col-start-5 col-end-8 animate-shake animate-infinite animate-duration-[5000ms] animate-ease-in-out animate-normal  duration-200"
+            width={700}
+            height={700}
+            className=" w-[25rem] col-start-4 md:col-start-5 col-end-7 md:col-end-8 animate-shake animate-infinite animate-duration-[5000ms] animate-ease-in-out animate-normal  duration-200"
           />
 
 
-          <div className="col-start-1 col-end-5 mt-[110px]"><DailyVerse /></div>
+          <div className="col-start-1 hidden md:block col-end-5 md:mt-[110px]"><DailyVerse /></div>
 
           <Image src="/images/readbible.png"
             alt="bg image"
             width={1000}
             height={1000}
-            className="w-[57rem] col-start-5 col-end-8"
+            className="md:w-[57rem] w-[58rem] col-start-4 md:col-start-5 md:col-end-8 col-end-7"
           />
         </div>
       </div>
@@ -86,8 +87,8 @@ export default function Home() {
       </div>
 
 
-      <div className=" bg-[#F4C2C2] pt-10">
-        <div className="flex  gap-16 colors font-sniglet  items-center justify-center bg-slate-100 w-fit py-20  rounded-xl  px-16 shadow-lg shadow-gray-700 m-auto">
+      <div className=" bg-[#F4C2C2] md:pt-10">
+        <div className="flex flex-col md:flex-row gap-8 md:gap-16 colors font-sniglet  items-center justify-center bg-slate-100 md:w-fit md:py-20 py-8 rounded-b-[10%] md:rounded-xl  md:px-16 shadow-lg shadow-gray-700 m-auto">
           <div className="flex flex-col gap-2 text-xl items-center">
 
             <AnimatedCounter targetNumber={130} fontSize={"5"} />
@@ -106,7 +107,7 @@ export default function Home() {
 
         </div>
         { videos && (<div>
-          <h1 className="text-6xl text-center mt-10 text-slate-900 font-lucky">Explore Our Videos</h1>
+          <h1 className="text-4xl md:text-6xl text-center mt-10 text-slate-900 font-lucky">Explore Our Videos</h1>
           <div className="grid md:grid-cols-3 gap-3 pt-4 px-5 md:px-28">
           {videos.map((item, index) => (
             <Link
@@ -153,12 +154,12 @@ export default function Home() {
       </div>
 
 
-      <div className=" bg-[#8E8EB1] px-28 pt-16 min-h-screen">
-        <h1 className="text-6xl text-center  text-slate-900 font-lucky">testimonies and feedbacks</h1>
+      <div className=" bg-[#8E8EB1] px-5 md:px-28 md:pt-16 py-7 min-h-screen">
+        <h1 className="text-4xl md:text-6xl text-center  text-slate-900 font-lucky">Testimonies and feedbacks</h1>
         <p className="text-lg font-sniglet text-center py-2">Share your life-transforming testimonies and any feedbacks with us</p>
 
 
-        <div className="col-span-2 mt-10 mx-auto w-[70%] flex flex-col gap-4 bg-[#fff] rounded-2xl shadow-lg p-10">
+        <div className="col-span-2 mt-10 mx-auto md:w-[70%] flex flex-col gap-4 bg-[#fff] rounded-2xl shadow-lg p-10">
           <h3 className="text-3xl text-primary font-lucky">
             We are just one chat away!
           </h3>
@@ -195,6 +196,7 @@ export default function Home() {
       </div>
 
       <Footer />
+      
     </div>
   );
 }

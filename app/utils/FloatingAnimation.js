@@ -71,7 +71,7 @@ const FloatingAnimation = () => {
     }, []);
 
     return (
-        <div className="">
+        <div className="hidden md:block">
             <canvas
                 id="miCanvas"
             ></canvas>
