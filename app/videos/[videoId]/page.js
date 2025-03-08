@@ -49,7 +49,7 @@ const VideoDetailsPage = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/api/videos`);
+        const response = await axios.get(`/api/videos`);
         if (response.status !== 200) {
           throw new Error("Failed to fetch videos");
         }
@@ -68,7 +68,7 @@ const VideoDetailsPage = () => {
   useEffect(() => {
     const fetchVideo = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/api/videos/${videoId}`);
+        const response = await axios.get(`/api/videos/${videoId}`);
         if (response.status !== 200) {
           throw new Error("Failed to fetch video details");
         }
@@ -367,7 +367,7 @@ const VideoDetailsPage = () => {
 
                 if (video) {
                   video.pause();
-                  video.currentTime = 0; // Reset video to the beginning
+                  video.currentTime = 0; 
                 }
               }}
             >

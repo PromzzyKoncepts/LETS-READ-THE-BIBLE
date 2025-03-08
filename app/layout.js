@@ -1,8 +1,7 @@
-// import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Header from "./components/Header";
-
+import BottomBar from "@/app/components/MobileNav";
 
 
 export const metadata = {
@@ -26,6 +25,7 @@ export default function RootLayout({ children }) {
         <canvas id="world" width="0" height="0"></canvas>
         <Header />
         {children}
+        <div className="fixed z-[999] block md:hi dden bottom-0"><BottomBar/></div>
         {/* Use next/script for including external JavaScript */}
         <Script src="./utils/PageAnimation.js" strategy="afterInteractive" />
       </body>
