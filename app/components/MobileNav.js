@@ -6,16 +6,76 @@ import { FaBookOpenReader } from "react-icons/fa6";
 import { FaUserCircle } from "react-icons/fa";
 import { MdShare } from "react-icons/md";
 import { BiSolidVideos } from "react-icons/bi";
+import { HiMenuAlt3 } from "react-icons/hi";
+import { IoMdCloudUpload } from "react-icons/io";
+import Share from './Share';
+import ShareMobile from './ShareMobile';
 
 const menuItems = [
-  { path: "/read", icon: <FaBookOpenReader color="#9e4264" size={28} />, label: "Read" },
-  { path: "/avatar", icon: <FaUserCircle color="#7DA042" size={28} />, label: "Avatar" },
-  { path: "/", icon: <GoHomeFill color="#9e4242" size={30} />, label: "Home" },
-  { path: "/videos", icon: <BiSolidVideos color="#425a9e" size={28} />, label: "Videos" },
-  { path: "/share", icon: <MdShare color="#ca6446" size={28} />, label: "Share" }
+  { path: "/read", icon: <FaBookOpenReader color="#9e4264" size={26} />, label: "Read" },
+//   { path: "/avatar", icon: <FaUserCircle color="#7DA042" size={26} />, label: "Avatar" },
+{ path: "/videos", icon: <BiSolidVideos color="#425a9e" size={26} />, label: "Videos" },
+{ path: "/", icon: <GoHomeFill color="#9e4242" size={30} />, label: "Home" },
+  { path: "/upload", icon: <IoMdCloudUpload  color="#ca6446" size={26} />, label: "Upload" },
+  { path: "#", icon: <HiMenuAlt3 color="#ca6446" size={26} />, label: "More" },
+  //   { path: "/share", icon: <MdShare color="#ca6446" size={26} />, label: "Share" },
 ];
 
+const Popup = ({ onClose }) => {
+    const router = useRouter();
+  
+    const handleRecordClick = () => {
+      router.push("/record");
+      onClose(); // Close the popup after navigation
+    };
+    const handleAvatarClick = () => {
+      router.push("/avatar");
+      onClose(); // Close the popup after navigation
+    };
+    const handleBibleFiesta = () => {
+      router.push("/avatar");
+      onClose(); // Close the popup after navigation
+    };
+  
+    return (
+      <div className="absolute bottom-20 right-4 bg-white shadow-lg rounded-lg py-4 px-2 bg-opacity-50 backdrop-blur-md w-64">
+        
+        <div
+          className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md cursor-pointer"
+          onClick={handleAvatarClick}
+        >
+          <FaUserCircle color="#425a9e" size={20} />
+          <span>Avatar</span>
+        </div>
+        <div
+          className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md cursor-pointer"
+          onClick={handleRecordClick}
+        >
+          <BiSolidVideos color="#425a9e" size={20} />
+          <span>Record</span>
+        </div>
+        <div
+          className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md cursor-pointer"
+          onClick={handleBibleFiesta}
+        >
+          <BiSolidVideos color="#425a9e" size={20} />
+          <span>BIBLE READING FIESTA</span>
+        </div>
+        {/* <div
+          className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md cursor-pointer"
+          onClick={() => setShare(true)} // Replace with your Share logic
+        >
+          <MdShare color="#ca6446" size={20} />
+          <span>Share</span>
+        </div> */}
+        
+      </div>
+    );
+  };
+
 const BottomBar = () => {
+    const [share, setShare] = useState(false)
+    const [showPopup, setShowPopup] = useState(false);
   const menuBarRef = useRef(null);
   const menuIndicatorRef = useRef(null);
   const router = useRouter();
@@ -35,8 +95,13 @@ const BottomBar = () => {
   }, [currentItem]);
 
   const handleNavigation = (index, path) => {
-    setCurrentItem(index);
-    router.push(path);
+    if (path === "#") {
+      setShowPopup((prev) => !prev); 
+    } else {
+      setCurrentItem(index);
+      router.push(path);
+      setShowPopup(false); 
+    }
   };
 
   return (
@@ -60,6 +125,12 @@ const BottomBar = () => {
         ref={menuIndicatorRef}
         className="sc-nav-indicator absolute w-14 h-14 bottom-7 backdrop-blur-sm bg-amber-200 bg-opacity-30 flex items-center justify-center shadow-[0px_3px_12px_rgba(0,0,0,0.08),0px_3px_6px_rgba(0,0,0,0.12)] rounded-full transition-all duration-300 ease-[cubic-bezier(0.45,0.73,0,0.59)]"
       ></div>
+      {showPopup && <Popup onClose={() => setShowPopup(false)} />}
+      {share && (
+            <div className="">
+        <ShareMobile setShare={setShare} />
+        </div>
+      )}
     </div>
   );
 };

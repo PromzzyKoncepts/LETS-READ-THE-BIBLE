@@ -1,9 +1,9 @@
 "use client"
 import {
-    AppShell,
-    MantineProvider,
-    ColorSchemeProvider,
-    ColorScheme,
+  AppShell,
+  MantineProvider,
+  ColorSchemeProvider,
+  ColorScheme,
 } from "@mantine/core";
 import { useDisclosure, useLocalStorage, useWindowEvent } from "@mantine/hooks";
 import MyNavbar from "../components/read/MyNavbar";
@@ -16,32 +16,33 @@ import Navbar from "../components/read/Navbar";
 const Read = () => {
 
 
-    const [opened, setOpened] = useState(true);
-    const [modalOpened, modalFn] = useDisclosure(false);
-    useWindowEvent("keydown", (event) => {
-        if (event.key === "/") {
-            event.preventDefault();
-            modalFn.open();
-        }
-        if (event.key === "Escape") {
-            event.preventDefault();
-            modalFn.close();
-        }
-    });
+  const [opened, setOpened] = useState(true);
+  const [modalOpened, modalFn] = useDisclosure(false);
+  useWindowEvent("keydown", (event) => {
+    if (event.key === "/") {
+      event.preventDefault();
+      modalFn.open();
+    }
+    if (event.key === "Escape") {
+      event.preventDefault();
+      modalFn.close();
+    }
+  });
 
-    return (
-        <div className="flex">
-            <Navbar />
-        <MantineProvider
-            withGlobalStyles
-            withNormalizeCSS
-        >
-            <AppShell>
-                <Passage open={modalFn.open} />
-                {/* <SearchModal opened={modalOpened} close={modalFn.close} /> */}
-            </AppShell>
-        </MantineProvider></div>
-    )
+  return (
+    <div className="flex">
+      <div className="hidden md:block"><Navbar /></div>
+      <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+      >
+        <AppShell>
+          <Passage open={modalFn.open} />
+          {/* <SearchModal opened={modalOpened} close={modalFn.close} /> */}
+        </AppShell>
+      </MantineProvider>
+    </div>
+  )
 }
 
 export default Read

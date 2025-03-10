@@ -29,7 +29,7 @@ export default function Home() {
         const { data } = response;
         setVideos(data);
       } catch (error) {
-        setError(error.message);
+        console.error(error.message);
       } finally {
         console.log("video loaded successfully")
       }

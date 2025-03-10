@@ -1,7 +1,7 @@
 import kjvBibleJson from "../../../public/kjv.json";
 import ampcBibleJson from "../../../public/ampc.json";
-// import esvBibleJson from "../../../public/esv.json";
 import nkjvBibleJson from "../../../public/nkjv.json";
+import { useBibleStore } from "./store";
 
 // Store all available translations
 const translations = {
@@ -12,12 +12,16 @@ const translations = {
 
 let currentTranslation = kjvBibleJson; // Default translation
 
+
 export const setTranslation = (translation) => {
+  const { setCurrentTranslation } = useBibleStore.getState();
   if (translations[translation]) {
     currentTranslation = translations[translation];
+    setCurrentTranslation(translation); // Update the store
   } else {
     console.warn(`Translation '${translation}' not found, defaulting to KJV.`);
     currentTranslation = translations["KJV"];
+    setCurrentTranslation("KJV"); // Default to KJV
   }
 };
 

@@ -7,10 +7,10 @@ const Header = () => {
   const [animate, setAnimate] = useState(false);
   const [share, setShare] = useState(false)
 
-  useEffect(() => {
-    // Trigger the animation after the component mounts
-    setAnimate(true);
-  }, []);
+  // useEffect(() => {
+  //   // Trigger the animation after the component mounts
+  //   setAnimate(true);
+  // }, []);
 
 
 
@@ -33,6 +33,9 @@ const Header = () => {
           </Link>
           <Link href={`/videos`} className="text-white hover:text-slate-800 hover:border  transition-all duration-500 ease hover:font-bold hover:bg-gradient-to-tr from-[#EE7822] to-[#EFB741] active:bg-gradient-to-bl hover:rounded-full hover:px-5 hover:py-2">
             Videos
+          </Link>
+          <Link href={`/lbrf`} className="text-white hover:text-slate-800 hover:border  transition-all duration-500 ease hover:font-bold hover:bg-gradient-to-tr from-[#EE7822] to-[#EFB741] active:bg-gradient-to-bl hover:rounded-full hover:px-5 hover:py-2">
+            LOVETOONS FIESTA
           </Link>
           <Link href={`/upload`} className="text-slate-800 border font-bold bg-gradient-to-tr from-[#EE7822] to-[#EFB741] hover:bg-gradient-to-bl rounded-full px-5 py-2 transition-all duration-300 ease">
             Join Campaign

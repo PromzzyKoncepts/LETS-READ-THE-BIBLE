@@ -13,6 +13,19 @@
   height: 8px;
 }
 
+/* Add this to your global CSS file */
+.transform {
+  transition: transform 0.3s ease-in-out;
+}
+
+.translate-x-0 {
+  transform: translateX(0);
+}
+
+.-translate-x-full {
+  transform: translateX(-100%);
+}
+
 /* Track */
 .example::-webkit-scrollbar-track {
   box-shadow: inset 0 0 10px #ddd;
