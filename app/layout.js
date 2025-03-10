@@ -25,8 +25,7 @@ export default function RootLayout({ children }) {
         <canvas id="world" width="0" height="0"></canvas>
         <Header />
         {children}
-        <div className="fixed z-[999] block md:hi dden bottom-0"><BottomBar/></div>
-        {/* Use next/script for including external JavaScript */}
+        <div className="fixed z-[999] block md:hidden bottom-0"><BottomBar/></div>
         <Script src="./utils/PageAnimation.js" strategy="afterInteractive" />
       </body>
     </html>

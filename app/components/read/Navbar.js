@@ -16,7 +16,6 @@ const Navbar = ({ setOpened }) => {
   const setActiveVerse = useBibleStore((state) => state.setActiveVerse);
   const activeVerse = useBibleStore((state) => state.activeVerse);
 
-//   console.log()
   useEffect(() => {
     setBooks(getBooks());
   }, []);
@@ -25,7 +24,6 @@ const Navbar = ({ setOpened }) => {
     if (activeBook) {
       setChapters(getChapters(activeBook));
     }
-    // console.log(chapters)
   }, [activeBook]);
 
   useEffect(() => {
@@ -35,37 +33,46 @@ const Navbar = ({ setOpened }) => {
   }, [activeChapter, activeBook]);
 
   return (
-    <div className="w-fit font-sniglet flex cursor-pointer bg-slate-200">
+    <div className="md:w-fit font-sniglet flex cursor-pointer bg-slate-200 fixed md:static left-0 w-full top-0">
       <div className="max-h-screen overflow-y-auto w-full pt-5">
+        {/* <button onClick={() => setOpened(false)} className="p-2 bg-red-500 text-white rounded-full absolute top-2 right-2">
+          Close
+        </button> */}
         {books.map((book) => (
           <div
             key={book.book_id}
-            onClick={() => setActiveBook(book.book_name)}
+            onClick={() => {
+              setActiveBook(book.book_name);
+              // setOpened(false);
+            }}
             style={{
               padding: "8px",
               cursor: "pointer",
               backgroundColor: activeBook === book.book_name ? "#661361" : "transparent",
             }}
-            className={`  ${activeBook === book.book_name  ? "bg-darkbg text-white font-bold" : "bg-transparent"}`}
+            className={`${activeBook === book.book_name ? "bg-darkbg text-white font-bold" : "bg-transparent"}`}
           >
             {book.book_name}
           </div>
         ))}
       </div>
 
-      <div className=" max-h-screen overflow-y-auto w-24 mx-auto pt-5 bg-[#C2F4C2] flex flex-col gap-2">
+      <div className="max-h-screen overflow-y-auto w-24 mx-auto pt-5 bg-[#C2F4C2] flex flex-col gap-2">
         {chapters.map((chapter) => (
           <div
             key={chapter}
-            onClick={() => setActiveChapter(chapter)}
-            className={` px-5 inset-shadow-sm inset-shadow-indigo-500 ${activeChapter === chapter ? "bg-slate-500 text-white font-bold" : "bg-transparent"}`}
+            onClick={() => {
+              setActiveChapter(chapter);
+              setOpened(false);
+            }}
+            className={`px-5 inset-shadow-sm inset-shadow-indigo-500 ${activeChapter === chapter ? "bg-slate-500 text-white font-bold" : "bg-transparent"}`}
           >
             {chapter}
           </div>
         ))}
       </div>
 
-      <div  className="max-h-screen overflow-y-auto w-24 mx-auto pt-5 bg-[#C2C2F4]  flex flex-col gap-2">
+      <div className="max-h-screen overflow-y-auto w-24 mx-auto pt-5 bg-[#C2C2F4] flex flex-col gap-2">
         {verses.map((verse) => (
           <div
             key={verse}

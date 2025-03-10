@@ -45,9 +45,9 @@ const Audio = () => {
       onClick={() => setIsPlaying((value) => !value)}
     >
       {isPlaying ? (
-        <FaPause color="white" size={rem(20)} />
+        <FaPause color="white" size={16} />
       ) : (
-        <FaPlay color="white" size={rem(20)} />
+        <FaPlay color="white" size={16} />
       )}
     </ActionIcon>
   );

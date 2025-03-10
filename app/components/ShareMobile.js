@@ -5,7 +5,7 @@ import { Copy } from 'lucide-react';
 import { FaFacebook, FaWhatsapp } from 'react-icons/fa6';
 import { IoLogoWhatsapp } from 'react-icons/io5';
 import { MdCancel } from "react-icons/md";
-const Share = ({setShare}) => {
+const ShareMobile = ({setShare}) => {
 	const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
 	const [copied, setCopied] = useState(false);
 
@@ -16,7 +16,7 @@ const Share = ({setShare}) => {
 	};
 
 	return (
-		<div className="fixed font-sniglet inset-0 z-[99]  flex  items-center justify-center h-screen w-full ">
+		<div className=" font-sniglet z-[99] absolute top-0 ">
 			{/* Overlay */}
 			<div 
 				className="absolute inset-0 bg-darkbg cursor-pointer bg-opacity-30" 
@@ -67,4 +67,4 @@ const Share = ({setShare}) => {
 	);
 };
 
-export default Share;
+export default ShareMobile;
