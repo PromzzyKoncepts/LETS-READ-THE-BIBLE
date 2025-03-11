@@ -109,9 +109,9 @@ export default function AvatarUploader() {
   }
 
   return (
-    <div style={{ backgroundImage: `url(/images/ava.jpg)`, backgroundOpacity: '50', objectFit: "fill", backgroundRepeat: "no-repeat", backgroundSize: "cover" }} className="text-center w-full min-h-screen object-contain font-sniglet pt-16 md:pt-28 bg-[#D9E6F3] bg-opacity-50 px-5 md:px-28">
-      <h2 className="text-2xl md:text-4xl font-medium font-lucky">Upload your best picture to Create an Avatar</h2>
-      <div className={` mt-5 ${!image ? "flex items-center justify-center" : ""}`}> {image == null ? (
+    <div style={{ backgroundImage: `url(/images/ava.jpg)`, backgroundOpacity: '50', objectFit: "fill", backgroundRepeat: "no-repeat", backgroundSize: "cover" }} className="text-center w-full min-h-screen object-contain font-sniglet  md:pt-28 bg-[#D9E6F3] bg-opacity-50  md:px-28">
+      <h2 className="text-2xl md:text-4xl font-medium font-lucky bg-white md:bg-transparent bg-opacity-60 backdrop-blur-sm md:backdrop-blur-none w-full md:w-auto md:py-0 py-5">Upload your best picture to Create an Avatar</h2>
+      <div className={` mt-5 md:px-0  ${!image ? "flex items-center justify-center" : ""}`}> {image == null ? (
         <label
           htmlFor="fileInput"
           className={`md:mx-0 mx-auto   flex flex-col items-center justify-center w-[80%] md:max-w-[50%] h-[50vh] md:h-[500px] shadow-lg  bg-white bg-opacity-90  text-center p-5 border-2 border-dashed border-slate-500 rounded-lg cursor-pointer ${dragging ? 'border-red-500 colors' : 'border-gray-300 hover:bg-slate-100'
@@ -137,7 +137,7 @@ export default function AvatarUploader() {
           />
         </label>)
         : (
-          <div className="grid md:grid-cols-2 justify-between place-items-between items-start gap-10">
+          <div className="grid md:grid-cols-2 justify-between place-items-between items-start gap-8 pb-16 px-5 md:px-0 md:pb-0 md:gap-10">
             <div className="flex flex-col items-center w-full">
               <div className={`relative w-full h-[300px] md:max-w-[100%] md:h-[500px] ${croppedImage ? "opacity-60" : "opacity-100"} rounded-xl`}>
                 <Cropper

@@ -287,8 +287,33 @@ const VideoRecorder = () => {
             <video
               ref={liveVideoFeed}
               autoPlay
-              className="colors rounded-xl border-white border-4 shadow-lg shadow-gray-400 md:w-[60rem] w-full h-screen md:h-[25rem] object-cover transform scale-x-[-1]"
+              className="colors rounded-xl border-white border-4 shadow-lg shadow-gray-400 md:w-[60rem] w-full h-[75vh] md:h-[25rem] object-cover transform scale-x-[-1]"
             ></video>
+            {!permission && !recordedVideo && (
+            <button
+              onClick={getCameraPermission}
+              className="absolute bottom-4 block md:hidden right-4 bg-gradient-to-tr shadow-slate-600 from-[#ac6430] text-white to-[#f4b120] font-bold rounded-full px-7 py-2 shadow-md"
+            >
+              {"Preview Camera"}
+            </button>
+          )}
+
+{permission && recordingStatus === "inactive" && (
+            <button
+              onClick={startRecording}
+              className="absolute bottom-4 right-4 bg-gradient-to-tr md:hidden block colors from-[#EE7822] text-slate-100 to-[#EFB741] font-bold rounded-full px-7 py-2 shadow-md"
+            >
+              Start Recording
+            </button>
+          )}
+          {recordingStatus === "recording" && (
+            <button
+              onClick={stopRecording}
+              className="bg-gradient-to-b absolute bottom-4 right-4 from-red-600 md:hidden block to-red-900 hover:from-red-900 hover:to-red-600 text-white rounded-full px-7 py-2 shadow-md"
+            >
+              Stop Recording
+            </button>
+          )}
           </div>
         )}
         {countdown !== null && countdown !== 0 && (
@@ -297,33 +322,33 @@ const VideoRecorder = () => {
           </div>
         )}
         {recordedVideo && (
-          <div className="recorded-player flex items-start gap-5 ">
+          <div className="recorded-player flex md:flex-row flex-col md:items-start items-center gap-2 md:gap-5 pb-7">
             <div className=" flex flex-col items-center justify-center gap-3 bg-gradient-to-t from-[#f8f8f8] to-white rounded-2xl ">
 
               <video
-                className="bg-[#333] rounded-2xl container w-[60rem] h-[25rem] object-cover border-[#f8f8f8] border-4"
+                className="bg-[#333] rounded-2xl container md:w-[60rem] w-full h-full md:h-[25rem] object-cover border-[#f8f8f8] border-4"
                 src={recordedVideo}
                 controls
               />
 
-              <div className="w-full flex items-center justify-between  font-lucky px-10 pb-5">
+              <div className="w-full flex flex-col md:flex-row md:items-center justify-between  font-lucky md:px-10 px-5 pb-5">
                 <div className="">
                   {kidFullname && (<p className="text-pinkbg"><span className="text-slate-500">Read By:</span> {kidFullname} </p>)}
-                  <div className="text-3xl text-darkbg">
+                  <div className="text-2xl md:text-3xl text-darkbg">
                     {selectedBook} {selectedChapterStart} {selectedChapterEnd && ` - ${selectedChapterEnd}`}
                   </div>
                 </div>
-                <div className=" flex items-center justify-center  gap-6 "><button
+                <div className=" flex items-center justify-center gap-2 md:gap-6 pt-4 md:pt-0"><button
                   onClick={restartRecording}
-                  className="bg-gradient-to-tr colors from-[#EE7822] to-[#EFB741] font-bold rounded-full px-10 py-2.5 text-lg shadow-md flex items-center text-slate-900 gap-3 tracking-wider"
+                  className="bg-gradient-to-tr colors from-[#EE7822] to-[#EFB741] font-bold rounded-full px-4 md:px-10 py-1.5 md:py-2.5 md:text-lg shadow-md flex items-center !text-[#9E4242] gap-2 md:gap-3 tracking-wider"
                 >
-                  <IoVideocam  size={30} /> Try Again
+                  <IoVideocam color="#9E4242" size={30} /> Try Again
                 </button>
 
                 <a
                   download
                   href={recordedVideo}
-                  className="bg-gradient-to-t from-darkbg to-[#ef419b] text-white rounded-full px-7 py-2.5 shadow-md flex items-center text-lg gap-3 w-fit"
+                  className="bg-gradient-to-t from-darkbg to-[#ef419b] text-white rounded-full px-3 md:px-7 py-1.5 md:py-2.5 shadow-md flex items-center md:text-lg gap-2 md:gap-3 w-fit"
                 >
                   <MdCloudDownload  size={30} /> Download
                 </a></div>
@@ -402,9 +427,9 @@ const VideoRecorder = () => {
         )}
       </div>
       <main>
-        <div className="md:flex mt-5 gap-3 items-center justify-center">
+        <div className="md:flex mt-5 g items-center justify-center">
           {!recordedVideo && (
-            <div className="flex flex-row items-center">
+            <div className="md:flex flex-row items-center hidden ">
               <div className="bg-darkbg p-2.5"><FaMicrophone color="white" /></div>
               <select
                 id="audioSelect"
@@ -421,7 +446,7 @@ const VideoRecorder = () => {
             </div>
           )}
           {!recordedVideo && (
-            <div className="flex flex-row items-start">
+            <div className="md:flex flex-row items-start hidden">
               <div className="bg-darkbg p-2.5"><FaCamera color="white" /></div>
               <select
                 id="videoSelect"
@@ -440,7 +465,7 @@ const VideoRecorder = () => {
           {!permission && !recordedVideo && (
             <button
               onClick={getCameraPermission}
-              className="bg-gradient-to-tr shadow-slate-600 from-[#ac6430] text-white to-[#f4b120] font-bold rounded-full px-7 py-2 shadow-md"
+              className="bg-gradient-to-tr md:block hidden shadow-slate-600 from-[#ac6430] text-white to-[#f4b120] font-bold rounded-full px-7 py-2 shadow-md"
             >
               {"Preview Camera"}
             </button>
@@ -448,7 +473,7 @@ const VideoRecorder = () => {
           {permission && recordingStatus === "inactive" && (
             <button
               onClick={startRecording}
-              className="bg-gradient-to-tr colors from-[#EE7822] text-slate-100 to-[#EFB741] font-bold rounded-full px-7 py-2 shadow-md"
+              className="bg-gradient-to-tr hidden md:block colors from-[#EE7822] text-slate-100 to-[#EFB741] font-bold rounded-full px-7 py-2 shadow-md"
             >
               Start Recording
             </button>
@@ -456,7 +481,7 @@ const VideoRecorder = () => {
           {recordingStatus === "recording" && (
             <button
               onClick={stopRecording}
-              className="bg-gradient-to-b from-red-600 to-red-900 hover:from-red-900 hover:to-red-600 text-white rounded-full px-7 py-2 shadow-md"
+              className="bg-gradient-to-b hidden md:block from-red-600 to-red-900 hover:from-red-900 hover:to-red-600 text-white rounded-full px-7 py-2 shadow-md"
             >
               Stop Recording
             </button>

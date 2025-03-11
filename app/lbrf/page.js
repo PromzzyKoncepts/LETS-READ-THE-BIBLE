@@ -42,6 +42,7 @@ const Page = () => {
             const result = await response.json();
             if(result?.error){
                 console.error("Registeration failed!", result.message)
+                toast.error(result.message);
             }
              
             else if(result?.result){
@@ -85,17 +86,17 @@ const Page = () => {
 
   return (
     <div className="grid md:grid-cols-2 items-start max-h-screen font-sniglet">
-        <Toaster position="bottom-center" />
+        <Toaster position="top-right" />
       <div className="hidden md:block col-span-1">
         <Image src="/images/banner2.png" className="w-full h-screen object-cover" alt="banner" width={500} height={500}/>
       </div>
-      <div className="flex flex-col items-center py-10 md:py-10 bg-[#dddcef] h-screen">
+      <div className="flex flex-col items-center pt-4 md:pt-14 bg-[#dddcef] h-screen">
         <Image src="/images/logo_fiesta.png" className="w-36 md:w-52" alt="banner" width={500} height={500}/>
       <div className="">
       <a onClick={loginWithKingsChat} className="bg-gradient-to-t from-blue-800 to-[#2F92E5] font-lucky tracking-wider cursor-pointer px-7 py-4 rounded-xl text-white mt-10 border-2 border-white hover:shadow-md hover:shadow-slate-400" target="_blank"> Register with KingsChat</a>
 
       </div>
-      <div className="flex items-center py-7 gap-3 opacity-60 mx-auto"><div  className="h-0.5 w-44 rounded-xl bg-darkbg"/> or <div className="h-0.5 w-44 rounded-xl bg-darkbg"/></div>
+      <div className="flex items-center py-7  gap-3 opacity-60 mx-auto"><div  className="h-0.5 w-36 md:w-44 rounded-xl bg-darkbg"/> or <div className="h-0.5 w-36 md:w-44 rounded-xl bg-darkbg"/></div>
         <div className="flex  flex-col gap-5 w-full px-8 md:px-20 lg:px-36">
         <div className="flex flex-col gap-2 w-full">
             <label>Email address</label>
