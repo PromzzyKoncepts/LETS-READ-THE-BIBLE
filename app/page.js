@@ -42,7 +42,7 @@ export default function Home() {
   return (
     <div className="">
       <FloatingAnimation />
-      <video src="/pinkbg.mp4" autoPlay muted loop className=" w-full saturate-100 object-cover  min-h-[14rem] md:h-full absolute top-0" />
+      <video src="/pinkbg.mp4" autoPlay muted loop className="bg-[#e47e5f] w-full saturate-100 object-cover  min-h-[14rem] md:h-full absolute top-0" />
       {/* Kids Background Image */}
       <div className="relative  md:h-screen pt-5 md:pt-0 w-fit mx-auto inset-0 flex items-center justify-center">
         <Image
