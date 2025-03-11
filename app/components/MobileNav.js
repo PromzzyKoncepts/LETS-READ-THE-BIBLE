@@ -10,6 +10,8 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { IoMdCloudUpload } from "react-icons/io";
 import Share from './Share';
 import ShareMobile from './ShareMobile';
+import Link from 'next/link';
+import { FaRecordVinyl } from "react-icons/fa6";
 
 const menuItems = [
   { path: "/read", icon: <FaBookOpenReader color="#9e4264" size={26} />, label: "Read" },
@@ -22,45 +24,36 @@ const menuItems = [
 ];
 
 const Popup = ({ onClose }) => {
-    const router = useRouter();
-  
-    const handleRecordClick = () => {
-      router.push("/record");
-      onClose(); // Close the popup after navigation
-    };
-    const handleAvatarClick = () => {
-      router.push("/avatar");
-      onClose(); // Close the popup after navigation
-    };
-    const handleBibleFiesta = () => {
-      router.push("/avatar");
-      onClose(); // Close the popup after navigation
-    };
   
     return (
       <div className="absolute bottom-20 right-4 bg-white shadow-lg rounded-lg py-4 px-2 bg-opacity-50 backdrop-blur-md w-64">
         
-        <div
-          className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md cursor-pointer"
-          onClick={handleAvatarClick}
+        <Link
+        href="/avatar"
+          className="flex items-center gap-2 p-2 hover:bg-gray-100 text-[#425a9e] rounded-md cursor-pointer"
+          onClick={onClose}
+
         >
-          <FaUserCircle color="#425a9e" size={20} />
+          <FaUserCircle color="#425a9e" size={24} />
           <span>Avatar</span>
-        </div>
-        <div
-          className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md cursor-pointer"
-          onClick={handleRecordClick}
+        </Link>
+        <Link
+        href="/record"
+          className="flex items-center gap-2 p-2 text-darkbg hover:bg-gray-100 rounded-md cursor-pointer"
+          onClick={onClose}
+
         >
-          <BiSolidVideos color="#425a9e" size={20} />
+          <FaRecordVinyl  color="#661361" size={24} />
           <span>Record</span>
-        </div>
-        <div
-          className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md cursor-pointer"
-          onClick={handleBibleFiesta}
+        </Link>
+        <Link
+        href="/lbrf"
+          className="flex items-center gap-2 p-2 text-[#9D4141] hover:bg-gray-100 rounded-md cursor-pointer"
+          onClick={onClose}
         >
-          <BiSolidVideos color="#425a9e" size={20} />
+          <BiSolidVideos color="#9D4141" size={24} />
           <span>BIBLE READING FIESTA</span>
-        </div>
+        </Link>
         {/* <div
           className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md cursor-pointer"
           onClick={() => setShare(true)} // Replace with your Share logic
@@ -110,7 +103,8 @@ const BottomBar = () => {
       className="sc-bottom-bar font-lucky flex justify-between items-center px-5 py-6 w-screen h-14 mx-auto top-0 left-0 right-0 bg-transparent bg-[radial-gradient(circle_at_36px_6px,transparent_36px,#ffffff_37px)] shadow-[0px_-1px_6px_rgba(0,0,0,0.08),0px_-2px_12px_rgba(0,0,0,0.12)] rounded-t-[30px] transition-all duration-500 ease-[cubic-bezier(0.57,0.23,0.08,0.96)]"
     >
       {menuItems.map((item, index) => (
-        <div
+        <Link
+        href={item.path}
           key={item.path}
           onClick={() => handleNavigation(index, item.path)}
           className={`sc-menu-item text-gray-600 flex flex-col items-center transition-all duration-500 ease-in-out cursor-pointer ${
@@ -119,7 +113,7 @@ const BottomBar = () => {
         >
           {item.icon}
           {currentItem !== index && <small>{item.label}</small>}
-        </div>
+        </Link>
       ))}
       <div
         ref={menuIndicatorRef}

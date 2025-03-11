@@ -287,8 +287,16 @@ const VideoRecorder = () => {
             <video
               ref={liveVideoFeed}
               autoPlay
-              className="colors rounded-xl border-white border-4 shadow-lg shadow-gray-400 md:w-[60rem] w-full h-screen md:h-[25rem] object-cover transform scale-x-[-1]"
+              className="colors rounded-xl border-white border-4 shadow-lg shadow-gray-400 md:w-[60rem] w-full h-[75vh] md:h-[25rem] object-cover transform scale-x-[-1]"
             ></video>
+            {!permission && !recordedVideo && (
+            <button
+              onClick={getCameraPermission}
+              className="absolute bottom-4 right-4 bg-gradient-to-tr shadow-slate-600 from-[#ac6430] text-white to-[#f4b120] font-bold rounded-full px-7 py-2 shadow-md"
+            >
+              {"Preview Camera"}
+            </button>
+          )}
           </div>
         )}
         {countdown !== null && countdown !== 0 && (
@@ -402,9 +410,9 @@ const VideoRecorder = () => {
         )}
       </div>
       <main>
-        <div className="md:flex mt-5 gap-3 items-center justify-center">
+        <div className="md:flex mt-5 g items-center justify-center">
           {!recordedVideo && (
-            <div className="flex flex-row items-center">
+            <div className="flex flex-row items-center hidden md:block">
               <div className="bg-darkbg p-2.5"><FaMicrophone color="white" /></div>
               <select
                 id="audioSelect"
@@ -421,7 +429,7 @@ const VideoRecorder = () => {
             </div>
           )}
           {!recordedVideo && (
-            <div className="flex flex-row items-start">
+            <div className="flex flex-row items-start hidden md:block">
               <div className="bg-darkbg p-2.5"><FaCamera color="white" /></div>
               <select
                 id="videoSelect"
@@ -440,7 +448,7 @@ const VideoRecorder = () => {
           {!permission && !recordedVideo && (
             <button
               onClick={getCameraPermission}
-              className="bg-gradient-to-tr shadow-slate-600 from-[#ac6430] text-white to-[#f4b120] font-bold rounded-full px-7 py-2 shadow-md"
+              className="bg-gradient-to-tr md:block hidden shadow-slate-600 from-[#ac6430] text-white to-[#f4b120] font-bold rounded-full px-7 py-2 shadow-md"
             >
               {"Preview Camera"}
             </button>

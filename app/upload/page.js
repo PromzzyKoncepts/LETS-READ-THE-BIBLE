@@ -148,11 +148,11 @@ const UploadVideo = () => {
   };
 
   return (
-    <div style={{ backgroundImage: `url(/images/ava3.jpg)`, backgroundOpacity: '50', objectFit: "fill", backgroundRepeat: "no-repeat", backgroundSize: "cover" }} className="m-auto object-contain brightness-10  min-h-screen flex flex-col gap-2 text-center justify-cente r px-28 items-center bg-gradient-to-b from-amber-300 to-[#c9822c] font-sniglet pt-24">
+    <div style={{ backgroundImage: `url(/images/ava3.jpg)`, backgroundOpacity: '50', objectFit: "fill", backgroundRepeat: "no-repeat", backgroundSize: "cover" }} className="m-auto object-contain brightness-10  min-h-screen flex flex-col gap-2 text-center justify-cente r  md:px-28 items-center bg-gradient-to-b from-amber-300 to-[#c9822c] font-sniglet  md:pt-24">
 
       {uploaded == true && (
-         <div className="absolute inset-0 bg-darkbg bg-opacity-50 flex items-center justify-center">
-         <div className="bg-white py-8 px-16 z-[9999] rounded-lg shadow-lg flex flex-col items-center justify-center gap-1">
+         <div className="absolute inset-0 bg-darkbg bg-opacity-50 flex items-center justify-center px-5">
+         <div className="bg-white py-8 px-5 md:px-16 z-[9999] rounded-lg shadow-lg flex flex-col items-center justify-center gap-1">
            <h3 className="text-2xl md:text-7xl text-center font-modak text-pinkbg">Gloraaay!</h3>
            <p className="text-center font-lucky font-light text-darkbg text-lg">Great Job! Your video has been successfully uploaded</p>
            <p className="text-center text-darkbg text-lg">Thank you for being a part of this Glorious campaign</p>
@@ -188,12 +188,12 @@ const UploadVideo = () => {
        </div>
       )} */}
 
-      <h2 className="text-2xl md:text-6xl py font-lucky text-slate-900">Upload your video</h2>
-      <h3 className="text-2xl my-1.5 font-lucky text-darkbg">Or you can choose to <Link href="/record" className="font-bold text-white tracking-wider bg-pinkbg px-5 py-2 rounded-2xl">Record your video</Link></h3>
+      <h2 className="text-3xl bg-[#9E4242] md:bg-transparent w-full md:w-auto md:text-6xl py-5 md:py-0 font-lucky text-white md:text-slate-900">Upload your video</h2>
+      <h3 className="md:text-2xl my-1.5 md:font-lucky text-darkbg flex flex-col md:flex-row">Or you can choose to <Link href="/record" className="font-bold text-white tracking-wider bg-pinkbg px-5 py-2 rounded-2xl">Record your video</Link></h3>
       {!videoSrc ? (
         <label
           htmlFor="fileInput"
-          className={`md:mx-0 mx-auto  flex flex-col items-center justify-center w-full max-w-[60%] md:h-[500px] shadow-lg shadow-gray-800 bg-amber-200  text-center  border-2 border-dashed rounded-lg cursor-pointer ${dragging ? 'border-red-500 bg-amber-100' : 'border-gray-300 hover:bg-amber-100'
+          className={`md:mx-0 mx-auto px-5 py-5 flex flex-col items-center justify-center w-[95%] md:w-[70%] md:h-[500px] shadow-lg shadow-gray-800 bg-amber-200  text-center  border-2 border-dashed rounded-lg cursor-pointer ${dragging ? 'border-red-500 bg-amber-100' : 'border-gray-300 hover:bg-amber-100'
             }`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
@@ -202,8 +202,8 @@ const UploadVideo = () => {
           <BiSolidCloudUpload size={50} color={dragging ? '#EE9F35' : '#333'} />
           <p className="mt-4 text-2xl text-slate-800 font-bold">Select Video to Upload</p>
           <p className="mt-1.5 text-gray-800 text-[13px]">Or Drag and Drop a File</p>
-          <p className="mt-12 text-gray-500 text-sm">MP4, WEBM videos only</p>
-          <p className="mt-12 text-gray-500 text-sm">720x1280 resolution or higher</p>
+          <p className="mt-8 text-gray-500 text-sm">MP4, WEBM videos only</p>
+          <p className="mt-8 text-gray-500 text-sm">720x1280 resolution or higher</p>
           <p className="mt-2 text-[#FE2C55] text-[13px] font-medium">Up to 10 minutes</p>
           <p className="mt-2 text-gray-500 text-[13px]">Less than 100MB</p>
 
