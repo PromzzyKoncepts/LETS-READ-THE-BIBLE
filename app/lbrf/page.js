@@ -4,37 +4,15 @@ import React, { useState } from 'react'
 import kingsChatWebSdk from 'kingschat-web-sdk';
 import 'kingschat-web-sdk/dist/stylesheets/style.min.css';
 import {useRouter} from "next/navigation"
+import { Toaster, toast  } from "react-hot-toast";
+
 const clientId = "31414fbe-48d9-4806-9acf-4ed4bf58679b"
 const loginOptions = {
     scopes: ["send_chat_message"],
     clientId: clientId
 }
 
-function loginWithKingsChat() {
-    kingsChatWebSdk.login(loginOptions)
-    .then(authenticationTokenResponse => {
-        console.log(authenticationTokenResponse);
-        fetchUserProfile(authenticationTokenResponse.access_token);
-    })
-    .catch(error => console.error(error));
-}
 
-async function fetchUserProfile(accessToken) {
-    try {
-        const response = await fetch('https://connect.kingsch.at/developer/api/profile', {
-            headers: {
-                'Authorization': `Bearer ${accessToken}`
-            }
-        });
-        const data = await response.json();
-        const { username, name, email } = data;
-
-        // Send data to MongoDB
-        await registerUser({ email, fullName: name, kingsChatHandle: username });
-    } catch (error) {
-        console.error('Error fetching user profile:', error);
-    }
-}
 
 
 const baseUrl = "https://lets-read-the-bible.vercel.app"
@@ -62,20 +40,52 @@ const Page = () => {
                 body: JSON.stringify(userData),
             });
             const result = await response.json();
-            console.log('User registered:', result);
-            if(result){
+            if(result?.error){
+                console.error("Registeration failed!", result.message)
+            }
+             
+            else if(result?.result){
                 localStorage.setItem("user", JSON.stringify(userData))
+                toast.success('You successfully registered!');
                 router.push("/fiesta")
 
             }
+            else console.error(result)
         } catch (error) {
             console.error('Error registering user:', error);
         }
     }
-
+    function loginWithKingsChat() {
+        kingsChatWebSdk.login(loginOptions)
+        .then(authenticationTokenResponse => {
+            console.log(authenticationTokenResponse.accessToken);
+            fetchUserProfile(authenticationTokenResponse.accessToken);
+        })
+        .catch(error => console.error(error));
+    }
+    
+    async function fetchUserProfile(accessToken) {
+        console.log(accessToken)
+        try {
+            const response = await fetch('https://connect.kingsch.at/developer/api/profile', {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            });
+            const data = await response.json();
+            console.log(data.profile)
+            const { username, name, email } = data?.profile;
+    
+            // Send data to MongoDB
+            await registerUser({ email, fullName: name, kingsChatHandle: username });
+        } catch (error) {
+            console.error('Error fetching user profile:', error);
+        }
+    }
 
   return (
     <div className="grid md:grid-cols-2 items-start max-h-screen font-sniglet">
+        <Toaster position="bottom-center" />
       <div className="hidden md:block col-span-1">
         <Image src="/images/banner2.png" className="w-full h-screen object-cover" alt="banner" width={500} height={500}/>
       </div>
@@ -86,7 +96,7 @@ const Page = () => {
 
       </div>
       <div className="flex items-center py-7 gap-3 opacity-60 mx-auto"><div  className="h-0.5 w-44 rounded-xl bg-darkbg"/> or <div className="h-0.5 w-44 rounded-xl bg-darkbg"/></div>
-        <div className="flex  flex-col gap-5 w-full md:px-20 lg:px-36">
+        <div className="flex  flex-col gap-5 w-full px-8 md:px-20 lg:px-36">
         <div className="flex flex-col gap-2 w-full">
             <label>Email address</label>
             <input name="email" className="border-0 outline-0 py-2 focus:border-b-2 border-b focus:border-darkbg border-slate-500 bg-transparent  text-darkbg" required type="email" placeholder="Enter Email address" value={email} onChange={(e) => setEmail(e.target.value)}/>

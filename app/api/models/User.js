@@ -3,8 +3,7 @@ import mongoose from 'mongoose';
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: true,
-    unique: true,
+    required: false,
   },
   fullName: {
     type: String,
@@ -13,6 +12,7 @@ const userSchema = new mongoose.Schema({
   kingsChatHandle: {
     type: String,
     required: false,
+    unique: true,
   },
   createdAt: {
     type: Date,
