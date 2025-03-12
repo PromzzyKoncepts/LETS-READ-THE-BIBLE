@@ -1,9 +1,7 @@
-import fs from "fs";
-import { Jimp } from "jimp";
-import path from "path";
+import { Jimp, JimpMime  } from "jimp";
 import { v2 as cloudinary } from "cloudinary";
 
-// Configure Cloudinary
+
 
 const cloudName = process.env.CLOUDINARY_CLOUD_NAME
 const apiKey = process.env.CLOUDINARY_API_KEY
@@ -22,60 +20,52 @@ export async function POST(req) {
     const { image } = body;
 
     if (!image) {
-      return new Response(JSON.stringify({ error: "No image provided" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ error: "No image provided" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
     }
 
     // Decode base64 image
     const base64Data = image.replace(/^data:image\/png;base64,/, "");
 
-    const imageName = `${Date.now()}.png`;
-    const imagePath = path.join(process.cwd(), "public", "images", imageName);
+    // Convert base64 to a buffer
+    const userImageBuffer = Buffer.from(base64Data, "base64");
 
-    fs.writeFileSync(imagePath, base64Data, "base64");
-
-    // Load images
+    // Load the avatar image from Cloudinary
     const avatarUrl = "https://res.cloudinary.com/dgbeonqpw/image/upload/v1741774122/avatar_rpjt8r.png";
     const avatar = await Jimp.read(avatarUrl);
 
-    let userImage = await Jimp.read(imagePath);
+    // Load the user's image from the buffer
+    const userImage = await Jimp.read(userImageBuffer);
 
-    avatar.resize({
-      w: 550,
-      h: 550
-    });
-    userImage.resize({
-      w: 290,
-      h: 290
-    });
+    // Resize images
+    avatar.resize({w: 550, h:550}); // Resize avatar
+    userImage.resize({w:290, h:290}); // Resize user's image
 
     // Merge images (overlay user image on avatar)
     avatar.composite(userImage, 130, 190.5);
+    console.log(Jimp.MIME_JPEG)
 
-    // Save output image
-    const outputName = `avatar_${Date.now()}.png`;
-    const outputPath = path.join(process.cwd(), "public", "images", outputName);
+    const mergedImageBase64 = await avatar.getBase64(JimpMime.png); // Explicitly specify MIME type
 
-    // await avatar.writeAsync(outputPath);
 
-    avatar.write(outputPath, (err) => {
-      if (err) console.error("Error saving image:", err);
-    });
+    // Convert the merged image to a buffer
+    // const mergedImageBuffer = await avatar.getBuffer(Jimp.MIME_PNG);
 
-    // Upload user's cropped image to Cloudinary
-    const userImageUploadResult = await cloudinary.uploader.upload(imagePath, {
-      folder: "user_images",
-    });
+    // Upload the user's cropped image to Cloudinary
+    const userImageUploadResult = await cloudinary.uploader.upload(
+      `data:image/png;base64,${base64Data}`,
+      { folder: "user_images" }
+    );
 
-    // Upload final merged image to Cloudinary
-    const mergedImageUploadResult = await cloudinary.uploader.upload(outputPath, {
-      folder: "merged_images",
-    });
-    console.log(mergedImageUploadResult, "mergedImageUploadResult", userImageUploadResult, "userImageUploadResult" )
+    // Upload the final merged image to Cloudinary
+    const mergedImageUploadResult = await cloudinary.uploader.upload(
+      mergedImageBase64, // Directly use the base64 string
+      { folder: "merged_images" }
+    );
 
-    // Return image URLs
+    // Return the Cloudinary URLs
     return new Response(
       JSON.stringify({
         userImageUrl: userImageUploadResult.secure_url,
