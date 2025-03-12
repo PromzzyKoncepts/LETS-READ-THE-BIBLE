@@ -42,7 +42,7 @@ export default function Home() {
   return (
     <div className="">
       <FloatingAnimation />
-      <video src="/pinkbg.mp4" autoPlay muted loop className="bg-[#e47e5f] w-full saturate-100 object-cover  min-h-[14rem] md:h-full absolute top-0" />
+      <video src="/pinkbg.mp4" autoPlay muted loop className=" w-full saturate-100 object-cover  min-h-[14rem] md:h-full absolute top-0" />
       {/* Kids Background Image */}
       <div className="relative  md:h-screen pt-5 md:pt-0 w-fit mx-auto inset-0 flex items-center justify-center">
         <Image
@@ -73,17 +73,12 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Read the Bible Image */}
-      {/* <div className=" ">
-        <TabSwitcher />
-      </div> */}
-
       <Tab />
 
-      {/* <Swiper /> */}
-      <div className="relative flex items-center justify-center">
-
-
+      <div className="bg-gradient-to-b from-[#EBD7D2] to-white">
+        <a href="https://lovetoons.org/sponsor.php">
+        <Image src="/images/sponsor.png" alt="sponsor LBR" className="mx-auto py-12 w-[85%]" width={1000} height={1000} />
+        </a>
       </div>
 
 
