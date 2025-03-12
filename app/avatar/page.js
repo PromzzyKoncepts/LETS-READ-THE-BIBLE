@@ -39,7 +39,7 @@ export default function AvatarUploader() {
     if (!croppedImage) return;
 
     try {
-      const response = await axios.post(`/api/generate-avatar`, { image: croppedImage });
+      const response = await axios.post(`${baseUrl}/api/generate-avatar`, { image: croppedImage });
       // const response = await axios.post(`${baseUrl}/api/generate-avatar`, { image: croppedImage });
 
       console.log(response.data, "resssss");
