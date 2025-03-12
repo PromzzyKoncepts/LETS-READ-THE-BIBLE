@@ -39,7 +39,8 @@ export default function AvatarUploader() {
     if (!croppedImage) return;
 
     try {
-      const response = await axios.post(`${baseUrl}/api/generate-avatar`, { image: croppedImage });
+      const response = await axios.post(`/api/generate-avatar`, { image: croppedImage });
+      // const response = await axios.post(`${baseUrl}/api/generate-avatar`, { image: croppedImage });
 
       console.log(response.data, "resssss");
 
@@ -99,6 +100,8 @@ export default function AvatarUploader() {
     setCroppedImage(null)
 
   }
+
+  
 
   return (
     <div style={{ backgroundImage: `url(/images/ava.jpg)`, backgroundOpacity: '50', objectFit: "fill", backgroundRepeat: "no-repeat", backgroundSize: "cover" }} className="text-center w-full min-h-screen object-contain font-sniglet  md:pt-28 bg-[#D9E6F3] bg-opacity-50  md:px-28">
@@ -209,14 +212,14 @@ export default function AvatarUploader() {
       <a
         href={avatarUrl}
         className="bg-[#734907] animate-pulse hover:animate-none px-5 py-2.5 rounded-xl text-white "
-        download
+        download="avatar.png"
       >
         DOWNLOAD AVATAR
       </a>
 
       <div className="flex justify-center gap-1">
       <a target='_blank' href={'https://kingschat.online'}>
-						<Image src="/images/kingschat.webp" alt="Share" width={500} className='w-9' height={500} />
+						<Image src="/images/kingschat.webp" alt="Share" width={500} className='w-10' height={500} />
 					</a>
         <WhatsappShareButton url={avatarUrl} title={"Join in the Read the Bible Campaign"}>
           <WhatsappIcon size={40} round={true}  />

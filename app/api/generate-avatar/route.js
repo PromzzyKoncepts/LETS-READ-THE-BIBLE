@@ -45,7 +45,6 @@ export async function POST(req) {
 
     // Merge images (overlay user image on avatar)
     avatar.composite(userImage, 130, 190.5);
-    console.log(Jimp.MIME_JPEG)
 
     const mergedImageBase64 = await avatar.getBase64(JimpMime.png); // Explicitly specify MIME type
 
@@ -54,22 +53,29 @@ export async function POST(req) {
     // const mergedImageBuffer = await avatar.getBuffer(Jimp.MIME_PNG);
 
     // Upload the user's cropped image to Cloudinary
-    const userImageUploadResult = await cloudinary.uploader.upload(
+    const userImageResult = await cloudinary.uploader.upload(
       `data:image/png;base64,${base64Data}`,
       { folder: "user_images" }
     );
 
     // Upload the final merged image to Cloudinary
-    const mergedImageUploadResult = await cloudinary.uploader.upload(
+    const AvatarResult = await cloudinary.uploader.upload(
       mergedImageBase64, // Directly use the base64 string
-      { folder: "merged_images" }
+      { folder: "avatar" }
     );
+
+    const finalAvatarUrl = cloudinary.url(AvatarResult.public_id, {
+      secure: true,
+      transformation: [
+        { flags: "attachment" }, // Add fl_attachment
+      ],
+    });
 
     // Return the Cloudinary URLs
     return new Response(
       JSON.stringify({
-        userImageUrl: userImageUploadResult.secure_url,
-        mergedImageUrl: mergedImageUploadResult.secure_url,
+        userImageUrl: userImageResult.secure_url,
+        mergedImageUrl: finalAvatarUrl,
       }),
       { status: 200, headers: { "Content-Type": "application/json" } }
     );
