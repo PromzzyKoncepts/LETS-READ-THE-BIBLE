@@ -4,10 +4,11 @@ import axios from "axios";
 import Image from "next/image";
 import Cropper from "react-easy-crop";
 import getCroppedImg from "@/app/utils/cropImage"; // Helper function to crop the image
-import { BiSolidCloudUpload } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import { WhatsappIcon, WhatsappShareButton, TelegramShareButton, TelegramIcon } from "react-share";
+import toast, { Toaster } from "react-hot-toast";
+import { CldImage } from 'next-cloudinary';
 
 const baseUrl = "https://lets-read-the-bible.vercel.app"
 
@@ -20,17 +21,17 @@ export default function AvatarUploader() {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [dragging, setDragging] = useState(false);
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-  console.log(`${baseUrl}/api/generate-avatar`)
+  // const handleImageUpload = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       setImage(reader.result);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+  // console.log(`${baseUrl}/api/generate-avatar`)
 
   const onCropComplete = useCallback((_, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -52,8 +53,9 @@ export default function AvatarUploader() {
 
       console.log(response.data, "resssss");
 
-      if (response.data.imageUrl) {
-        setAvatarUrl(response.data.imageUrl);
+      if (response?.data?.mergedImageUrl) {
+        toast.success("Your avatar has been created!")
+        setAvatarUrl(response.data.mergedImageUrl);
       }
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -110,6 +112,7 @@ export default function AvatarUploader() {
 
   return (
     <div style={{ backgroundImage: `url(/images/ava.jpg)`, backgroundOpacity: '50', objectFit: "fill", backgroundRepeat: "no-repeat", backgroundSize: "cover" }} className="text-center w-full min-h-screen object-contain font-sniglet  md:pt-28 bg-[#D9E6F3] bg-opacity-50  md:px-28">
+      <Toaster position="top-right" />
       <h2 className="text-2xl md:text-4xl font-medium font-lucky bg-white md:bg-transparent bg-opacity-60 backdrop-blur-sm md:backdrop-blur-none w-full md:w-auto md:py-0 py-5">Upload your best picture to Create an Avatar</h2>
       <div className={` mt-5 md:px-0  ${!image ? "flex items-center justify-center" : ""}`}> {image == null ? (
         <label
@@ -194,14 +197,22 @@ export default function AvatarUploader() {
       <MdCancel size={30} color="#ef4444"/>
       </div>
       {/* Display the generated avatar */}
-      <Image
+      {/* <Image
         src={avatarUrl}
         alt="Generated Avatar"
         width={1000}
         height={1000}
         className="mx-auto w-[32rem]"
-      />
-
+      /> */}
+      <CldImage
+      src={avatarUrl} // Use this sample image or upload your own via the Media Explorer
+      width="500" // Transform the image: auto-crop to square aspect_ratio
+      height="500"
+      crop={{
+        type: 'auto',
+        source: true
+      }}
+    />
       {/* Download button */}
 
       <div className="flex justify-center gap-4">
@@ -214,8 +225,8 @@ export default function AvatarUploader() {
       </a>
 
       <div className="flex justify-center gap-1">
-      <a target='_blank' href={'https://www.kingschat.online'}>
-						<Image src="/images/kingschat.webp" alt="Share" width={500} className='w-20' height={500} />
+      <a target='_blank' href={'https://kingschat.online'}>
+						<Image src="/images/kingschat.webp" alt="Share" width={500} className='w-9' height={500} />
 					</a>
         <WhatsappShareButton url={avatarUrl} title={"Join in the Read the Bible Campaign"}>
           <WhatsappIcon size={40} round={true}  />

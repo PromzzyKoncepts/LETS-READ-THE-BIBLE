@@ -1,6 +1,20 @@
 import fs from "fs";
 import { Jimp } from "jimp";
 import path from "path";
+import { v2 as cloudinary } from "cloudinary";
+
+// Configure Cloudinary
+
+const cloudName = process.env.CLOUDINARY_CLOUD_NAME
+const apiKey = process.env.CLOUDINARY_API_KEY
+const apiSecret = process.env.CLOUDINARY_API_SECRET
+
+
+cloudinary.config({
+  cloud_name: cloudName,
+  api_key: apiKey,
+  api_secret: apiSecret,
+});
 
 export async function POST(req) {
   try {
@@ -23,20 +37,19 @@ export async function POST(req) {
     fs.writeFileSync(imagePath, base64Data, "base64");
 
     // Load images
-    const avatarPath = path.join(process.cwd(), "public", "images", "avatar.png");
-    const avatar = await Jimp.read(avatarPath);
+    const avatarUrl = "https://res.cloudinary.com/dgbeonqpw/image/upload/v1741774122/avatar_rpjt8r.png";
+    const avatar = await Jimp.read(avatarUrl);
 
     let userImage = await Jimp.read(imagePath);
 
     avatar.resize({
       w: 550,
       h: 550
-    })
+    });
     userImage.resize({
       w: 290,
       h: 290
-    })
-
+    });
 
     // Merge images (overlay user image on avatar)
     avatar.composite(userImage, 130, 190.5);
@@ -44,18 +57,30 @@ export async function POST(req) {
     // Save output image
     const outputName = `avatar_${Date.now()}.png`;
     const outputPath = path.join(process.cwd(), "public", "images", outputName);
-    // console.log(outputPath)
 
-    // await avatar.writeAsync(outputPath)
-    // ;
+    // await avatar.writeAsync(outputPath);
 
     avatar.write(outputPath, (err) => {
       if (err) console.error("Error saving image:", err);
     });
 
-    // Return image URL
+    // Upload user's cropped image to Cloudinary
+    const userImageUploadResult = await cloudinary.uploader.upload(imagePath, {
+      folder: "user_images",
+    });
+
+    // Upload final merged image to Cloudinary
+    const mergedImageUploadResult = await cloudinary.uploader.upload(outputPath, {
+      folder: "merged_images",
+    });
+    console.log(mergedImageUploadResult, "mergedImageUploadResult", userImageUploadResult, "userImageUploadResult" )
+
+    // Return image URLs
     return new Response(
-      JSON.stringify({ imageUrl: `/images/${outputName}` }),
+      JSON.stringify({
+        userImageUrl: userImageUploadResult.secure_url,
+        mergedImageUrl: mergedImageUploadResult.secure_url,
+      }),
       { status: 200, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
