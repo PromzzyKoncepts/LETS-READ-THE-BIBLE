@@ -21,16 +21,6 @@ export default function AvatarUploader() {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [dragging, setDragging] = useState(false);
 
-  // const handleImageUpload = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       setImage(reader.result);
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
   // console.log(`${baseUrl}/api/generate-avatar`)
 
   const onCropComplete = useCallback((_, croppedAreaPixels) => {
