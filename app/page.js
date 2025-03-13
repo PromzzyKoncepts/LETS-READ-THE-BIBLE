@@ -76,7 +76,7 @@ export default function Home() {
       <Tab />
 
       <div className="bg-gradient-to-b from-[#EBD7D2] to-white">
-        <a href="https://lovetoons.org/sponsor.php">
+        <a target="_blank" href="https://lovetoons.org/sponsor.php">
         <Image src="/images/sponsor.png" alt="sponsor LBR" className="mx-auto py-12 w-[85%]" width={1000} height={1000} />
         </a>
       </div>
