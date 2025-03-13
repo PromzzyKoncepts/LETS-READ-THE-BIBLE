@@ -7,25 +7,28 @@ const Tab = () => {
 		{
 			id: 2,
 			icon: "/images/boyread.png",
-			title: "read",
+			title: "Record and read",
 			content:
-				"Dive into the Word! Join our 'Let's Read the Bible' campaign and explore the Bible like never before on our platform. Start your journey today!",
-			btn: "Read the bible",
+				"Dive into the Word! Join our 'Let's Read the Bible' fiesta and explore the Bible like never before on our platform. Start your journey today!",
+				link:"fiesta/record",
+			btn: "Select a chapter",
 		},
 		{
 			id: 3,
 			icon: "/images/uploadIcon.png",
-			title: "upload",
+			title: "upload a chapter",
 			content:
-				"Spread the light! Share your favorite Bible verses and inspire others by posting on social media with #LetsReadTheBible. Let’s make the Word go viral!",
-			btn: "Upload now!",
+				"Your voice matters! Record or upload your own video reading the Bible and be part of our global campaign. Let’s bring the Scriptures to life together!",				
+				link:"fiesta/upload",
+			btn: "Select a chapter",
 		},
 		{
 			id: 4,
 			icon: "/images/share.png",
 			title: "share",
 			content:
-				"Create your unique campaign flyer! Personalize your 'Let’s Read the Bible' avatar and share it with your community to encourage everyone to join the movement.",
+				"Spread the light! Share your favorite Bible verses and inspire others by posting on social media with #LetsReadTheBible. Let’s make the Word go viral!",
+				link:"",
 			btn: "Share with friends",
 		},
 		{
@@ -33,7 +36,8 @@ const Tab = () => {
 			icon: "/images/child.png",
 			title: "avatar",
 			content:
-				"Your voice matters! Record or upload your own video reading the Bible and be part of our global campaign. Let’s bring the Scriptures to life together!",
+				"Create your unique campaign flyer! Personalize your FIESTA avatar and share it with your community to encourage everyone to join the movement.",
+				link:"avatar",
 			btn: "Create my avatar",
 		},
 	];
@@ -47,7 +51,7 @@ const Tab = () => {
 					<div className="flex flex-col justify-between items-start h-full">
 						<h1 className="font-lucky text-4xl text-darkbg">{item.title}</h1>
 						<p className="w-full">{item.content}</p>
-						{item.title !== "share" ? (<Link href={`/${item.title}`} className="px-4 py-2 bg-darkbg text-white rounded-full hover:animate-pulse">{item.btn}</Link>)
+						{item.title !== "share" ? (<Link href={`/${item.link}`} className="px-4 py-2 bg-darkbg text-white w-full rounded-full hover:animate-pulse">{item.btn}</Link>)
 							: (<button className="px-4 py-2 bg-darkbg text-white rounded-full hover:animate-pulse" onClick={() => setShare(true)}>Share with Friends</button>)}
 					</div>
 

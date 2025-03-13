@@ -51,6 +51,28 @@ export const getChapters = (thebook) => {
   ];
 };
 
+export const getNewTestamentBooks = () => {
+  // List of New Testament books
+  const newTestamentBooks = [
+    "Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Corinthians", "2 Corinthians",
+    "Galatians", "Ephesians", "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians",
+    "1 Timothy", "2 Timothy", "Titus", "Philemon", "Hebrews", "James", "1 Peter", "2 Peter",
+    "1 John", "2 John", "3 John", "Jude", "Revelation"
+  ];
+
+  const set = new Set();
+  data
+    .filter((book) => newTestamentBooks.includes(book.book_name)) // Filter by New Testament book names
+    .map((book) => {
+      const obj = {
+        book_name: book.book_name,
+        book_id: book.book_id,
+      };
+      set.add(JSON.stringify(obj, Object.keys(obj).sort()));
+    });
+  return [...set].map((item) => JSON.parse(item));
+};
+
 export const getChapter = (thebook, thechapter) => {
   return data
     .filter(
