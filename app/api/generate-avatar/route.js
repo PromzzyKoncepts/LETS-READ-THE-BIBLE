@@ -33,7 +33,7 @@ export async function POST(req) {
     const userImageBuffer = Buffer.from(base64Data, "base64");
 
     // Load the avatar image from Cloudinary
-    const avatarUrl = "https://res.cloudinary.com/dgbeonqpw/image/upload/v1741774122/avatar_rpjt8r.png";
+    const avatarUrl = "https://res.cloudinary.com/dgbeonqpw/image/upload/v1742230506/1000679214_thowre.png";
     const avatar = await Jimp.read(avatarUrl);
 
     // Load the user's image from the buffer

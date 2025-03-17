@@ -334,3 +334,26 @@
   animation: slideInFromTop 1s ease-in-out forwards;
 }
 
+
+
+
+
+
+
+.embla {
+  overflow: hidden;
+ }
+ .embla__container {
+  display: flex;
+ }
+ .embla__slide {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 100%;
+  padding: 0 10px;
+ }
+ .embla__slide__img {
+  /* width: 100%; */
+  height: 400px;
+  object-fit: contain;
+ }

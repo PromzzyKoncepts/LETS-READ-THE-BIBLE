@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
         <Header />
         {children}
         <div className="fixed z-[999] block md:hidden bottom-0"><BottomBar/></div>
-        <Script src="./utils/PageAnimation.js" strategy="afterInteractive" />
+        {/* <Script src="./utils/PageAnimation.js" strategy="afterInteractive" /> */}
       </body>
     </html>
   );
