@@ -13,8 +13,6 @@ const loginOptions = {
 }
 
 
-
-
 const baseUrl = "https://lets-read-the-bible.vercel.app"
 
 const Page = () => {
@@ -32,7 +30,7 @@ const Page = () => {
     async function registerUser(userData) {
         console.log(userData)
         try {
-            const response = await fetch(`/api/register-fiesta`, {
+            const response = await fetch(`${baseUrl}/api/register-fiesta`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
