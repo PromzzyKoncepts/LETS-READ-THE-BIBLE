@@ -86,12 +86,10 @@ export default function Home() {
       <div className=" bg-[#F4C2C2] md:pt-10">
         <div className="flex flex-col md:flex-row gap-8 md:gap-16 colors font-sniglet  items-center justify-center bg-slate-100 md:w-fit md:py-20 py-8 rounded-b-[10%] md:rounded-xl  md:px-16 shadow-lg shadow-gray-700 m-auto">
           <div className="flex flex-col gap-2 text-xl items-center">
-
             <AnimatedCounter targetNumber={130} fontSize={"5"} />
             Participating Countries & Cities
           </div>
           <div className="flex flex-col gap-2 text-xl items-center">
-
             <AnimatedCounter targetNumber={930000000} fontSize={"8"} />
             Kids Read the Bible
           </div>
