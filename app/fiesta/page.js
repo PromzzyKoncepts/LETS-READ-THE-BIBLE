@@ -95,11 +95,18 @@ const Page = () => {
         </div>
       )}
       <div style={{ backgroundImage: `url(/images/banner22.png)`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }} className="md:w-[85%] flex items-center object-contain justify-center flex-col md:rounded-2xl mx-auto h-36 md:h-64 text-white p-5 md:p-10">
-        <div>
+        {user ? (<div>
           {user?.fullName && (<small className="text-darkbg text-center md:text-left md:text-sm">Dearly Esteemed {user?.fullName}</small>)}
           <h1 className="m-auto text-center text-2xl md:text-5xl font-lucky">Thank you for registering!</h1>
           <p className="text-center font-schoolbell">You have successfully registered for the Lovetoons Bible Reading Fiesta</p>
-        </div>
+        </div>)
+        :
+        (<div>
+          
+          <h1 className="m-auto text-center text-2xl md:text-5xl font-lucky">Kindly register to participate</h1>
+          <p className="text-center font-sniglet"><Link className="underline" href="/lbrf">Click here to register </Link>for the Lovetoons Bible Reading Fiesta</p>
+        </div>)
+        }
       </div>
 
       <div className="px-5 md:px-32 pt-5 md:pt-10  md:grid grid-cols-3 flex-col md:flex-row gap-4 md:gap-10 font-sniglet">
