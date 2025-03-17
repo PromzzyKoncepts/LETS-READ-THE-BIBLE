@@ -9,6 +9,9 @@ import { RiLoginCircleFill } from "react-icons/ri";
 import Footer from "@/app/components/Footer";
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css'; // Swiper styles
+import { Navigation, Pagination } from 'swiper/modules';
 
 const Page = () => {
   const [user, setUser] = useState(null);
@@ -107,6 +110,31 @@ const Page = () => {
           <h2 className="text-xl md:text-3xl font-lucky text-[#FD3006] py-1">A 24-HR BIBLE READING RENDEVOUS</h2>
 
           {/* <a href="https://lovetoons.org/sponsor.php" className="md:hidden block" target="_blank"><Image src="/images/sponsor.png" alt="sponsor LBR" className="mx-auto my-2 w-full md:w-[85%]" width={1000} height={1000} /></a> */}
+
+          <div className="my-10">
+          <Swiper
+            modules={[Navigation, Pagination]}
+            spaceBetween={10}
+            slidesPerView={1}
+            navigation
+            pagination={{ clickable: true }}
+            className="w-full"
+          >
+            {card.map((item) => (
+              <SwiperSlide key={item.title}>
+                <div className="flex justify-center">
+                  <Image
+                    src={item.src}
+                    className="w-[20rem]"
+                    alt={item.title}
+                    width={500}
+                    height={500}
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
           <p><span className="text-blue-500 font-jua text-lg md:text-xl">Don't just register, take up the mantle...</span> Join millions of kids all over the world read the bible in just one day</p>
           <p>'Lovetoons Bible Reading Fiesta' is an inspiring campaign to engage children around the world to read the bible: a chapter in the New Testament thereby contributing to keeping the Bible as the number one book in the world, even among children. The Bible says "Start children off on the way they should go, and even when they are old they will not turn from it." Proverbs 22:6. This beautiful campaign gives every child an opportunity to read at least one chapter of the Bible of his/her choice, get recorded while reading, upload his/her video and share the link to other children. By reading the Bible, the kids will come to know and love the ministry of the Holy Spirit and understand the sacrificial love of our Lord Jesus Christ. Furthermore, parents can read alongside their children while recording the activity.</p>
         </div>
