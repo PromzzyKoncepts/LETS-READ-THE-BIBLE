@@ -81,7 +81,7 @@ const Page = () => {
 
   return (
     <div className="bg-[#d6d6cb] md:pt-24 min-h-screen">
-      {viewAvatar && (
+      {viewAvatar && user && (
         <div className="font-sniglet z-[99] fixed top-0 h-screen w-full bg-darkbg bg-opacity-30 backdrop-blur-sm flex items-center justify-center">
           <div className="bg-white rounded-2xl shadow-lg py-7 px-4 md:px-10 flex items-center gap-2 flex-col">
             <h2 className="text-2xl text-center md:text-4xl font-lucky text-[#d1942b]">Congratulations</h2>
