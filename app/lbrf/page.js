@@ -13,8 +13,6 @@ const loginOptions = {
 }
 
 
-
-
 const baseUrl = "https://lets-read-the-bible.vercel.app"
 
 const Page = () => {
@@ -22,7 +20,7 @@ const Page = () => {
     const [success, setSuccess] = useState(false);
     const [email, setEmail] = useState('');
     const [fullName, setFullName] = useState('');
-    const [kingsChatHandle, setKingsChatHandle] = useState('');
+    const [kingsChatHandle, setKingsChatHandle] = useState(null);
     
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -33,6 +31,33 @@ const Page = () => {
         console.log(userData)
         try {
             const response = await fetch(`${baseUrl}/api/register-fiesta`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData),
+            });
+            const result = await response.json();
+            if(result?.error){
+                console.error("Registeration failed!", result.message)
+                toast.error(result.message);
+            }
+             
+            else if(result?.result){
+                localStorage.setItem("user", JSON.stringify(userData))
+                toast.success('You successfully registered!');
+                router.push("/fiesta")
+
+            }
+            else console.error(result)
+        } catch (error) {
+            console.error('Error registering user:', error);
+        }
+    }
+    async function registerKCUser(userData) {
+        console.log(userData)
+        try {
+            const response = await fetch(`/api/kc-register-fiesta`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -78,7 +103,7 @@ const Page = () => {
             const { username, name, email } = data?.profile;
     
             // Send data to MongoDB
-            await registerUser({ email, fullName: name, kingsChatHandle: username });
+            await registerKCUser({ email, fullName: name, kingsChatHandle: username });
         } catch (error) {
             console.error('Error fetching user profile:', error);
         }
