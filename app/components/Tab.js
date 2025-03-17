@@ -16,7 +16,7 @@ const Tab = () => {
 		{
 			id: 3,
 			icon: "/images/uploadIcon.png",
-			title: "upload a chapter",
+			title: "upload a Video",
 			content:
 				"Your voice matters! Record or upload your own video reading the Bible and be part of our global campaign. Let’s bring the Scriptures to life together!",				
 				link:"fiesta/upload",
