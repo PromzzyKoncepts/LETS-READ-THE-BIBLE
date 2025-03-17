@@ -1,19 +1,18 @@
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema({
+const KingsChatUserSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: true,
-    unique: true
+    required: false,
   },
   fullName: {
     type: String,
-    required: false,
+    required: true,
   },
   kingsChatHandle: {
     type: String,
     required: false,
-    unique: false,
+    unique: true,
   },
   createdAt: {
     type: Date,
@@ -22,6 +21,6 @@ const userSchema = new mongoose.Schema({
 });
 
 // Check if the model already exists to avoid redefining it
-const User = mongoose.models.User || mongoose.model('User', userSchema);
+const KingsChatUser = mongoose.models.KingsChatUser || mongoose.model('KingsChatUser', KingsChatUserSchema);
 
-export default User;
+export default KingsChatUser;
