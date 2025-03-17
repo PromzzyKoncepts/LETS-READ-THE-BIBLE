@@ -77,7 +77,7 @@ export default function Home() {
 
       <div className="bg-gradient-to-b from-[#EBD7D2] to-white">
         <Link  href="/lbrf">
-        <Image src="/images/banner.png" alt="sponsor LBR" className="mx-auto md:my-10 md:w-[85%]" width={1000} height={1000} />
+        <Image src="/images/banner.png" alt="sponsor LBR" className="mx-auto md:py-10 md:w-[85%]" width={1000} height={1000} />
         </Link>
       </div>
 
