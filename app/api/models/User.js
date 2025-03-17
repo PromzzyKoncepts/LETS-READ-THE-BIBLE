@@ -12,7 +12,6 @@ const userSchema = new mongoose.Schema({
   kingsChatHandle: {
     type: String,
     required: false,
-    unique: true,
   },
   createdAt: {
     type: Date,

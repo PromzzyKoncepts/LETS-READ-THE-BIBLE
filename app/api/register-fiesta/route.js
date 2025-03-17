@@ -15,7 +15,7 @@ export  async function POST (req, res) {
       console.log({ email, fullName, kingsChatHandle })
 
       // Validate the required fields
-      if (!fullName || !kingsChatHandle) {
+      if (!fullName) {
         return new Response(JSON.stringify({ message: 'Missing required fields' }), {
           status: 400,
           headers: { 'Content-Type': 'application/json' },
