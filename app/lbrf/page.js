@@ -12,7 +12,6 @@ const loginOptions = {
     clientId: clientId
 }
 
-
 const baseUrl = "https://lets-read-the-bible.vercel.app"
 
 const Page = () => {
