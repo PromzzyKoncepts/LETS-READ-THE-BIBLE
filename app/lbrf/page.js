@@ -56,7 +56,7 @@ const Page = () => {
     async function registerKCUser(userData) {
         console.log(userData)
         try {
-            const response = await fetch(`/api/kc-register-fiesta`, {
+            const response = await fetch(`${baseUrl}/api/kc-register-fiesta`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
