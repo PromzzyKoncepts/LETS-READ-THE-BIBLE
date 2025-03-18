@@ -225,10 +225,10 @@ const VideoDetailsPage = () => {
 
   return (
     <div style={{ backgroundImage: `url(/images/pngbg.png)`, backgroundSize: 'cover' }}
-      className="px-5 bg-[#F4C2C2] md:px-24 pt-28 min-h-screen">
+      className="px-5 bg-[#F4C2C2] md:px-24 pt-5 md:pt-28 min-h-screen">
       <div className="  md:grid md:grid-cols-3 gap-5 items-start">
         <div
-          className=" col-span-2 relative bg-white w-fit md:w-[55rem] h-[35rem] shadow-lg shadow-darkbg border-2 border-white rounded-3xl overflow-hidden"
+          className=" col-span-2 relative bg-white w-full md:w-fit h-full shadow-lg shadow-darkbg border-2 border-white rounded-3xl overflow-hidden"
           onClick={handleHover}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -238,7 +238,7 @@ const VideoDetailsPage = () => {
             src={video.video_url}
             type="video/mp4"
             muted={isMuted}
-            className="w-full h-full object-contain"
+            className="w-fit h-full object-contain"
           />
           {isHovered && (
             <div>
@@ -320,10 +320,10 @@ const VideoDetailsPage = () => {
 
 
         {/* do the component here please */}
-        <div className="bg-white font-sniglet rounded-3xl">
-          <div className="flex space-x-2 font-lucky text-lg w-[25rem] overflow-x-auto">
+        <div className="bg-white font-sniglet rounded-3xl md:mt-0 mt-5">
+          <div className="flex space-x-2 font-lucky text-lg md:w-[25rem] overflow-x-auto">
             {chapters.map((chapter, index) => (
-              <button
+              <button 
                 key={index}
                 onClick={() => handleChapterClick(chapter.chapter)}
                 className={`px-2 py-2  ${selectedChapter === chapter.chapter ? 'bg-gray-100 rounded--3xl border-t-2 border-l-2 border-r-2 text-darkbg' : ' text-slate-700'
@@ -344,52 +344,53 @@ const VideoDetailsPage = () => {
           </div>
         </div>
       </div>
+      <div className="bg-white bg-opacity-70 rounded-3xl px-4 md:px-10 pb-10 md:pb-0 py-5 mt-10">
+        <h2 className="font-lucky text-center text-3xl md:text-5xl pb-5 ">Explore More Videos</h2>
+        <div className=" grid md:grid-cols-4 gap-5 ">
+          {videos.map((item, index) => (
+            <Link
+              key={item.id}
+              href={`/videos/${item.id}`}
+              className="relative hover:group  hover: cursor-pointer hover:border-2 border-white bg-slate-500 rounded-2xl hover:shadow-md hover:shadow-slate-600">
+              <div
+                className="w-full h-full hover:group"
+                onMouseEnter={(e) => {
+                  const video = e.currentTarget.querySelector('.video');
+                  console.log(video)
+                  if (video) {
+                    video.play();
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  const video = e.currentTarget.querySelector('.video');
+                  console.log(video)
 
-      <h2 className="font-lucky text-center text-5xl py-10">Explore More Videos</h2>
-      <div className=" grid md:grid-cols-3 gap-4 ">
-        {videos.map((item, index) => (
-          <Link
-            key={item.id}
-            href={`/videos/${item.id}`}
-            className="relative hover:group  hover: cursor-pointer hover:border-2 border-white bg-slate-500 rounded-2xl hover:shadow-md hover:shadow-slate-600">
-            <div
-              className="w-full h-full hover:group"
-              onMouseEnter={(e) => {
-                const video = e.currentTarget.querySelector('.video');
-                console.log(video)
-                if (video) {
-                  video.play();
-                }
-              }}
-              onMouseLeave={(e) => {
-                const video = e.currentTarget.querySelector('.video');
-                console.log(video)
-
-                if (video) {
-                  video.pause();
-                  video.currentTime = 0; 
-                }
-              }}
-            >
-              <video
-                src={item.url}
-                width={200}
-                height={200}
-                className="w-full object-cover video h-full rounded-2xl"
-                muted={false} // Ensure audio is enabled
-                controls={false} // Hide controls
-                loop={true}
-              />
-              <div className="absolute bottom-4 group-bg-opacity-100 right-4 backdrop-blur-sm rounded-full text-lg px-5 py-3 text-white hover:bg-opacity-100 bg-opacity-50 bg-darkbg">
-                <h3 className="">
-                  {item.book} {item.chapter_start} {item.chapter_end && item.chapter_end !== item.chapter_start && ` - ${item.chapter_end}`}
-                </h3>
+                  if (video) {
+                    video.pause();
+                    video.currentTime = 0;
+                  }
+                }}
+              >
+                <video
+                  src={item.url}
+                  width={200}
+                  height={200}
+                  className="w-full object-cover video h-full rounded-2xl"
+                  muted={false} // Ensure audio is enabled
+                  controls={false} // Hide controls
+                  loop={true}
+                />
+                <div className="absolute bottom-4 group-bg-opacity-100 right-4 backdrop-blur-sm rounded-full text-lg px-5 py-3 text-white hover:bg-opacity-100 bg-opacity-50 bg-darkbg">
+                  <h3 className="">
+                    {item.book} {item.chapter_start} {item.chapter_end && item.chapter_end !== item.chapter_start && ` - ${item.chapter_end}`}
+                  </h3>
+                </div>
               </div>
-            </div>
-          </Link>
-        ))}
-      </div>
+            </Link>
+          ))}
+        </div>
 
+      </div>
     </div>
   );
 };

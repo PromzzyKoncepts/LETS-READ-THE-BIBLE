@@ -24,20 +24,19 @@ export default function Home() {
         if (response.status !== 200) {
           throw new Error("Failed to fetch videos");
         }
-
-        console.log(response)
+  
         const { data } = response;
-        setVideos(data);
+        const limitedVideos = data.slice(0, 12); // Limit to 20 videos
+        setVideos(limitedVideos);
       } catch (error) {
         console.error(error.message);
       } finally {
-        console.log("video loaded successfully")
+        console.log("Videos loaded successfully");
       }
     };
-
+  
     fetchVideos();
   }, []);
-
 
   return (
     <div className="">
@@ -66,8 +65,8 @@ export default function Home() {
 
           <Image src="/images/readbible.png"
             alt="bg image"
-            width={1000}
-            height={1000}
+            width={500}
+            height={500}
             className="md:w-[57rem] w-[58rem] col-start-4 md:col-start-5 md:col-end-8 col-end-7"
           />
         </div>
@@ -77,7 +76,7 @@ export default function Home() {
 
       <div className="bg-gradient-to-b from-[#EBD7D2] to-white">
         <Link  href="/lbrf">
-        <Image src="/images/banner.png" alt="sponsor LBR" className="mx-auto md:py-10 md:w-[85%]" width={1000} height={1000} />
+        <Image src="/images/banner3.png" alt="sponsor LBR" className="mx-auto md:py-10 md:w-[85%]" width={1000} height={1000} />
         </Link>
       </div>
 
@@ -102,7 +101,7 @@ export default function Home() {
         </div>
         { videos && (<div>
           <h1 className="text-4xl md:text-6xl text-center mt-10 text-slate-900 font-lucky">Explore Our Videos</h1>
-          <div className="grid md:grid-cols-3 gap-3 pt-4 px-5 md:px-28">
+          <div className="grid md:grid-cols-4 gap-3 pt-4 px-5 md:px-28">
           {videos.map((item, index) => (
             <Link
               key={item.id}
