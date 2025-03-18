@@ -10,6 +10,7 @@ import Footer from "@/app/components/Footer";
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import Swiper from '../components/Swiper';
+import { IoMdCloudDownload } from "react-icons/io";
 
 const Page = () => {
   const [user, setUser] = useState(null);
@@ -94,9 +95,9 @@ const Page = () => {
           </div>
         </div>
       )}
-      <div style={{ backgroundImage: `url(/images/banner22.png)`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }} className="md:w-[85%] flex items-center object-contain justify-center flex-col md:rounded-2xl mx-auto h-36 md:h-64 text-white p-5 md:p-10">
+      <div style={{ backgroundImage: `url(/images/top.png)`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }} className="md:w-[85%] flex items-center object-contain justify-center flex-col md:rounded-2xl mx-auto h-36 md:h-64 text-white p-5 md:p-10">
         {user ? (<div>
-          {user?.fullName && (<small className="text-darkbg text-center md:text-left md:text-sm">Dearly Esteemed {user?.fullName}</small>)}
+          {user?.fullName && (<small className="text-darkbg text-center md:text-left md:text-xl">Dearly Esteemed {user?.fullName}</small>)}
           <h1 className="m-auto text-center text-2xl md:text-5xl font-lucky">Thank you for registering!</h1>
           <p className="text-center font-schoolbell">You have successfully registered for the Lovetoons Bible Reading Fiesta</p>
         </div>)
@@ -114,7 +115,6 @@ const Page = () => {
           <h2 className="font-lucky text-3xl md:text-5xl text-darkbg">LOVETOONS BIBLE READING FIESTA</h2>
           <h2 className="text-xl md:text-3xl font-lucky text-[#FD3006] py-1">A 24-HR BIBLE READING RENDEVOUS</h2>
 
-          {/* <a href="https://lovetoons.org/sponsor.php" className="md:hidden block" target="_blank"><Image src="/images/sponsor.png" alt="sponsor LBR" className="mx-auto my-2 w-full md:w-[85%]" width={1000} height={1000} /></a> */}
           <div className="block md:hidden z-[9]">
             <Swiper carousels={card} />
           </div>
@@ -131,9 +131,13 @@ const Page = () => {
 
           <p><span className="text-blue-500 font-jua text-lg md:text-xl">Dont just register, take up the mantle...</span> Join millions of children around the world in a meaningful journey to read the Bible in just one day!
           </p>
-          <p className="mt-2">The Lovetoons Bible Reading Fiesta is an inspiring campaign aimed at engaging children everywhere to read the Bible. This is more than just reading; it's about instilling a consciousness of the Bible while fostering a love for the Bible in their hearts.
+          <p className="mt-1">The Lovetoons Bible Reading Fiesta is an inspiring campaign aimed at engaging children everywhere to read the Bible. This is more than just reading; it's about instilling a consciousness of the Bible while fostering a love for the Bible in their hearts.
           </p>
-          <p className="mt-2">As the Bible lovingly reminds us, "Start children off on the way they should go, and even when they are old, they will not turn from it" (Proverbs 22:6)....
+          <p className="mt-1">As the Bible lovingly reminds us, "Start children off on the way they should go, and even when they are old, they will not turn from it" (Proverbs 22:6).
+          </p>
+          <p className="mt-1">Through this wonderful program, children can read a chapter of the New Testament Section of the Bible, record themselves, and share their readings with millions of other children. This will enable them to learn inspiring truths and engage with the profound messages of faith, hope, and love found in the pages of the Bible.
+          </p>
+          <p className="mt-1">Let’s come together to guide our kids on this beautiful journey, helping them to discover the love of our Lord Jesus Christ and the amazing person of the Holy Spirit. Your involvement can make a lasting difference in their lives!
           </p>
         </div>
 
@@ -144,15 +148,14 @@ const Page = () => {
           <Link href="/lbrf" className="bg-gradient-to-tr transition-all duration-200 ease-in-out hover:border-2 hover:border-white hover:shadow-lg hover:shadow-gray-700 shadow-lg shadow-gray-500 from-[#EA8937] to-[#F8C254] px-5 w-max py-4 rounded-2xl text-slate-800 text-lg font-lucky flex items-center gap-2"><RiLoginCircleFill size={30} />Register a friend</Link>
         </div>
       </div>
-      {/* 
-      <a href="https://lovetoons.org/sponsor.php" className="hidden md:block" target="_blank"><Image src="/images/sponsor.png" alt="sponsor LBR" className="mx-auto pt-10 md:pt-16 w-full md:w-[85%]" width={1000} height={1000} /></a> */}
 
-      {/* <div className="flex items-center gap-4 justify-center my-10">{card.map(item => (<Image key={item.title} src={item.src} className="w-[20rem]" alt={item.title} width={500} height={500} />))}</div> */}
-
-
+      <div className="bg-gradien t-to-b bg-slate-400 mt-10 from-[#EBD7D2] to-white">
+        <Image src="/images/banner3.png" alt="sponsor LBR" className="mx-auto md:py-10 md:w-[85%]" width={1000} height={1000} />
+      </div>
+     
       <div className="md:flex items-center hidden gap-4 justify-center my-10">
         {card.map((item) => (
-          <Image
+          <div className="relative"><Image
             key={item.title}
             src={item.src}
             className="w-[21rem]"
@@ -160,6 +163,11 @@ const Page = () => {
             width={500}
             height={500}
           />
+          <a href={item.src} 
+            download={item.title} 
+            className="absolute top-2 text-white right-2 rounded-full bg-slate-600 p-3"><IoMdCloudDownload size="25" />
+          </a>
+          </div>
         ))}
       </div>
 
