@@ -133,7 +133,7 @@ const Page = () => {
     </div>
 
       {/* Image Grid */}
-      <div className="grid md:grid-cols-3 gap-3 pt-4">
+      <div className="grid md:grid-cols-4 gap-3 pt-4">
         {videos.map((item, index) => (
           <Link 
           key={item.id} 

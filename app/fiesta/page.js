@@ -97,7 +97,7 @@ const Page = () => {
       )}
       <div style={{ backgroundImage: `url(/images/top.png)`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }} className="md:w-[85%] flex items-center object-contain justify-center flex-col md:rounded-2xl mx-auto h-36 md:h-64 text-white p-5 md:p-10">
         {user ? (<div>
-          {user?.fullName && (<small className="text-darkbg text-center md:text-left md:text-xl">Dearly Esteemed {user?.fullName}</small>)}
+          {user?.fullName && (<small className="text-darkbg font-lucky text-center md:text-left md:text-2xl">Dearly Esteemed {user?.fullName}</small>)}
           <h1 className="m-auto text-center text-2xl md:text-5xl font-lucky">Thank you for registering!</h1>
           <p className="text-center font-schoolbell">You have successfully registered for the Lovetoons Bible Reading Fiesta</p>
         </div>)
@@ -129,7 +129,7 @@ const Page = () => {
             </button>
           </div>
 
-          <p><span className="text-blue-500 font-jua text-lg md:text-xl">Dont just register, take up the mantle...</span> Join millions of children around the world in a meaningful journey to read the Bible in just one day!
+          <p><span className="text-blue-500 font-jua text-lg md:text-xl">Don't just register, take up the mantle...</span> Join millions of children around the world in a meaningful journey to read the Bible in just one day!
           </p>
           <p className="mt-1">The Lovetoons Bible Reading Fiesta is an inspiring campaign aimed at engaging children everywhere to read the Bible. This is more than just reading; it's about instilling a consciousness of the Bible while fostering a love for the Bible in their hearts.
           </p>
