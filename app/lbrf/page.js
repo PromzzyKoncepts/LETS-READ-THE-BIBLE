@@ -12,7 +12,8 @@ const loginOptions = {
     clientId: clientId
 }
 
-const baseUrl = "https://lets-read-the-bible.vercel.app"
+const baseUrl = "https://letsreadthebible.club"
+// const baseUrl = "https://lets-read-the-bible.vercel.app"
 
 const Page = () => {
     const router = useRouter()
