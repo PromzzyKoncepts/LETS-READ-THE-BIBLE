@@ -97,9 +97,9 @@ const Page = () => {
       )}
       <div style={{ backgroundImage: `url(/images/top.png)`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }} className="md:w-[85%] flex items-center object-contain justify-center flex-col md:rounded-2xl mx-auto h-36 md:h-64 text-white p-5 md:p-10">
         {user ? (<div>
-          {user?.fullName && (<small className="text-darkbg font-lucky text-center md:text-left md:text-2xl">Dearly Esteemed {user?.fullName}</small>)}
+          {user?.fullName && (<small className="text-white font-lucky text-center md:text-left md:text-2xl">Dearly Esteemed {user?.fullName}</small>)}
           <h1 className="m-auto text-center text-2xl md:text-5xl font-lucky">Thank you for registering!</h1>
-          <p className="text-center font-schoolbell">You have successfully registered for the Lovetoons Bible Reading Fiesta</p>
+          <p className="text-center md:text-base text-xs font-schoolbell">You have successfully registered for the Lovetoons Bible Reading Fiesta</p>
         </div>)
         :
         (<div>
@@ -155,8 +155,8 @@ const Page = () => {
      
       <div className="md:flex items-center hidden gap-4 justify-center my-10">
         {card.map((item) => (
-          <div className="relative"><Image
-            key={item.title}
+          <div key={item.title} className="relative"><Image
+            
             src={item.src}
             className="w-[21rem]"
             alt={item.title}
