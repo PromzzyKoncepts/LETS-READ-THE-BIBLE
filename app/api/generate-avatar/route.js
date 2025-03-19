@@ -48,16 +48,6 @@ export async function POST(req) {
 
     const mergedImageBase64 = await avatar.getBase64(JimpMime.png); // Explicitly specify MIME type
 
-
-    // Convert the merged image to a buffer
-    // const mergedImageBuffer = await avatar.getBuffer(Jimp.MIME_PNG);
-
-    Upload the user's cropped image to Cloudinary
-    const userImageResult = await cloudinary.uploader.upload(
-      `data:image/png;base64,${base64Data}`,
-      { folder: "user_images" }
-    );
-
     // Upload the final merged image to Cloudinary
     const AvatarResult = await cloudinary.uploader.upload(
       mergedImageBase64, // Directly use the base64 string
@@ -74,7 +64,6 @@ export async function POST(req) {
     // Return the Cloudinary URLs
     return new Response(
       JSON.stringify({
-        userImageUrl: userImageResult.secure_url,
         mergedImageUrl: finalAvatarUrl,
       }),
       { status: 200, headers: { "Content-Type": "application/json" } }

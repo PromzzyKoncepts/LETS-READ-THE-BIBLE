@@ -21,7 +21,7 @@ export default function AvatarUploader() {
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [dragging, setDragging] = useState(false);
-  const[loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   // console.log(`${baseUrl}/api/generate-avatar`)
 
@@ -42,7 +42,7 @@ export default function AvatarUploader() {
 
     try {
       setLoading(true)
-      const response = await axios.post(`${baseUrl}/api/generate-avatar`, { image: croppedImage });
+      const response = await axios.post(`/api/generate-avatar`, { image: croppedImage });
 
 
       if (response?.data?.mergedImageUrl) {
@@ -105,12 +105,12 @@ export default function AvatarUploader() {
 
   }
 
-  
+
 
   return (
     <div style={{ backgroundImage: `url(/images/ava.jpg)`, backgroundOpacity: '50', objectFit: "fill", backgroundRepeat: "no-repeat", backgroundSize: "cover" }} className="text-center w-full min-h-screen object-contain font-sniglet  md:pt-28 bg-[#D9E6F3] bg-opacity-50  md:px-28">
       <Toaster position="top-right" />
-      
+
       <h2 className="text-2xl md:text-4xl font-medium font-lucky bg-white md:bg-transparent bg-opacity-60 backdrop-blur-sm md:backdrop-blur-none w-full md:w-auto md:py-0 py-5">Upload your best picture to Create an Avatar</h2>
       <div className={` mt-5 md:px-0  ${!image ? "flex items-center justify-center" : ""}`}> {image == null ? (
         <label
@@ -169,7 +169,7 @@ export default function AvatarUploader() {
 
                 {croppedImage && image && (
                   <button onClick={handleSubmit} className={`bg-green-800 ${!avatarUrl && "animate-bounce hover:animate-none"} px-5 py-2 rounded-xl text-white`}>
-                   {loading ?  "Generating... please wait" : "Generate Avatar"}
+                    {loading ? "Generating... please wait" : "Generate Avatar"}
                   </button>)}
               </div>
             )}
@@ -180,54 +180,64 @@ export default function AvatarUploader() {
 
 
       {avatarUrl && (
-  <div
-    className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm cursor-pointer z-50"
-    onClick={() => setAvatarUrl("")} // Clicking overlay closes modal
-    >
-    <div
-      className=" cursor-auto relative flex items-center flex-col gap-10 w-fit text-center"
-      onClick={(e) => e.stopPropagation()}
-      >
-      <div className="absolute right-2 top-2 cursor-pointer  rounded-full"
-      onClick={() => setAvatarUrl("")} // Clicking overlay closes modal
-      >
-        
-      <MdCancel size={30} color="#ef4444"/>
-      </div>
-      {/* Display the generated avatar */}
-      <Image
+        <div
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm cursor-pointer z-50"
+          onClick={() => setAvatarUrl("")} // Clicking overlay closes modal
+        >
+          <div
+            className=" cursor-auto relative flex items-center flex-col gap-10 w-fit text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="absolute right-2 top-2 cursor-pointer  rounded-full"
+              onClick={() => setAvatarUrl("")} // Clicking overlay closes modal
+            >
+
+              <MdCancel size={30} color="#ef4444" />
+            </div>
+            {/* Display the generated avatar */}
+            {/* <Image
         src={avatarUrl}
         alt="Generated Avatar"
         width={300}
         height={300}
         className="mx-auto w-[30rem]"
-      />
-      
-      <div className="flex justify-center gap-4">
-      <a
-        href={avatarUrl}
-        className="bg-[#734907] animate-pulse hover:animate-none px-5 py-2.5 rounded-xl text-white "
-        download="avatar.png"
-      >
-        DOWNLOAD AVATAR
-      </a>
+      /> */}
 
-      <div className="flex justify-center gap-1">
-      <a target='_blank' href={'https://kingschat.online'}>
-						<Image src="/images/kingschat.webp" alt="Share" width={500} className='w-10' height={500} />
-					</a>
-        <WhatsappShareButton url={avatarUrl} title={"Join in the Read the Bible Campaign"}>
-          <WhatsappIcon size={40} round={true}  />
-        </WhatsappShareButton>
+            <CldImage
+              src={avatarUrl} // Use this sample image or upload your own via the Media Explorer
+              width="500" // Transform the image: auto-crop to square aspect_ratio
+              height="500"
+              crop={{
+                type: 'auto',
+                source: true
+              }}
+            />
 
-        <TelegramShareButton>
-          <TelegramIcon  size={40} round={true}/>
-        </TelegramShareButton>
-      </div>
-      </div>
-    </div>
-  </div>
-)}
+            <div className="flex justify-center gap-4">
+              <a
+                href={avatarUrl}
+                className="bg-[#734907] animate-pulse hover:animate-none px-5 py-2.5 rounded-xl text-white "
+                download="avatar.png"
+              >
+                DOWNLOAD AVATAR
+              </a>
+
+              <div className="flex justify-center gap-1">
+                <a target='_blank' href={'https://kingschat.online'}>
+                  <Image src="/images/kingschat.webp" alt="Share" width={500} className='w-10' height={500} />
+                </a>
+                <WhatsappShareButton url={avatarUrl} title={"Join in the Read the Bible Campaign"}>
+                  <WhatsappIcon size={40} round={true} />
+                </WhatsappShareButton>
+
+                <TelegramShareButton>
+                  <TelegramIcon size={40} round={true} />
+                </TelegramShareButton>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
 
     </div>
