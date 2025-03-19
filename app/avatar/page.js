@@ -10,8 +10,8 @@ import { WhatsappIcon, WhatsappShareButton, TelegramShareButton, TelegramIcon } 
 import toast, { Toaster } from "react-hot-toast";
 import { CldImage } from 'next-cloudinary';
 
-// const baseUrl = "https://letsreadthebible.club"
-const baseUrl = "https://lets-read-the-bible.vercel.app"
+const baseUrl = "https://letsreadthebible.club"
+// const baseUrl = "https://lets-read-the-bible.vercel.app"
 
 export default function AvatarUploader() {
   const [image, setImage] = useState(null);

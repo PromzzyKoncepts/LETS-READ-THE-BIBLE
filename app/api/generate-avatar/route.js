@@ -52,11 +52,11 @@ export async function POST(req) {
     // Convert the merged image to a buffer
     // const mergedImageBuffer = await avatar.getBuffer(Jimp.MIME_PNG);
 
-    // Upload the user's cropped image to Cloudinary
-    // const userImageResult = await cloudinary.uploader.upload(
-    //   `data:image/png;base64,${base64Data}`,
-    //   { folder: "user_images" }
-    // );
+    Upload the user's cropped image to Cloudinary
+    const userImageResult = await cloudinary.uploader.upload(
+      `data:image/png;base64,${base64Data}`,
+      { folder: "user_images" }
+    );
 
     // Upload the final merged image to Cloudinary
     const AvatarResult = await cloudinary.uploader.upload(
