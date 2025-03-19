@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images: {
-      domains: ["storage.googleapis.com"], // Add the allowed domain(s) here
-    },
+  images: {
+    domains: ["res.cloudinary.com"], // Add the Cloudinary domain here
+  },
     async headers() {
       return [
           {
