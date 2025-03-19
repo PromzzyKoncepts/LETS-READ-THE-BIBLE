@@ -202,17 +202,7 @@ export default function AvatarUploader() {
         height={300}
         className="mx-auto w-[30rem]"
       />
-      {/* <CldImage
-      src={avatarUrl} //  Use this sample image or upload your own via the Media Explorer
-      width="500" // Transform the image: auto-crop to square aspect_ratio
-      height="500"
-      crop={{
-        type: 'auto',
-        source: true
-      }} */}
-    {/* /> */}
-      {/* Download button */}
-
+      
       <div className="flex justify-center gap-4">
       <a
         href={avatarUrl}
