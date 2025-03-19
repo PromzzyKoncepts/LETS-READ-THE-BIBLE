@@ -42,8 +42,10 @@ export default function AvatarUploader() {
 
     try {
       setLoading(true)
-      const response = await axios.post(`${baseUrl}/api/generate-avatar`, { image: croppedImage });
-
+      const response = await axios.post(`${baseUrl}/api/generate-avatar`, { image: croppedImage }, {
+        maxBodyLength: 100000000, // 100MB
+        maxContentLength: 100000000 // 100MB
+      });
 
       if (response?.data?.mergedImageUrl) {
         setLoading(false)

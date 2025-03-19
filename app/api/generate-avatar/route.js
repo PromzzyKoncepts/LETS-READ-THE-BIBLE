@@ -1,7 +1,7 @@
-import { Jimp, JimpMime  } from "jimp";
+import fs from 'fs';
+import { Jimp } from 'jimp';
+import path from 'path';
 import { v2 as cloudinary } from "cloudinary";
-
-
 
 const cloudName = process.env.CLOUDINARY_CLOUD_NAME
 const apiKey = process.env.CLOUDINARY_API_KEY
@@ -40,19 +40,25 @@ export async function POST(req) {
     const userImage = await Jimp.read(userImageBuffer);
 
     // Resize images
-    avatar.resize({w: 550, h:550}); // Resize avatar
+    avatar.resize({w:550, h:550}); // Resize avatar
     userImage.resize({w:290, h:290}); // Resize user's image
-
+    // userImage.quality(80); 
+    
     // Merge images (overlay user image on avatar)
     avatar.composite(userImage, 130, 190.5);
 
-    const mergedImageBase64 = await avatar.getBase64(JimpMime.png); // Explicitly specify MIME type
+    // Save the merged image to a temporary file
+    const tempFilePath = path.join(process.cwd(), 'temp_merged_image.png');
+    await avatar.write(tempFilePath);
 
     // Upload the final merged image to Cloudinary
     const AvatarResult = await cloudinary.uploader.upload(
-      mergedImageBase64, // Directly use the base64 string
+      tempFilePath, // Upload the file instead of base64
       { folder: "avatar" }
     );
+
+    // Delete the temporary file after upload
+    fs.unlinkSync(tempFilePath);
 
     const finalAvatarUrl = cloudinary.url(AvatarResult.public_id, {
       secure: true,
