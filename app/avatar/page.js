@@ -10,7 +10,8 @@ import { WhatsappIcon, WhatsappShareButton, TelegramShareButton, TelegramIcon } 
 import toast, { Toaster } from "react-hot-toast";
 import { CldImage } from 'next-cloudinary';
 
-const baseUrl = "https://lets-read-the-bible.vercel.app"
+const baseUrl = "https://letsreadthebible.club"
+// const baseUrl = "https://lets-read-the-bible.vercel.app"
 
 export default function AvatarUploader() {
   const [image, setImage] = useState(null);
@@ -20,6 +21,7 @@ export default function AvatarUploader() {
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [dragging, setDragging] = useState(false);
+  const[loading, setLoading] = useState(false)
 
   // console.log(`${baseUrl}/api/generate-avatar`)
 
@@ -39,16 +41,18 @@ export default function AvatarUploader() {
     if (!croppedImage) return;
 
     try {
+      setLoading(true)
       const response = await axios.post(`${baseUrl}/api/generate-avatar`, { image: croppedImage });
-      // const response = await axios.post(`${baseUrl}/api/generate-avatar`, { image: croppedImage });
 
-      console.log(response.data, "resssss");
 
       if (response?.data?.mergedImageUrl) {
+        setLoading(false)
         toast.success("Your avatar has been created!")
         setAvatarUrl(response.data.mergedImageUrl);
       }
     } catch (error) {
+      setLoading(false)
+      toast.error("Avatar creation failed, try Again")
       console.error("Error uploading image:", error);
     }
   };
@@ -106,6 +110,7 @@ export default function AvatarUploader() {
   return (
     <div style={{ backgroundImage: `url(/images/ava.jpg)`, backgroundOpacity: '50', objectFit: "fill", backgroundRepeat: "no-repeat", backgroundSize: "cover" }} className="text-center w-full min-h-screen object-contain font-sniglet  md:pt-28 bg-[#D9E6F3] bg-opacity-50  md:px-28">
       <Toaster position="top-right" />
+      
       <h2 className="text-2xl md:text-4xl font-medium font-lucky bg-white md:bg-transparent bg-opacity-60 backdrop-blur-sm md:backdrop-blur-none w-full md:w-auto md:py-0 py-5">Upload your best picture to Create an Avatar</h2>
       <div className={` mt-5 md:px-0  ${!image ? "flex items-center justify-center" : ""}`}> {image == null ? (
         <label
@@ -155,16 +160,16 @@ export default function AvatarUploader() {
             {!croppedImage ? (
               <div className="flex items-center flex-col gap-5 brightness-50">
                 <h3 className="text-xl font-lucky bg-pink-600 text-white px-5 rounded-xl py-1.5">Preview Image</h3>
-                <Image src="/images/profile.png" alt="Cropped Avatar" width={1000} height={1000} className="w-[27rem]" />
+                <Image src="/images/profile.png" alt="Cropped Avatar" width={300} height={300} className="w-[27rem]" />
               </div>
             ) : (
               <div className="flex items-center flex-col gap-5">
                 <h3 className="text-xl font-lucky bg-pink-600 text-white px-5 rounded-xl py-1.5">Preview Image</h3>
-                <Image src={croppedImage} alt="Cropped Avatar" width={1000} height={1000} className="w-[27rem] border-4 border-white rounded-full shadow-lg" />
+                <Image src={croppedImage} alt="Cropped Avatar" width={300} height={300} className="w-[27rem] border-4 border-white rounded-full shadow-lg" />
 
                 {croppedImage && image && (
                   <button onClick={handleSubmit} className={`bg-green-800 ${!avatarUrl && "animate-bounce hover:animate-none"} px-5 py-2 rounded-xl text-white`}>
-                    Generate Avatar
+                   {loading ?  "Generating... please wait" : "Generate Avatar"}
                   </button>)}
               </div>
             )}
@@ -190,24 +195,14 @@ export default function AvatarUploader() {
       <MdCancel size={30} color="#ef4444"/>
       </div>
       {/* Display the generated avatar */}
-      {/* <Image
+      <Image
         src={avatarUrl}
         alt="Generated Avatar"
-        width={1000}
-        height={1000}
-        className="mx-auto w-[32rem]"
-      /> */}
-      <CldImage
-      src={avatarUrl} // Use this sample image or upload your own via the Media Explorer
-      width="500" // Transform the image: auto-crop to square aspect_ratio
-      height="500"
-      crop={{
-        type: 'auto',
-        source: true
-      }}
-    />
-      {/* Download button */}
-
+        width={300}
+        height={300}
+        className="mx-auto w-[30rem]"
+      />
+      
       <div className="flex justify-center gap-4">
       <a
         href={avatarUrl}
