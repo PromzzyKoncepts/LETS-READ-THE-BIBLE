@@ -1,7 +1,7 @@
-import fs from 'fs';
-import { Jimp } from 'jimp';
-import path from 'path';
+import { Jimp, JimpMime  } from "jimp";
 import { v2 as cloudinary } from "cloudinary";
+
+
 
 const cloudName = process.env.CLOUDINARY_CLOUD_NAME
 const apiKey = process.env.CLOUDINARY_API_KEY
@@ -40,25 +40,29 @@ export async function POST(req) {
     const userImage = await Jimp.read(userImageBuffer);
 
     // Resize images
-    avatar.resize({w:550, h:550}); // Resize avatar
+    avatar.resize({w: 550, h:550}); // Resize avatar
     userImage.resize({w:290, h:290}); // Resize user's image
-    // userImage.quality(80); 
-    
+
     // Merge images (overlay user image on avatar)
     avatar.composite(userImage, 130, 190.5);
 
-    // Save the merged image to a temporary file
-    const tempFilePath = path.join(process.cwd(), 'temp_merged_image.png');
-    await avatar.write(tempFilePath);
+    const mergedImageBase64 = await avatar.getBase64(JimpMime.png); // Explicitly specify MIME type
+
+
+    // Convert the merged image to a buffer
+    // const mergedImageBuffer = await avatar.getBuffer(Jimp.MIME_PNG);
+
+    // Upload the user's cropped image to Cloudinary
+    const userImageResult = await cloudinary.uploader.upload(
+      `data:image/png;base64,${base64Data}`,
+      { folder: "user_images" }
+    );
 
     // Upload the final merged image to Cloudinary
     const AvatarResult = await cloudinary.uploader.upload(
-      tempFilePath, // Upload the file instead of base64
+      mergedImageBase64, // Directly use the base64 string
       { folder: "avatar" }
     );
-
-    // Delete the temporary file after upload
-    fs.unlinkSync(tempFilePath);
 
     const finalAvatarUrl = cloudinary.url(AvatarResult.public_id, {
       secure: true,
@@ -70,6 +74,7 @@ export async function POST(req) {
     // Return the Cloudinary URLs
     return new Response(
       JSON.stringify({
+        userImageUrl: userImageResult.secure_url,
         mergedImageUrl: finalAvatarUrl,
       }),
       { status: 200, headers: { "Content-Type": "application/json" } }
