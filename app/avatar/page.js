@@ -10,8 +10,8 @@ import { WhatsappIcon, WhatsappShareButton, TelegramShareButton, TelegramIcon } 
 import toast, { Toaster } from "react-hot-toast";
 import { CldImage } from 'next-cloudinary';
 
-const baseUrl = "https://letsreadthebible.club"
-// const baseUrl = "https://lets-read-the-bible.vercel.app"
+// const baseUrl = "https://letsreadthebible.club"
+const baseUrl = "https://lets-read-the-bible.vercel.app"
 
 export default function AvatarUploader() {
   const [image, setImage] = useState(null);
@@ -42,7 +42,7 @@ export default function AvatarUploader() {
 
     try {
       setLoading(true)
-      const response = await axios.post(`/api/generate-avatar`, { image: croppedImage });
+      const response = await axios.post(`${baseUrl}/api/generate-avatar`, { image: croppedImage });
 
 
       if (response?.data?.mergedImageUrl) {
