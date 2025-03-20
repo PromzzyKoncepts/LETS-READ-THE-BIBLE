@@ -16,8 +16,12 @@ cloudinary.config({
 
 export async function POST(req) {
   try {
-    const body = await req.json();
-    const { image } = body;
+    // const body = await req.json();
+    // const { image } = body;
+
+    const formData = await req.formData();
+    const image = formData.get("image");
+    console.log(image instanceof File);
 
     if (!image) {
       return new Response(
@@ -26,11 +30,9 @@ export async function POST(req) {
       );
     }
 
-    // Decode base64 image
-    const base64Data = image.replace(/^data:image\/png;base64,/, "");
+    const arrayBuffer = await image.arrayBuffer();
+    const userImageBuffer = Buffer.from(arrayBuffer);
 
-    // Convert base64 to a buffer
-    const userImageBuffer = Buffer.from(base64Data, "base64");
 
     // Load the avatar image from Cloudinary
     const avatarUrl = "https://res.cloudinary.com/dgbeonqpw/image/upload/v1742230506/1000679214_thowre.png";
@@ -46,17 +48,9 @@ export async function POST(req) {
     // Merge images (overlay user image on avatar)
     avatar.composite(userImage, 130, 190.5);
 
-    const mergedImageBase64 = await avatar.getBase64(JimpMime.png); // Explicitly specify MIME type
 
+    const mergedImageBase64 = await avatar.getBase64(JimpMime.png, {quality: 50}); // Explicitly specify MIME type
 
-    // Convert the merged image to a buffer
-    // const mergedImageBuffer = await avatar.getBuffer(Jimp.MIME_PNG);
-
-    // Upload the user's cropped image to Cloudinary
-    const userImageResult = await cloudinary.uploader.upload(
-      `data:image/png;base64,${base64Data}`,
-      { folder: "user_images" }
-    );
 
     // Upload the final merged image to Cloudinary
     const AvatarResult = await cloudinary.uploader.upload(
@@ -74,7 +68,7 @@ export async function POST(req) {
     // Return the Cloudinary URLs
     return new Response(
       JSON.stringify({
-        userImageUrl: userImageResult.secure_url,
+        // userImageUrl: userImageResult.secure_url,
         mergedImageUrl: finalAvatarUrl,
       }),
       { status: 200, headers: { "Content-Type": "application/json" } }
