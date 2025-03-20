@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 import axios from "axios";
 import Image from "next/image";
 import Cropper from "react-easy-crop";
-import getCroppedImg from "@/app/utils/cropImage"; // Helper function to crop the image
+import getCroppedImg from "@/app/utils/cropImage"; 
 import { FaTrash } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import { WhatsappIcon, WhatsappShareButton, TelegramShareButton, TelegramIcon } from "react-share";
@@ -23,7 +23,6 @@ export default function AvatarUploader() {
   const [dragging, setDragging] = useState(false);
   const [loading, setLoading] = useState(false)
 
-  // console.log(`${baseUrl}/api/generate-avatar`)
 
   const onCropComplete = useCallback((_, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -37,7 +36,7 @@ export default function AvatarUploader() {
   };
 
   const base64ToFile = (base64, filename, mimeType) => {
-    const byteCharacters = atob(base64.split(",")[1]); // Remove the data URL prefix
+    const byteCharacters = atob(base64.split(",")[1]); 
     const byteNumbers = new Array(byteCharacters.length);
     for (let i = 0; i < byteCharacters.length; i++) {
       byteNumbers[i] = byteCharacters.charCodeAt(i);
@@ -102,7 +101,7 @@ export default function AvatarUploader() {
     try {
       setLoading(true);
   
-      const response = await axios.post(`/api/generate-avatar`, formData, {
+      const response = await axios.post(`${baseUrl}/api/generate-avatar`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
