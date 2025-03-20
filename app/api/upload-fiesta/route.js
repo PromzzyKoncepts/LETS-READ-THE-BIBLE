@@ -62,6 +62,7 @@ export async function POST(req) {
       chapter_start,
       chapter_end,
       video_url: videoUrl,
+      approved: false
     });
 
     await newVideo.save();
