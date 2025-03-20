@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 import axios from "axios";
 import Image from "next/image";
 import Cropper from "react-easy-crop";
-import getCroppedImg from "@/app/utils/cropImage"; // Helper function to crop the image
+import getCroppedImg from "@/app/utils/cropImage"; 
 import { FaTrash } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import { WhatsappIcon, WhatsappShareButton, TelegramShareButton, TelegramIcon } from "react-share";
@@ -23,7 +23,6 @@ export default function AvatarUploader() {
   const [dragging, setDragging] = useState(false);
   const [loading, setLoading] = useState(false)
 
-  // console.log(`${baseUrl}/api/generate-avatar`)
 
   const onCropComplete = useCallback((_, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -36,30 +35,95 @@ export default function AvatarUploader() {
     setCroppedImage(croppedImg);
   };
 
+  const base64ToFile = (base64, filename, mimeType) => {
+    const byteCharacters = atob(base64.split(",")[1]); 
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    return new File([byteArray], filename, { type: mimeType });
+  };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!croppedImage) return;
+
+  //   const formData = new FormData();
+  //       formData.append("image", croppedImage);
+
+  //   try {
+  //     setLoading(true)
+  //     // const response = await axios.post(`/api/generate-avatar`, { image: croppedImage }, {
+  //     //   maxBodyLength: 100000000, // 100MB
+  //     //   maxContentLength: 100000000 // 100MB
+  //     // });
+
+  //     const response = await axios.post(`/api/generate-avatar`, formData, {
+  //       headers: {
+  //           "Content-Type": "multipart/form-data",
+  //       },
+  //       maxBodyLength: 100000000, // 100MB
+  //       maxContentLength: 100000000, // 100MB
+  //   });
+
+  //     if (response?.data?.mergedImageUrl) {
+  //       setLoading(false)
+  //       toast.success("Your avatar has been created!")
+  //       setAvatarUrl(response.data.mergedImageUrl);
+  //     }
+  //   } catch (error) {
+  //     setLoading(false)
+  //     toast.error("Avatar creation failed, try Again")
+  //     console.error("Error uploading image:", error);
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!croppedImage) return;
-
+  
+    const formData = new FormData();
+  
+    // Check if croppedImage is a base64 string
+    if (typeof croppedImage === "string" && croppedImage.startsWith("data:image")) {
+      // Convert base64 to a File object
+      const file = base64ToFile(croppedImage, "cropped-image.png", "image/png");
+      formData.append("image", file);
+    } else if (croppedImage instanceof File || croppedImage instanceof Blob) {
+      // If it's already a File or Blob, append it directly
+      formData.append("image", croppedImage);
+    } else {
+      console.error("Unsupported image format");
+      return;
+    }
+  
     try {
-      setLoading(true)
-      const response = await axios.post(`/api/generate-avatar`, { image: croppedImage }, {
+      setLoading(true);
+  
+      const response = await axios.post(`${baseUrl}/api/generate-avatar`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
         maxBodyLength: 100000000, // 100MB
-        maxContentLength: 100000000 // 100MB
+        maxContentLength: 100000000, // 100MB
       });
-
+  
       if (response?.data?.mergedImageUrl) {
-        setLoading(false)
-        toast.success("Your avatar has been created!")
+        setLoading(false);
+        toast.success("Your avatar has been created!");
         setAvatarUrl(response.data.mergedImageUrl);
       }
     } catch (error) {
-      setLoading(false)
-      toast.error("Avatar creation failed, try Again")
+      setLoading(false);
+      if(error.status == 413){
+        toast.error("image is too heavy, upload another");
+
+      }
+      toast.error("Avatar creation failed, try again");
       console.error("Error uploading image:", error);
     }
   };
-
-
 
   const handleFile = (file) => {
     if (!file) return;
