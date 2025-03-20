@@ -1,7 +1,7 @@
-// models/Video.js
+// models/ApprovedVideo.js
 import mongoose from 'mongoose';
 
-const videoSchema = new mongoose.Schema({
+const approvedVideoSchema = new mongoose.Schema({
   kid_fullname: {
     type: String,
     required: true,
@@ -26,16 +26,12 @@ const videoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  approved: {
-    type: Boolean,
-    default: false,
-  },
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
 
-const Video = mongoose.models.Video || mongoose.model('Video', videoSchema);
+const ApprovedVideo = mongoose.models.ApprovedVideo || mongoose.model('ApprovedVideo', approvedVideoSchema);
 
-export default Video;
+export default ApprovedVideo;

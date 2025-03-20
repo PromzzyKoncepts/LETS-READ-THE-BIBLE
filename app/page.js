@@ -20,7 +20,7 @@ export default function Home() {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/api/videos`);
+        const response = await axios.get(`${baseUrl}/api/videos/video-approved`);
         if (response.status !== 200) {
           throw new Error("Failed to fetch videos");
         }

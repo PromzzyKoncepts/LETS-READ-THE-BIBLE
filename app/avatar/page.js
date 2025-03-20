@@ -45,39 +45,6 @@ export default function AvatarUploader() {
     return new File([byteArray], filename, { type: mimeType });
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (!croppedImage) return;
-
-  //   const formData = new FormData();
-  //       formData.append("image", croppedImage);
-
-  //   try {
-  //     setLoading(true)
-  //     // const response = await axios.post(`/api/generate-avatar`, { image: croppedImage }, {
-  //     //   maxBodyLength: 100000000, // 100MB
-  //     //   maxContentLength: 100000000 // 100MB
-  //     // });
-
-  //     const response = await axios.post(`/api/generate-avatar`, formData, {
-  //       headers: {
-  //           "Content-Type": "multipart/form-data",
-  //       },
-  //       maxBodyLength: 100000000, // 100MB
-  //       maxContentLength: 100000000, // 100MB
-  //   });
-
-  //     if (response?.data?.mergedImageUrl) {
-  //       setLoading(false)
-  //       toast.success("Your avatar has been created!")
-  //       setAvatarUrl(response.data.mergedImageUrl);
-  //     }
-  //   } catch (error) {
-  //     setLoading(false)
-  //     toast.error("Avatar creation failed, try Again")
-  //     console.error("Error uploading image:", error);
-  //   }
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();

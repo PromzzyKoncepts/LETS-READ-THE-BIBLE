@@ -6,7 +6,7 @@ import {useEffect, useState, useRef} from 'react';
 import { getBooks } from '../components/read/readApi';
 import { MdArrowRight, MdArrowLeft } from "react-icons/md";
 
-const baseUrl = "https://lets-read-the-bible.vercel.app"
+const baseUrl = "https://letsreadthebible.club/"
 
 // Function to generate a random hex color
 const getRandomColor = () => {
@@ -45,7 +45,7 @@ const Page = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/api/videos`);
+        const response = await axios.get(`${baseUrl}/api/videos/video-approved`);
         if (response.status !== 200) {
           throw new Error("Failed to fetch videos");
         }
@@ -91,8 +91,9 @@ const Page = () => {
   return (
     <div
       style={{ backgroundImage: `url(/images/pngbg.png)`, backgroundSize: 'cover' }}
-      className="md:px-24 px-5 py-20 bg-[#b4c6c6] font-sniglet"
+      className="md:px-24 px-5 py-20 bg-[#b4c6c6] font-sniglet min-h-screen"
     >
+      
       <h1 className="text-2xl md:text-7xl text-darkbg text-center font-lucky py-5">Bible reading Videos</h1>
       {/* Book List with Random Background Colors */}
       <div className="relative flex items-center justify-center ">
@@ -131,6 +132,8 @@ const Page = () => {
         <MdArrowRight />
       </button>
     </div>
+
+    {videos.length == 0 && !loading && (<div className="flex items-center h-[40vh] justify-center"><div className="bg-white rounded-2xl py-10 px-10 ">No approved Videos Yet</div></div>)}
 
       {/* Image Grid */}
       <div className="grid md:grid-cols-4 gap-3 pt-4">
