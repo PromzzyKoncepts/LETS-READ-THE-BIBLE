@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-
+const baseUrl = "https://letsreadthebible.club"
 const InfluencersPage = () => {
 	const [influencerId, setInfluencerId] = useState('');
 	const [users, setUsers] = useState([]);
@@ -24,7 +24,7 @@ const InfluencersPage = () => {
 		setError('');
 
 		try {
-			const response = await fetch(`/api/GET_totalUsers?influencerId=${influencerId}`);
+			const response = await fetch(`${baseUrl}/api/GET_totalUsers?influencerId=${influencerId}`);
 			const data = await response.json();
 
 			if (response.ok) {
@@ -45,7 +45,7 @@ const InfluencersPage = () => {
 		setError('');
 
 		try {
-			const response = await fetch('/api/GET_totalUsers');
+			const response = await fetch(`${baseUrl}/api/GET_totalUsers`);
 			const data = await response.json();
 
 			if (response.ok) {
