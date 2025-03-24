@@ -14,12 +14,12 @@ export async function GET(req, res) {
     const influencerId = url.searchParams.get('influencerId');
 
     // Define the list of influencer IDs to filter by
-    const influencerIds = ['PLEROO', 'DOXA', 'SOZO', 'TELEIOS'];
+    const influencerIds = ['PLEROO', 'DOXA', 'SOZO', 'TELEIOS', 'EM', 'IG','FB','YT'];
 
     // If an influencerId is provided in the query, fetch users for that specific influencer
     if (influencerId) {
       if (!influencerIds.includes(influencerId)) {
-        return new Response(JSON.stringify({ message: 'Invalid influencer ID' }), {
+        return new Response(JSON.stringify({ message: 'Unauthorised pathway/influencer!' }), {
           status: 400,
           headers: { 'Content-Type': 'application/json' },
         });
