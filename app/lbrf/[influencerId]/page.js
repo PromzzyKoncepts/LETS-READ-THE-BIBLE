@@ -31,7 +31,7 @@ const Page = () => {
     async function registerUser(userData) {
         console.log(userData)
         try {
-            const response = await fetch(`${baseUrl}/api/influencer-fiesta`, {
+            const response = await fetch(`/api/influencer-fiesta`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

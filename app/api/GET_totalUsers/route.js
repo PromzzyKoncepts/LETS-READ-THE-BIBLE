@@ -14,7 +14,7 @@ export async function GET(req, res) {
     const influencerId = url.searchParams.get('influencerId');
 
     // Define the list of influencer IDs to filter by
-    const influencerIds = ['PLEROO', 'DOXA', 'SOZO', 'TELEIOS', 'EM', 'IG','FB','YT'];
+    const influencerIds = ['PLEROO', 'DOXA', 'SOZO', 'TELEIOS', 'em', 'ig','fb','yt'];
 
     // If an influencerId is provided in the query, fetch users for that specific influencer
     if (influencerId) {
