@@ -67,14 +67,15 @@ const InfluencersPage = () => {
 				<div>
 
 					{/* Input for fetching users by influencerId */}
-					<div style={{ marginBottom: '7px' }} className="bg-slate-400 rounded-2xl px-10 py-5  font-sniglet">
+					<div style={{ marginBottom: '7px' }} className="bg-slate-400 rounded-2xl px-10 py-5 flex flex-col items-start  font-sniglet">
 						<h2 className="font-sniglet text-2xl" >View live Registration from each Influencer</h2>
+						<small>Please be case sensitive when typing...</small>
 						<input
 							type="text"
 							className="border border-darkbg rounded-2xl focus:outline-0"
 							placeholder="Enter Influencer ID (e.g., PLEROO)"
 							value={influencerId}
-							onChange={(e) => setInfluencerId(e.target.value.toUpperCase())}
+							onChange={(e) => setInfluencerId(e.target.value)}
 							style={{ padding: '8px', width: '300px', marginRight: '10px' }}
 						/>
 						<button className="bg-darkbg border-2 text-white rounded-full shadow-lg shadow-slate-500 px-8 py-2" onClick={fetchUsersByInfluencer} disabled={loading}>

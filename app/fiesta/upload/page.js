@@ -7,7 +7,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 
 // const baseUrl = "http://localhost:3000"
-const baseUrl = "https://lets-read-the-bible.vercel.app"
+const baseUrl = "https://letsreadthebible.club"
 
 const UploadVideo = () => {
   const [videoSrc, setVideoSrc] = useState('');
@@ -125,7 +125,7 @@ const UploadVideo = () => {
     setShowModal(true);
 
     try {
-      const response = await axios.post(`/api/upload-fiesta`, formData, {
+      const response = await axios.post(`${baseUrl}/api/upload-fiesta`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
