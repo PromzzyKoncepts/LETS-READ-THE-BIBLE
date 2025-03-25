@@ -1,6 +1,7 @@
 import "./globals.css";
 import Header from "./components/Header";
 import BottomBar from "@/app/components/MobileNav";
+import { Suspense } from 'react'
 
 export const metadata = {
   title: "Lets Read the Bible Campaign",
@@ -26,7 +27,9 @@ export default function RootLayout({ children }) {
       >
         <canvas id="world" width="0" height="0"></canvas>
         <Header />
+        <Suspense>
         {children}
+        </Suspense>
         <div className="fixed z-[999] block md:hidden bottom-0"><BottomBar /></div>
       </body>
     </html>
