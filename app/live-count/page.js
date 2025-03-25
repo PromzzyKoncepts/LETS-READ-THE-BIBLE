@@ -67,9 +67,9 @@ const InfluencersPage = () => {
 				<div>
 
 					{/* Input for fetching users by influencerId */}
-					<div style={{ marginBottom: '7px' }} className="bg-slate-400 rounded-2xl px-10 py-5  font-sniglet">
+					<div style={{ marginBottom: '7px' }} className="bg-slate-400 rounded-2xl px-10 py-5 flex flex-col items-start  font-sniglet">
 						<h2 className="font-sniglet text-2xl" >View live Registration from each Influencer</h2>
-						<small>Please be case sensitive when querying...</small>
+						<small>Please be case sensitive when typing...</small>
 						<input
 							type="text"
 							className="border border-darkbg rounded-2xl focus:outline-0"
