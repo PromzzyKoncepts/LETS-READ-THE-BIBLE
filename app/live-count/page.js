@@ -1,7 +1,43 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+import React, { useState, useEffect,  } from 'react';
+
+function m(number, decPlaces) {
+	// 2 decimal places => 100, 3 => 1000, etc
+	decPlaces = Math.pow(10, decPlaces);
+  
+	// Enumerate number abbreviations
+	var abbrev = ["k", "m", "b", "t"];
+  
+	// Go through the array backwards, so we do the largest first
+	for (var i = abbrev.length - 1; i >= 0; i--) {
+  
+	  // Convert array index to "1000", "1000000", etc
+	  var size = Math.pow(10, (i + 1) * 3);
+  
+	  // If the number is bigger or equal do the abbreviation
+	  if (size <= number) {
+		
+		number = Math.round(number * decPlaces / size) / decPlaces;
+  
+		// Handle special case where we round up to the next abbreviation
+		if ((number == 1000) && (i < abbrev.length - 1)) {
+		  number = 1;
+		  i++;
+		}
+  
+		// Add the letter for the abbreviation
+		number += abbrev[i];
+		break;
+	  }
+	}
+  
+	return number;
+  }
+
 const baseUrl = "https://letsreadthebible.club"
 const InfluencersPage = () => {
+	const searchParams = useSearchParams();
 	const [influencerId, setInfluencerId] = useState('');
 	const [users, setUsers] = useState([]);
 	const [totals, setTotals] = useState({
@@ -12,6 +48,16 @@ const InfluencersPage = () => {
 	const [loading, setLoading] = useState(false);
 	const [viewResult, setViewResult] = useState(false);
 	const [error, setError] = useState('');
+	const [isAdmin, setIsAdmin] = useState(false);
+
+	useEffect(() => {
+        // Check if admin access is granted via URL query params
+        const adminParam = searchParams.get('admin');
+        if (adminParam === 'true') {
+            setIsAdmin(true);
+            fetchTotals(); // Automatically fetch totals if admin
+        }
+    }, [searchParams]);
 
 	// Fetch users for a specific influencer
 	const fetchUsersByInfluencer = async () => {
@@ -45,7 +91,7 @@ const InfluencersPage = () => {
 		setError('');
 
 		try {
-			const response = await fetch(`${baseUrl}/api/GET_totalUsers`);
+			const response = await fetch(`/api/GET_totalUsers`);
 			const data = await response.json();
 
 			if (response.ok) {
@@ -118,10 +164,15 @@ const InfluencersPage = () => {
 
 					{/* Display totals */}
 					{totals.totalAllUsers > 0 && (
-						<div className="bg-slate-200 font-sniglet rounded-2xl px-5 py-5 md:grid grid-cols-3 gap-3">
-							<p className="font-lucky uppercase bg-pinkbg text-white px-5 py-5 rounded-2xl flex flex-col gap-2 items-center border-2 shadow-slate-500 border-white shadow-lg  text-5xl "><strong className="text-lg font-jua text-slate-700">Influencers</strong> {totals.totalUsersThroughInfluencers}</p>
-							<p className="font-lucky uppercase bg-green-500 text-white px-5 py-5 rounded-2xl flex flex-col gap-2 items-center border-2 shadow-slate-500 border-white shadow-lg  text-6xl "><strong className="text-2xl font-jua text-slate-700">Total</strong> {totals.totalAllUsers}</p>
-							<p className="font-lucky uppercase bg-blue-500 text-white px-5 py-5 rounded-2xl flex flex-col gap-2 items-center border-2 shadow-slate-500 border-white shadow-lg  text-5xl "><strong className="text-lg font-jua text-slate-700">regular</strong> {totals.totalUsersThroughUsualRoutes}</p>
+						<div className="bg-slate-200 font-sniglet rounded-2xl px-5 py-3 md:grid grid-cols-3 gap-2">
+							<p className="font-lucky uppercase bg-pinkbg text-white px-4 py-4 rounded-2xl flex flex-col gap-2 items-center border-2 shadow-slate-500 border-white shadow-lg  text-5xl "><strong className="text-lg font-jua text-slate-700">Influencers</strong> {totals.totalUsersThroughRegularInfluencers}</p>
+							<p className="font-lucky uppercase bg-lime-500 text-white px-4 py-4 rounded-2xl flex flex-col gap-2 items-center border-2 shadow-slate-500 border-white shadow-lg  text-6xl "><strong className="text-2xl font-jua text-slate-700">Total</strong> {m(totals.totalAllUsers, 1)}</p>
+							{isAdmin && (<p className="font-lucky uppercase bg-stone-500 text-white px-4 py-4 rounded-2xl flex flex-col gap-2 items-center border-2 shadow-slate-500 border-white shadow-lg  text-5xl "><strong className="text-lg font-jua text-white">regular</strong> {totals.totalUsersThroughUsualRoutes}</p>)}
+							{isAdmin && (<p className="font-lucky uppercase bg-amber-500 text-white px-4 py-4 rounded-2xl flex flex-col gap-2 items-center border-2 shadow-slate-500 border-white shadow-lg  text-5xl "><strong className="text-lg font-jua text-slate-700">INSTAGRAM</strong> {totals.influencersThroughIG}</p>)}
+							{isAdmin && (<p className="font-lucky uppercase bg-red-500 text-white px-4 py-4 rounded-2xl flex flex-col gap-2 items-center border-2 shadow-slate-500 border-white shadow-lg  text-5xl "><strong className="text-lg font-jua text-slate-700">YOUTUBE</strong> {totals.influencersThroughYT}</p>)}
+							{isAdmin && (<p className="font-lucky uppercase bg-orange-500 text-white px-4 py-4 rounded-2xl flex flex-col gap-2 items-center border-2 shadow-slate-500 border-white shadow-lg  text-5xl "><strong className="text-lg font-jua text-slate-700">EMAIL</strong> {totals.influencersThroughEM}</p>)}
+							{isAdmin && (<p className="font-lucky uppercase bg-sky-500 text-white px-4 py-4 rounded-2xl flex flex-col gap-2 items-center border-2 shadow-slate-500 border-white shadow-lg  text-5xl "><strong className="text-lg font-jua text-slate-700">FACEBOOK</strong> {totals.influencersThroughFB}</p>)}
+							{isAdmin && (<p className="font-lucky uppercase bg-violet-500 text-white px-4 py-4 rounded-2xl flex flex-col gap-2 items-center border-2 shadow-slate-500 border-white shadow-lg  text-5xl "><strong className="text-lg font-jua text-slate-700">TRANSLATORS</strong> {totals.influencersThroughTL}</p>)}
 						</div>
 					)}
 				</div>
