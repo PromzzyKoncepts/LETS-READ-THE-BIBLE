@@ -150,7 +150,7 @@ const UploadVideo = () => {
         book: selectedBook,
         chapter_start: selectedChapterStart,
         chapter_end: selectedChapterEnd,
-        video_url: file_path,
+        video_url: "https://lovetoons.org/" + file_path,
       }
       const response = await axios.post(`${baseUrl}/api/upload-fiesta`, body, {
         headers: {
