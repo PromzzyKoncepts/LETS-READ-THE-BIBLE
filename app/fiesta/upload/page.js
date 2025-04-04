@@ -113,26 +113,54 @@ const UploadVideo = () => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('file', videoFile);
-    formData.append('kid_fullname', kidFullname || user?.fullName);
-    formData.append('parent_fullname', parentFullname);
-    formData.append('book', selectedBook);
-    formData.append('chapter_start', selectedChapterStart);
-    formData.append('chapter_end', selectedChapterEnd);
+    // const formData = new FormData();
+    // formData.append('file', videoFile);
+    // formData.append('kid_fullname', kidFullname || user?.fullName);
+    // formData.append('parent_fullname', parentFullname);
+    // formData.append('book', selectedBook);
+    // formData.append('chapter_start', selectedChapterStart);
+    // formData.append('chapter_end', selectedChapterEnd);
+
+    const apiFormData = new FormData();
+    apiFormData.append('file', videoFile);
 
     setIsUploading(true);
     setShowModal(true);
 
     try {
-      const response = await axios.post(`${baseUrl}/api/upload-fiesta`, formData, {
+      const res = await axios.post(`https://lovetoons.org/api/datafile/fileupload.php`, apiFormData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+        'Content-Type': 'multipart/form-data',
+        'Accept': '*/*',
+      },
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+        setUploadProgress(percentCompleted);
+      },})
+      console.log(res)
+      if(!res?.data?.success) return
+      const file_path = res.data.file_path.replace(/^(\.\.\/)+/, '')
+      .replace(/\\/g, '/')
+      .replace(/\/+/g, '/');
+      console.log(file_path)
+
+      const body = {
+        kid_fullname: kidFullname,
+        parent_fullname: parentFullname,
+        book: selectedBook,
+        chapter_start: selectedChapterStart,
+        chapter_end: selectedChapterEnd,
+        video_url: file_path,
+      }
+      const response = await axios.post(`${baseUrl}/api/upload-fiesta`, body, {
+        headers: {
+          // 'Content-Type': 'multipart/form-data',
+          'Accept': '*/*',
         },
-        onUploadProgress: (progressEvent) => {
-          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          setUploadProgress(percentCompleted);
-        },
+        // onUploadProgress: (progressEvent) => {
+        //   const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+        //   setUploadProgress(percentCompleted);
+        // },
       });
 
       console.log(response)
