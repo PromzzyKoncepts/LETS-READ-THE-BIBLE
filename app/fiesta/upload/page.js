@@ -145,7 +145,7 @@ const UploadVideo = () => {
       console.log(file_path)
 
       const body = {
-        kid_fullname: kidFullname,
+        kid_fullname: kidFullname  || user?.fullName,
         parent_fullname: parentFullname,
         book: selectedBook,
         chapter_start: selectedChapterStart,
