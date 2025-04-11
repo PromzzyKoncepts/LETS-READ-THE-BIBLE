@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import { MdEmergencyRecording } from "react-icons/md";
-import { IoShareSocialSharp } from "react-icons/io5";
+import { IoPersonCircleSharp, IoShareSocialSharp } from "react-icons/io5";
 import { IoMdCloudUpload } from "react-icons/io";
 import { RiLoginCircleFill } from "react-icons/ri";
 import Footer from "@/app/components/Footer";
@@ -16,6 +16,7 @@ import { IoMdCloudDownload } from "react-icons/io";
 const Page = () => {
   const [user, setUser] = useState(null);
   const [viewAvatar, setViewAvatar] = useState(false);
+  const [viewPicture, setViewPicture] = useState(false);
   const card = [
     {
       title: "fiesta 4",
@@ -90,8 +91,25 @@ const Page = () => {
             <p>You successfully registered.</p>
             <p className="text-lg">Next, we recommend you to create your Bible Fiesta Avatar</p>
             <div className="flex items-center gap-2 mt-3">
-              <button onClick={() => setViewAvatar(false)} className="border-2 border-darkbg rounded-full px-4 py-2">I have created mine</button>
+              <button onClick={() => {setViewAvatar(false)
+                setViewPicture(true)
+              }} className="border-2 border-darkbg rounded-full px-4 py-2">I have created mine</button>
               <Link href="/avatar" className="bg-darkbg rounded-full text-white px-4 py-2 hover:border-2 hover:border-white shadow-lg">Create my avatar</Link>
+            </div>
+          </div>
+        </div>
+      )}
+      {viewPicture  && (
+        <div className="font-sniglet z-[99] fixed top-0 h-screen w-full bg-darkbg bg-opacity-40 backdrop-blur-sm flex items-center justify-center">
+          <div className="bg-white rounded-2xl shadow-lg py-7 px-4 max-w-2xl md:px-10 flex items-center gap-2 flex-col">
+            <h2 className="text-2xl text-center md:text-4xl font-lucky text-[#d1942b]">ONE MORE THING...</h2>
+            <small>Thank you for registering and creating your fiesta avatar</small>
+            <p className="text-lg text-center">Finally, we need you to capture and upload a quick photo of you or your kid(s) reading the Bible</p>
+            <div className="flex items-center gap-2 mt-3">
+              <button onClick={() => {setViewAvatar(false)
+                setViewPicture(false)
+              }} className="border-2 border-darkbg rounded-full px-4 py-2">I have uploaded mine</button>
+              <Link href="/lbrf/picture" className="bg-darkbg rounded-full text-white px-4 py-2 hover:border-2 hover:border-white shadow-lg">Upload Photo</Link>
             </div>
           </div>
         </div>
@@ -143,11 +161,12 @@ const Page = () => {
         </div>
 
         <div className="w-full col-span-1 flex flex-col gap-3 mt-5 md:mt-0">
-          <Link href="/avatar" className="bg-gradient-to-bl transition-all duration-200 ease-in-out hover:border-2 hover:border-white hover:shadow-lg hover:shadow-gray-700 shadow-lg shadow-gray-500 from-[#FFCDB4] to-[#ED6073] px-5 w-max py-4 rounded-2xl text-slate-800 text-lg font-lucky flex items-center gap-2"><IoShareSocialSharp size={30} />Create fiesta avatar</Link>
+          <Link href="/avatar" className="bg-gradient-to-bl transition-all duration-200 ease-in-out hover:border-2 hover:border-white hover:shadow-lg hover:shadow-gray-700 shadow-lg shadow-gray-500 from-[#FFCDB4] to-[#ED6073] px-5 w-max py-4 rounded-2xl text-slate-800 text-lg font-lucky flex items-center gap-2"><IoPersonCircleSharp  size={30} />Create fiesta avatar</Link>
+          <Link href="/lbrf/picture" className="bg-gradient-to-tr transition-all duration-200 ease-in-out hover:border-2 hover:border-white hover:shadow-lg hover:shadow-gray-700 shadow-lg shadow-gray-500 from-[#EA8937] to-[#F8C254] px-5 w-max py-4 rounded-2xl text-slate-800 text-lg font-lucky flex items-center gap-2"><IoMdCloudUpload size={30} />Upload Bible reading picture</Link>
           <Link href="/fiesta/upload" className="bg-gradient-to-bl transition-all duration-200 ease-in-out hover:border-2 hover:border-white hover:shadow-lg hover:shadow-gray-700 shadow-lg shadow-gray-500 from-[#c7c7e0] to-[#8E8EB1] px-5 w-max py-4 rounded-2xl text-slate-800 text-lg font-lucky flex items-center gap-2"><IoMdCloudUpload size={30} />Select a chapter</Link>
-          <Link href="/fiesta/upload" className="bg-gradient-to-bl transition-all duration-200 ease-in-out hover:border-2 hover:border-white hover:shadow-lg hover:shadow-gray-700 shadow-lg shadow-gray-500 from-green-500 to-lime-500 px-5 w-max py-4 rounded-2xl  text-lg font-lucky text-white flex items-center gap-2"><IoMdCloudUpload size={30} />Upload now</Link>
+          <Link href="/fiesta/upload" className="bg-gradient-to-tr transition-all duration-200 ease-in-out hover:border-2 hover:border-white hover:shadow-lg hover:shadow-gray-700 shadow-lg shadow-gray-500 from-green-500 to-lime-500 px-5 w-max py-4 rounded-2xl  text-lg font-lucky text-white flex items-center gap-2"><IoMdCloudUpload size={30} />Upload now</Link>
           <Link href="/record" className="bg-gradient-to-tr transition-all duration-200 ease-in-out from-[#0081EE] to-[#88CEDF] px-5 w-max py-4 rounded-2xl text-slate-100 text-lg font-lucky hover:border-2 hover:border-white hover:shadow-lg hover:shadow-gray-700 shadow-lg shadow-gray-500 flex items-center gap-2"><MdEmergencyRecording size={30} />Record and Read</Link>
-          <Link href="/lbrf" className="bg-gradient-to-tr transition-all duration-200 ease-in-out hover:border-2 hover:border-white hover:shadow-lg hover:shadow-gray-700 shadow-lg shadow-gray-500 from-[#EA8937] to-[#F8C254] px-5 w-max py-4 rounded-2xl text-slate-800 text-lg font-lucky flex items-center gap-2"><RiLoginCircleFill size={30} />Register a friend</Link>
+          <Link href="/lbrf" className="bg-gradient-to-tr transition-all duration-200 ease-in-out hover:border-2 hover:border-white hover:shadow-lg hover:shadow-gray-700 shadow-lg shadow-gray-500 from-fuchsia-500 to-fuchsia-600 px-5 w-max py-4 rounded-2xl text-white text-lg font-lucky flex items-center gap-2"><RiLoginCircleFill size={30} />Register a friend</Link>
         </div>
       </div>
 
