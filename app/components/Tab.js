@@ -7,11 +7,11 @@ const Tab = () => {
 		{
 			id: 2,
 			icon: "/images/boyread.png",
-			title: "Record and read",
+			title: "Upload Picture",
 			content:
-				"Dive into the Word! Join our 'Let's Read the Bible' fiesta and explore the Bible like never before on our platform. Start your journey today!",
-				link:"fiesta/record",
-			btn: "Select a chapter",
+				"Join this Glorious fiesta! Join our 'Let's Read the Bible' fiesta by uploading a clear image of your kid(s) reading the Bible!",
+				link:"lbrf/picture",
+			btn: "Upload now",
 		},
 		{
 			id: 3,
@@ -51,7 +51,7 @@ const Tab = () => {
 					<div className="flex flex-col justify-between items-start h-full">
 						<h1 className="font-lucky text-4xl text-darkbg">{item.title}</h1>
 						<p className="w-full">{item.content}</p>
-						{item.title !== "share" ? (<Link href={`/${item.link}`} className="px-4 py-2 bg-darkbg text-white w-full rounded-full hover:animate-pulse">{item.btn}</Link>)
+						{item.title !== "share" ? (<Link href={`/${item.link}`} className="px-4 py-2 bg-darkbg text-white w-fit  rounded-full hover:animate-pulse">{item.btn}</Link>)
 							: (<button className="px-4 py-2 bg-darkbg text-white rounded-full hover:animate-pulse" onClick={() => setShare(true)}>Share with Friends</button>)}
 					</div>
 
