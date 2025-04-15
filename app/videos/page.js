@@ -209,7 +209,7 @@ const Page = () => {
           <Link
             key={item.id}
             href={`/videos/${item.id}`}
-            target={item.id.startsWith('ext-') ? "_blank" : "_self"}
+            // target={item.id.startsWith('ext-') ? "_blank" : "_self"}
             className="relative hover:group hover:cursor-pointer hover:border-2 border-white bg-slate-500 rounded-2xl hover:shadow-md hover:shadow-slate-600"
           >
             <div className="w-full h-[20rem]" onMouseEnter={(e) => {
@@ -232,7 +232,7 @@ const Page = () => {
                 width={300}
                 height={300}
                 className="w-full object-cover h-full rounded-2xl"
-                muted={true}
+                muted={false}
                 controls={false} // Hide controls
                 loop={true}
                 playsInline
