@@ -29,7 +29,6 @@ export const data =  currentTranslation;
 // console.log(data, "dataaaaaaaa")
 
 export const getBooks = () => {
-  console.log(data)
   const set = new Set();
   data?.map((book) => {
     const obj = {
