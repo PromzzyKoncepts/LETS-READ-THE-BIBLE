@@ -12,7 +12,7 @@ const nextConfig = {
     },
   },
   images: {
-    domains: ["res.cloudinary.com"], // Add the Cloudinary domain here
+    domains: ["res.cloudinary.com", "d1ent1.loveworldcloud.com"], // Add the Cloudinary domain here
   },
   async headers() {
     return [

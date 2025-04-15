@@ -68,14 +68,33 @@ const VideoDetailsPage = () => {
   useEffect(() => {
     const fetchVideo = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/api/videos/${videoId}`);
-        if (response.status !== 200) {
-          throw new Error("Failed to fetch video details");
+        if (videoId.startsWith('ext-')) {
+          const timestamp = Date.now();
+          const response = await axios.get(
+            `https://lovetoons.org/api/datafile/allbiblevideos.php?t=${timestamp}`
+          );
+          
+          const foundVideo = response?.data?.data?.find(
+            v => `ext-${v.id}` === videoId
+          );
+          console.log(foundVideo, "foundVideo")
+          
+          if (foundVideo) {
+            setVideo({
+              video_url: foundVideo.link,
+              book: foundVideo.biblechapter,
+              // Add other necessary fields
+            });
+          }
+        } else {
+          // Original internal video handling
+          const response = await axios.get(`${baseUrl}/api/videos/${videoId}`);
+          if (response.status !== 200) throw new Error("Failed to fetch video details");
+          setVideo(response?.data);
+          const chapters = getChaptersInRange(response?.data?.book, response?.data?.chapter_start, response?.data?.chapter_end);
+          setChapters(chapters);
+          setSelectedChapter(response.data.chapter_start);
         }
-        setVideo(response?.data);
-        const chapters = getChaptersInRange(response?.data?.book, response?.data?.chapter_start, response?.data?.chapter_end);
-        setChapters(chapters);
-        setSelectedChapter(response.data.chapter_start);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -86,7 +105,7 @@ const VideoDetailsPage = () => {
     fetchVideo();
   }, [videoId]);
 
-  console.log(chapters, verses)
+  console.log(video)
 
   useEffect(() => {
     if (selectedChapter !== null) {
@@ -225,10 +244,10 @@ const VideoDetailsPage = () => {
 
   return (
     <div style={{ backgroundImage: `url(/images/pngbg.png)`, backgroundSize: 'cover' }}
-      className="px-5 bg-[#F4C2C2] md:px-24 pt-5 md:pt-28 min-h-screen">
-      <div className="  md:grid md:grid-cols-3 gap-5 items-start">
+      className="px-5 bg-[#F4C2C2] md:px-24 pt-5 md:pt-24 pb-10 min-h-screen">
+      <div className={`${videoId.startsWith('ext-') ? "w-full" : "md:grid md:grid-cols-3 gap-5"}   items-start`}>
         <div
-          className=" col-span-2 relative bg-white w-full md:w-fit h-full shadow-lg shadow-darkbg border-2 border-white rounded-3xl overflow-hidden"
+          className={` col-span-2 relative bg-[#F4C2C2] bg-opacity-50 w-full ${!videoId.startsWith('ext-')  ? "md:w-fit h-full" : "md:w-[70%] mx-auto h-[40vh] md:h-[70vh]"}  shadow-lg shadow-darkbg border-2 border-white rounded-3xl overflow-hidden`}
           onClick={handleHover}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -238,7 +257,7 @@ const VideoDetailsPage = () => {
             src={video.video_url}
             type="video/mp4"
             muted={isMuted}
-            className="w-fit h-full object-contain"
+            className="w-full h-full object-contain "
           />
           {isHovered && (
             <div>
@@ -304,23 +323,23 @@ const VideoDetailsPage = () => {
               </div>
 
               <p className={`absolute bg-darkbg bg-opacity-20 top-4 font-sniglet px-5 py-2 rounded-full backdr op-blur-md right-4 slide-in-right ${isVisible ? 'visible' : ''}`}>
-                <span className="font-bold font-jua text-white text-xl tracking-wider">{video.book} CH </span>{"  "}
+                <span className="font-bold font-jua text-white text-xl tracking-wider">{video.book} {video.chapter_start && "CH"}  </span>{"  "}
                 <span className="font-bold font-jua text-white text-xl">
                   {" "}{video.chapter_start}{" "}
                   {video.chapter_end && video.chapter_end !== video.chapter_start && ` - ${video.chapter_end}`}
                 </span>
               </p>
 
-              <p className="text-white absolute  bottom-4 font-bubblegum  rounded-full  left-1/2 slide-in-top">
+              {video.kid_fullname && (<p className="text-white absolute  bottom-4 font-bubblegum  rounded-full  left-1/2 slide-in-top">
                 Read by: {video.kid_fullname}
-              </p>
+              </p>)}
             </div>
           )}
         </div>
 
 
         {/* do the component here please */}
-        <div className="bg-white font-sniglet rounded-3xl md:mt-0 mt-5">
+        {video.kid_fullname && verses && (<div className="bg-white font-sniglet rounded-3xl md:mt-0 mt-5">
           <div className="flex space-x-2 font-lucky text-lg md:w-[25rem] overflow-x-auto">
             {chapters.map((chapter, index) => (
               <button 
@@ -342,9 +361,9 @@ const VideoDetailsPage = () => {
               ))}
             </ul>
           </div>
-        </div>
+        </div>)}
       </div>
-      <div className="bg-white bg-opacity-70 rounded-3xl px-4 md:px-10 pb-10 md:pb-0 py-5 mt-10">
+      <div className="bg-white bg-opacity-70 rounded-3xl px-4 md:px-10 pb-10 md:pb-7  py-5 mt-10">
         <h2 className="font-lucky text-center text-3xl md:text-5xl pb-5 ">Explore More Videos</h2>
         <div className=" grid md:grid-cols-4 gap-5 ">
           {videos.map((item, index) => (
@@ -389,7 +408,7 @@ const VideoDetailsPage = () => {
             </Link>
           ))}
         </div>
-
+          <Link href="/videos" className="mx-auto rounded-3xl bg-darkbg mt-10 md:mt-12 px-5 py-2 text-white border border-white hover:shadow-md hover:shadow-slate-500 flex w-fit items-center">Explore more</Link>
       </div>
     </div>
   );
