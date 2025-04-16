@@ -123,21 +123,21 @@ const Page = () => {
 
 				</div>
 				<div className="flex items-center pt-6  gap-3 opacity-60 mx-auto"><div className="h-0.5 w-36 md:w-44 rounded-xl bg-darkbg" /> or <div className="h-0.5 w-36 md:w-44 rounded-xl bg-darkbg" /></div>
-				<div className="flex  flex-col gap-5 w-full px-8 md:px-20 lg:px-36">
-					<div className="flex flex-col gap-2 w-full">
+				<div className="flex  flex-col gap-3 w-full px-8 md:px-20 lg:px-36">
+					<div className="flex flex-col gap-1 w-full">
 						<label>Email address</label>
 						<input name="email" className="border-0 outline-0 py-2 focus:border-b-2 border-b focus:border-darkbg border-slate-500 bg-transparent  text-darkbg" required type="email" placeholder="Enter Email address" value={email} onChange={(e) => setEmail(e.target.value)} />
 					</div>
-					<div className="flex flex-col gap-2">
+					<div className="flex flex-col gap-1">
 						<label>Full name</label>
 						<input name="name" className="border-0 outline-0 focus:border-b-2 border-b py-2 focus:border-darkbg border-slate-500 bg-transparent  text-darkbg" required type="text" placeholder="Enter your full-name" value={fullName} onChange={(e) => setFullName(e.target.value)} />
 					</div>
-					<div className="flex flex-col gap-2 w-full">
+					<div className="flex flex-col gap-1 w-full">
 						<label>KingsChat(Optional)</label>
 						<div className="flex items-center gap-3 py-2 border-b border-slate-500">@<input name="name" type="text" className="border-0 outline-0  bg-transparent text-darkbg w-full" placeholder="Enter your kingsChat username" value={kingsChatHandle} onChange={(e) => setKingsChatHandle(e.target.value)} /></div>
 					</div>
 					<button onClick={handleRegister} className="bg-gradient-to-t from-[#F82F00] to-[#F89108] hover:border-white hover:border-2 hover:shadow-lg hover:shadow-slate-400 px-5 py-2 rounded-lg text-white " >Register Now!</button>
-					<div className="flex items-center gap-3 flex-col">
+					<div className="flex items-center gap-2 flex-col">
 						<div className="flex items-center   gap-3 opacity-60 mx-auto">
 							<div className="h-0.5 w-36 md:w-44 rounded-xl bg-darkbg" /> or 
 							<div className="h-0.5 w-36 md:w-44 rounded-xl bg-darkbg" />
