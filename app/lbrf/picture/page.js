@@ -8,6 +8,7 @@ import toast, { Toaster } from 'react-hot-toast'
 export default function ImageUploadPage() {
   const [file, setFile] = useState(null)
   const [fullName, setFullName] = useState('')
+  const [scripture, setScripture] = useState('')
   const [isUploading, setIsUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
   const fileInputRef = useRef(null)
@@ -54,7 +55,8 @@ export default function ImageUploadPage() {
 
     const apiFormData = new FormData()
     apiFormData.append('file', file)
-    apiFormData.append('name', fullName.trim())
+    apiFormData.append('name', fullName)
+    apiFormData.append('scripture', scripture)
 
     setIsUploading(true)
     setUploadProgress(0)
@@ -62,8 +64,9 @@ export default function ImageUploadPage() {
     const toastId = toast.loading('Uploading image...')
 
     try {
+      const timestamp = Date.now();
       await axios.post(
-        `https://lovetoons.org/api/datafile/fileupload.php`,
+        `https://lovetoons.org/api/datafile/fileupload.php?t=${timestamp}`,
         apiFormData,
         {
           headers: {
@@ -85,6 +88,7 @@ export default function ImageUploadPage() {
       toast.success('Image uploaded successfully!', { id: toastId })
       setFile(null)
       setFullName('')
+      setScripture('')
       setUploadProgress(0)
       if (fileInputRef.current) {
         fileInputRef.current.value = ''
@@ -104,11 +108,11 @@ export default function ImageUploadPage() {
   }
 
   return (
-    <div className="min-h-screen font sniglet bg-gray-50 flex md:items-center justify-center p-4">
+    <div className="min-h-screen font sniglet bg-gray-200 flex md:items-center justify-center p-4">
       <Toaster position="top-center" />
       
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6 font-lucky">Upload Image</h1>
+        <h1 className="text-2xl font-bold text-darkbg mb-6 font-lucky">Upload Image</h1>
         
         <div
           {...getRootProps()}
@@ -215,6 +219,20 @@ export default function ImageUploadPage() {
             onChange={(e) => setFullName(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             placeholder="John Doe"
+            disabled={isUploading}
+          />
+        </div>
+        <div className="mb-6">
+          <label htmlFor="scripture" className="block text-sm font-medium text-gray-700 mb-1">
+            Scripture read
+          </label>
+          <input
+            type="text"
+            id="scripture"
+            value={scripture}
+            onChange={(e) => setScripture(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            placeholder="John 3:16"
             disabled={isUploading}
           />
         </div>
