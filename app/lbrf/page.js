@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import kingsChatWebSdk from 'kingschat-web-sdk';
 import 'kingschat-web-sdk/dist/stylesheets/style.min.css';
 import { useRouter } from "next/navigation"
@@ -22,6 +22,20 @@ const Page = () => {
 	const [email, setEmail] = useState('');
 	const [fullName, setFullName] = useState('');
 	const [kingsChatHandle, setKingsChatHandle] = useState(null);
+	const [viewAvatar, setViewAvatar] = useState(false);
+
+
+	useEffect(() => {
+		// Ensure this code runs only on the client side
+		if (typeof window !== 'undefined') {
+			// Check if the popup has already been shown using session storage
+			const hasPopupBeenShown = sessionStorage.getItem('hasPopupBeenShown');
+			if (!hasPopupBeenShown) {
+				setViewAvatar(true); // Show the popup
+				sessionStorage.setItem('hasPopupBeenShown', 'true'); // Mark the popup as shown
+			}
+		}
+	}, []);
 
 	const handleRegister = async (e) => {
 		e.preventDefault();
@@ -113,6 +127,22 @@ const Page = () => {
 	return (
 		<div className="grid md:grid-cols-2 items-start max-h-screen font-sniglet">
 			<Toaster position="top-right" />
+			{viewAvatar && (
+				<div className="font-sniglet z-[99] fixed top-0 h-screen w-full bg-darkbg bg-opacity-30 backdrop-blur-sm flex items-center justify-center">
+					<div className="bg-white rounded-2xl shadow-lg py-10 mx-5 px-4 md:px-10 flex items-center gap-2 flex-col">
+						<h2 className="text-3xl text-center md:text-5xl font-lucky text-[#d1942b]">WELCOME TO LBRF</h2>
+						{/* <p>Show us your participation</p> */}
+						<p className="text-lg text-center md:max-w-3xl">Kindly take a picture of you reading the scripture or participating in the fiesta and share with us</p>
+						<div className="flex items-center gap-2 mt-3">
+							<button onClick={() => {
+								setViewAvatar(false)
+								// setViewPicture(true)
+							}} className="border-2 border-darkbg rounded-full px-4 py-2">Register instead</button>
+							<Link href="/lbrf/picture" className="bg-darkbg rounded-full text-white px-4 py-2 border-2 hover:shadow-md hover:shadow-slate-500 border-white shadow-lg">Upload my picture</Link>
+						</div>
+					</div>
+				</div>
+			)}
 			<div className=" col-span-1">
 				<Image src="/images/banner2.png" className="md:w-full h-[10rem] md:h-screen object-cover" alt="banner" width={500} height={500} />
 			</div>
@@ -139,7 +169,7 @@ const Page = () => {
 					<button onClick={handleRegister} className="bg-gradient-to-t from-[#F82F00] to-[#F89108] hover:border-white hover:border-2 hover:shadow-lg hover:shadow-slate-400 px-5 py-2 rounded-lg text-white " >Register Now!</button>
 					<div className="flex items-center gap-2 flex-col">
 						<div className="flex items-center   gap-3 opacity-60 mx-auto">
-							<div className="h-0.5 w-36 md:w-44 rounded-xl bg-darkbg" /> or 
+							<div className="h-0.5 w-36 md:w-44 rounded-xl bg-darkbg" /> or
 							<div className="h-0.5 w-36 md:w-44 rounded-xl bg-darkbg" />
 						</div>
 						<Link href="/lbrf/picture" className="bg-gradient-to-t from-blue-800 to-[#2F92E5] hover:border-white hover:border-2 hover:shadow-lg hover:shadow-slate-400 px-5 py-2 rounded-lg text-white " >Upload your Bible reading picture</Link>
