@@ -148,12 +148,14 @@ const Page = () => {
 			</div>
 			<div className="flex flex-col items-center  md:pt-14 bg-[#dddcef] h-screen">
 				<Image src="/images/logo_fiesta.png" className="w-36 md:w-40" alt="banner" width={500} height={500} />
-				<div className="">
-					<a onClick={loginWithKingsChat} className="bg-gradient-to-t from-blue-800 to-[#2F92E5] font-lucky tracking-wider cursor-pointer px-7 py-4 rounded-xl text-white mt-10 border-2 border-white hover:shadow-md hover:shadow-slate-400" target="_blank"> Register with KingsChat</a>
+				
+				<div className="flex gap-4 flex-col items-center ">
+						<Link href="/lbrf/picture" className="bg-gradient-to-t from-lime-800 to-lime-500 hover:border-white hover:border-2 hover:shadow-lg hover:shadow-slate-400 px-5 py-4 font-lucky rounded-lg text-white  text-lg" >Upload your Bible reading picture</Link>
+					<a onClick={loginWithKingsChat} className="bg-gradient-to-t from-blue-800 to-[#2F92E5] font-lucky tracking-wider cursor-pointer px-7 py-4 rounded-xl text-white  border-2 border-white hover:shadow-md hover:shadow-slate-400" target="_blank"> Register with KingsChat</a>
 
 				</div>
 				<div className="flex items-center pt-6  gap-3 opacity-60 mx-auto"><div className="h-0.5 w-36 md:w-44 rounded-xl bg-darkbg" /> or <div className="h-0.5 w-36 md:w-44 rounded-xl bg-darkbg" /></div>
-				<div className="flex  flex-col gap-3 w-full px-8 md:px-20 lg:px-36">
+				<div className="flex  flex-col gap-4 w-full px-8 md:px-20 lg:px-36">
 					<div className="flex flex-col gap-1 w-full">
 						<label>Email address</label>
 						<input name="email" className="border-0 outline-0 py-2 focus:border-b-2 border-b focus:border-darkbg border-slate-500 bg-transparent  text-darkbg" required type="email" placeholder="Enter Email address" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -167,13 +169,7 @@ const Page = () => {
 						<div className="flex items-center gap-3 py-2 border-b border-slate-500">@<input name="name" type="text" className="border-0 outline-0  bg-transparent text-darkbg w-full" placeholder="Enter your kingsChat username" value={kingsChatHandle} onChange={(e) => setKingsChatHandle(e.target.value)} /></div>
 					</div>
 					<button onClick={handleRegister} className="bg-gradient-to-t from-[#F82F00] to-[#F89108] hover:border-white hover:border-2 hover:shadow-lg hover:shadow-slate-400 px-5 py-2 rounded-lg text-white " >Register Now!</button>
-					<div className="flex items-center gap-2 flex-col">
-						<div className="flex items-center   gap-3 opacity-60 mx-auto">
-							<div className="h-0.5 w-36 md:w-44 rounded-xl bg-darkbg" /> or
-							<div className="h-0.5 w-36 md:w-44 rounded-xl bg-darkbg" />
-						</div>
-						<Link href="/lbrf/picture" className="bg-gradient-to-t from-blue-800 to-[#2F92E5] hover:border-white hover:border-2 hover:shadow-lg hover:shadow-slate-400 px-5 py-2 rounded-lg text-white " >Upload your Bible reading picture</Link>
-					</div>
+					
 				</div>
 
 			</div>
