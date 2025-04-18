@@ -2,6 +2,7 @@ import React from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const ImageCarousel = ({carousels}) => {
      const [emblaRef] = useEmblaCarousel({
@@ -14,15 +15,15 @@ const ImageCarousel = ({carousels}) => {
          <div className="embla" ref={emblaRef}>
            <div className="embla__container  ">
            {carousels.map((image, index) => (
-             <div key={index} className="embla__slide ">
+             <Link href={image.link ? image.link: ""} key={index} className="embla__slide ">
                <Image 
                src={image.src} 
                alt={image.title} 
                width={500}
                height={500}
-               className="embla__slide__img w-fit mx-auto" 
+               className="embla__slide__img md:h-[400px] h-fit w-fit mx-auto" 
                />
-             </div>
+             </Link>
            ))}
            </div>
          </div>

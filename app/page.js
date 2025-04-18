@@ -5,12 +5,13 @@ import Link from 'next/link';
 import DailyVerse from "./components/Dailyverse";
 import { useEffect, useState } from "react";
 import FloatingAnimation from "./utils/FloatingAnimation";
-import Swiper from "./components/Swiper";
+// import Swiper from "./components/Swiper";
 import Tab from "./components/Tab";
 import AnimatedCounter from "./utils/CountingAnimation";
 import InteractiveFigures from "./components/InteractiveFigures";
 import Footer from "@/app/components/Footer";
 import BottomBar from "@/app/components/MobileNav";
+import Swiper from '@/app/components/Swiper';
 
 const baseUrl = "https://lets-read-the-bible.vercel.app"
 
@@ -37,6 +38,27 @@ export default function Home() {
   
     fetchVideos();
   }, []);
+
+  const card = [
+    {
+      title: "fiesta 4",
+      src: "/images/banner3.png",
+      link: "/lbrf",
+    },
+    {
+      title: "fiesta 1",
+      src: "/images/comics.png"
+    },
+    {
+      title: "fiesta 3",
+      src: "/images/comics2.png"
+    },
+    {
+      title: "fiesta 2",
+      src: "/images/year.jpg"
+    },
+
+  ]
 
   return (
     <div className="">
@@ -75,9 +97,10 @@ export default function Home() {
     
 
       <div className="bg-gradient-to-b from-[#EBD7D2] to-white">
-        <Link  href="/lbrf">
+        {/* <Link  href="/lbrf">
         <Image src="/images/banner3.png" alt="sponsor LBR" className="mx-auto md:py-10 md:w-[85%]" width={1000} height={1000} />
-        </Link>
+        </Link> */}
+        <Swiper carousels={card} />
       </div>
 
       <Tab />
