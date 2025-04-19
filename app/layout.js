@@ -2,7 +2,7 @@ import "./globals.css";
 import Header from "./components/Header";
 import BottomBar from "@/app/components/MobileNav";
 import { Suspense } from 'react'
-// import CountdownPopup from "./components/Redirect";
+import CountdownPopup from "./components/Redirect";
 
 export const metadata = {
   title: "Lets Read the Bible Campaign",
@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
       <body className={`antialiased`}>
         <canvas id="world" width="0" height="0"></canvas>
         <Header />
-        {/* <CountdownPopup  redirectUrl="https://lovetoons.tv/livetv"  /> */}
+        <CountdownPopup  redirectUrl="https://lovetoons.tv/livetv"  />
           <Suspense>
             {children}
           </Suspense>
