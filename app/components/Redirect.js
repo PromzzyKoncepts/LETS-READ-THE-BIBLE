@@ -67,7 +67,7 @@ export default function CountdownPopup({ redirectUrl }) {
         
         {/* Content */}
         <div className="relative z-10 text-center text-slate-800">
-            <Image src="/images/live.jpg" className="w-[70%] rounded-xl mx-auto h-fit" width={500} height={500} alt="card" />
+            <Image src="/images/rebroadcast.jpg" className="w-[70%] rounded-xl mx-auto h-fit" width={500} height={500} alt="card" />
           <h2 className="text-4xl font-bold  py-4 font-lucky">Bible reading Fiesta is <span className="text-lime-600">LIVE</span> </h2>
           <p className=" text-lg mb-0">
             Redirecting you to <span className="font-bold">Fiesta Livestream</span> in...
