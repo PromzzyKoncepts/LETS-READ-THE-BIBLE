@@ -181,9 +181,9 @@ const Page = () => {
   return (
     <div
       style={{ backgroundImage: `url(/images/pngbg.png)`, backgroundSize: 'cover' }}
-      className="md:px-24 px-5 py-20 bg-[#b4c6c6] font-sniglet min-h-screen"
+      className="md:px-24 px-5 py-5 md:py-20 bg-[#b4c6c6] font-sniglet min-h-screen"
     >
-      <h1 className="text-2xl md:text-7xl text-darkbg text-center font-lucky py-5">Bible Reading Videos</h1>
+      <h1 className="text-3xl md:text-7xl text-darkbg text-center font-lucky py-5">Bible Reading Videos</h1>
 
       {/* Book List with Random Background Colors */}
       <div className="relative flex items-center justify-center">
