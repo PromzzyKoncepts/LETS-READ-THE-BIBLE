@@ -77,21 +77,31 @@ const VideoDetailsPage = () => {
           const foundVideo = response?.data?.data?.find(
             v => `ext-${v.id}` === videoId
           );
-          console.log(foundVideo, "foundVideo")
           
           if (foundVideo) {
+            // Parse book and chapter from biblechapter
+            const [book, chapterVerse] = foundVideo.biblechapter.split(' ');
+            const [chapterStart] = chapterVerse.split(':');
+            
             setVideo({
               video_url: foundVideo.link,
-              book: foundVideo.biblechapter,
+              book: book,
+              chapter_start: parseInt(chapterStart),
+              biblechapter: foundVideo.biblechapter,
               // Add other necessary fields
             });
+            
+            // Set chapters for external videos
+            const chapters = getChaptersInRange(book, parseInt(chapterStart), parseInt(chapterStart));
+            setChapters(chapters);
+            setSelectedChapter(parseInt(chapterStart));
           }
         } else {
-          // Original internal video handling
+          // Original internal video handling remains the same
           const response = await axios.get(`${baseUrl}/api/videos/${videoId}`);
           if (response.status !== 200) throw new Error("Failed to fetch video details");
           setVideo(response?.data);
-          const chapters = getChaptersInRange(response?.data?.book, response?.data?.chapter_start, response?.data?.chapter_end);
+          const chapters = getChaptersInRange(response?.data?.book, response?.data?.chapter_start, response?.data?.chapter_start);
           setChapters(chapters);
           setSelectedChapter(response.data.chapter_start);
         }
@@ -101,7 +111,7 @@ const VideoDetailsPage = () => {
         setLoading(false);
       }
     };
-
+  
     fetchVideo();
   }, [videoId]);
 
@@ -245,9 +255,9 @@ const VideoDetailsPage = () => {
   return (
     <div style={{ backgroundImage: `url(/images/pngbg.png)`, backgroundSize: 'cover' }}
       className="px-5 bg-[#F4C2C2] md:px-24 pt-5 md:pt-24 pb-10 min-h-screen">
-      <div className={`${videoId.startsWith('ext-') ? "w-full" : "md:grid md:grid-cols-3 gap-5"}   items-start`}>
+      <div className={`md:grid md:grid-cols-3 gap-5   items-start`}>
         <div
-          className={` col-span-2 relative bg-[#F4C2C2] bg-opacity-50 w-full ${!videoId.startsWith('ext-')  ? "md:w-fit h-full" : "md:w-[70%] mx-auto h-[40vh] md:h-[70vh]"}  shadow-lg shadow-darkbg border-2 border-white rounded-3xl overflow-hidden`}
+          className={` col-span-2 relative bg-[#F4C2C2] bg-opacity-50 w-full md:w-full mx-auto h-[40vh] md:h-[75vh]  shadow-lg shadow-darkbg border-2 border-white rounded-3xl overflow-hidden`}
           onClick={handleHover}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -339,7 +349,7 @@ const VideoDetailsPage = () => {
 
 
         {/* do the component here please */}
-        {video.kid_fullname && verses && (<div className="bg-white font-sniglet rounded-3xl md:mt-0 mt-5">
+        <div className="bg-white font-sniglet rounded-3xl md:mt-0 mt-5">
           <div className="flex space-x-2 font-lucky text-lg md:w-[25rem] overflow-x-auto">
             {chapters.map((chapter, index) => (
               <button 
@@ -361,7 +371,7 @@ const VideoDetailsPage = () => {
               ))}
             </ul>
           </div>
-        </div>)}
+        </div>
       </div>
       <div className="bg-white bg-opacity-70 rounded-3xl px-4 md:px-10 pb-10 md:pb-7  py-5 mt-10">
         <h2 className="font-lucky text-center text-3xl md:text-5xl pb-5 ">Explore More Videos</h2>
