@@ -42,8 +42,8 @@ export default function Home() {
   const card = [
     {
       title: "fiesta 4",
-      src: "/images/banner3.png",
-      link: "/lbrf",
+      src: "/images/DDDD.jpg",
+      // link: "/lbrf",
     },
     {
       title: "fiesta 1",
