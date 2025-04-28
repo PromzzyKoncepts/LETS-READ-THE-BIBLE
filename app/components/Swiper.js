@@ -9,7 +9,7 @@ const ImageCarousel = ({carousels}) => {
      loop: true,
      align: 'center',
      skipSnaps: false,
-     }, [ Autoplay({ playOnInit: true, delay: 3000 })]);
+     }, [ Autoplay({ playOnInit: true, delay: 5000 })]);
     
       return (
          <div className="embla" ref={emblaRef}>

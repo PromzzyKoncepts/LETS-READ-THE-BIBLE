@@ -41,16 +41,21 @@ export default function Home() {
 
   const card = [
     {
-      title: "fiesta 4",
-      src: "/images/banner3.png",
-      link: "/lbrf",
+      title: "Your loveworld advert card",
+      src: "/images/DDDD.jpg",
+      // link: "/lbrf",
     },
     {
-      title: "fiesta 1",
+      title: "communion card",
+      src: "/images/communion.png",
+      // link: "/lbrf",
+    },
+    {
+      title: "Comics 1",
       src: "/images/comics.png"
     },
     {
-      title: "fiesta 3",
+      title: "Comics 3",
       src: "/images/comics2.png"
     },
     {
