@@ -19,8 +19,8 @@ const ImageCarousel = ({carousels}) => {
                <Image 
                src={image.src} 
                alt={image.title} 
-               width={500}
-               height={500}
+               width={1500}
+               height={1500}
                className="embla__slide__img md:h-[400px] h-fit w-fit mx-auto" 
                />
              </Link>
