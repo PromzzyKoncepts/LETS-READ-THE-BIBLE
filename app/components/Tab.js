@@ -7,10 +7,10 @@ const Tab = () => {
 		{
 			id: 2,
 			icon: "/images/boyread.png",
-			title: "Upload Picture",
+			title: "READ",
 			content:
-				"Join this Glorious fiesta! Join our 'Let's Read the Bible' fiesta by uploading a clear image of your kid(s) reading the Bible!",
-				link:"lbrf/picture",
+				"Join this Glorious fiesta! Join our 'Let's Read the Bible' fiesta by reading a chapter of the bible daily!",
+				link:"read",
 			btn: "Upload now",
 		},
 		{
