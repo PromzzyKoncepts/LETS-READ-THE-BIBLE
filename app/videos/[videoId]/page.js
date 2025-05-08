@@ -13,8 +13,8 @@ import { RiForward10Fill } from "react-icons/ri";
 import { FaRotateLeft } from "react-icons/fa6";
 import { getChapter, getChaptersInRange, getVersesInChapter } from "@/app/components/read/readApi";
 
-// const baseUrl = "http://localhost:3000"
-const baseUrl = "https://lets-read-the-bible.vercel.app"
+const baseUrl = "http://localhost:3000"
+// const baseUrl = "https://lets-read-the-bible.vercel.app"
 
 
 const VideoDetailsPage = () => {
@@ -46,6 +46,40 @@ const VideoDetailsPage = () => {
     setIsVisible(true);
   }, []);
 
+
+  const fetchAllExternalVideos = async () => {
+    try {
+      let allVideos = [];
+      let page = 1;
+      let hasMore = true;
+  
+      while (hasMore) {
+        const response = await axios.get(
+          `https://lovetoons.org/api/datafile/allbiblevideos.php?page=${page}`
+        );
+  
+        if (response.data?.data?.length > 0) {
+          const formattedVideos = response.data.data.map(video => ({
+            id: `ext-${video.id}`,
+            url: video.link,
+            book: video.biblechapter,
+            thumbnail: video.image || '/images/default-video-thumb.jpg'
+          }));
+  
+          allVideos = [...allVideos, ...formattedVideos];
+          page++;
+        } else {
+          hasMore = false;
+        }
+      }
+  
+      return allVideos;
+    } catch (err) {
+      console.error("Error fetching external videos:", err);
+      throw err;
+    }
+  };
+
   useEffect(() => {
     const fetchVideos = async () => {
       try {
@@ -66,35 +100,81 @@ const VideoDetailsPage = () => {
 
 
   useEffect(() => {
+    // const fetchVideo = async () => {
+    //   try {
+    //     if (videoId.startsWith('ext-')) {
+    //       const timestamp = Date.now();
+    //       const response = await axios.get(
+    //         `https://lovetoons.org/api/datafile/allbiblevideos.php?t=${timestamp}`
+    //       );
+          
+    //       const foundVideo = response?.data?.data?.find(
+    //         v => `ext-${v.id}` === videoId
+    //       );
+    //       console.log(response?.data?.data)
+          
+    //       if (foundVideo) {
+    //         // Parse book and chapter from biblechapter
+    //         const [book, chapterVerse] = foundVideo.biblechapter.split(' ');
+    //         const [chapterStart] = chapterVerse.split(':');
+            
+    //         setVideo({
+    //           video_url: foundVideo.link,
+    //           book: book,
+    //           chapter_start: parseInt(chapterStart),
+    //           biblechapter: foundVideo.biblechapter,
+    //           // Add other necessary fields
+    //         });
+            
+    //         // Set chapters for external videos
+    //         const chapters = getChaptersInRange(book, parseInt(chapterStart), parseInt(chapterStart));
+    //         setChapters(chapters);
+    //         setSelectedChapter(parseInt(chapterStart));
+    //       }
+    //     } else {
+    //       // Original internal video handling remains the same
+    //       const response = await axios.get(`${baseUrl}/api/videos/${videoId}`);
+    //       if (response.status !== 200) throw new Error("Failed to fetch video details");
+    //       setVideo(response?.data);
+    //       const chapters = getChaptersInRange(response?.data?.book, response?.data?.chapter_start, response?.data?.chapter_start);
+    //       setChapters(chapters);
+    //       setSelectedChapter(response.data.chapter_start);
+    //     }
+    //   } catch (error) {
+    //     setError(error.message);
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
+  
+
     const fetchVideo = async () => {
       try {
         if (videoId.startsWith('ext-')) {
-          const timestamp = Date.now();
-          const response = await axios.get(
-            `https://lovetoons.org/api/datafile/allbiblevideos.php?t=${timestamp}`
-          );
+          // Fetch ALL external videos
+          const allExternalVideos = await fetchAllExternalVideos();
           
-          const foundVideo = response?.data?.data?.find(
-            v => `ext-${v.id}` === videoId
-          );
+          // Find the specific video in all fetched videos
+          const foundVideo = allExternalVideos.find(v => v.id === videoId);
           
           if (foundVideo) {
             // Parse book and chapter from biblechapter
-            const [book, chapterVerse] = foundVideo.biblechapter.split(' ');
+            const [book, chapterVerse] = foundVideo.book.split(' ');
             const [chapterStart] = chapterVerse.split(':');
             
             setVideo({
-              video_url: foundVideo.link,
+              video_url: foundVideo.url,
               book: book,
               chapter_start: parseInt(chapterStart),
-              biblechapter: foundVideo.biblechapter,
-              // Add other necessary fields
+              biblechapter: foundVideo.book,
             });
             
             // Set chapters for external videos
             const chapters = getChaptersInRange(book, parseInt(chapterStart), parseInt(chapterStart));
             setChapters(chapters);
             setSelectedChapter(parseInt(chapterStart));
+          } else {
+            throw new Error("Video not found");
           }
         } else {
           // Original internal video handling remains the same
@@ -111,7 +191,6 @@ const VideoDetailsPage = () => {
         setLoading(false);
       }
     };
-  
     fetchVideo();
   }, [videoId]);
 
