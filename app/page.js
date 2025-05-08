@@ -45,11 +45,11 @@ export default function Home() {
       src: "/images/DDDD.jpg",
       // link: "/lbrf",
     },
-    // {
-    //   title: "communion card",
-    //   src: "/images/communion.png",
-    //   // link: "/lbrf",
-    // },
+    {
+      title: "Gratias card",
+      src: "/images/GAFL_WEB.png",
+      // link: "/lbrf",
+    },
     {
       title: "Comics 1",
       src: "/images/comics.png"
