@@ -22,6 +22,7 @@
     "aos": "^2.3.4",
     "axios": "^1.7.9",
     "canvallax": "^2.0.0",
+    "canvas-confetti": "^1.9.3",
     "cloudinary": "^2.6.0",
     "compass": "^0.1.1",
     "dompurify": "^3.2.3",
