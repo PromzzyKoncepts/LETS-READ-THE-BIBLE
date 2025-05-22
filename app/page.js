@@ -41,8 +41,13 @@ export default function Home() {
 
   const card = [
     {
-      title: "Your loveworld advert card",
-      src: "/images/DDDD.jpg",
+      title: "Praise night",
+      src: "/images/praise-night.jpeg",
+      // link: "/lbrf",
+    },
+    {
+      title: "Tick Talk",
+      src: "/images/ticktalk.png",
       // link: "/lbrf",
     },
     {
