@@ -40,11 +40,11 @@ export default function Home() {
   }, []);
 
   const card = [
-    {
-      title: "Praise night",
-      src: "/images/praise-night.jpeg",
-      // link: "/lbrf",
-    },
+    // {
+    //   title: "Praise night",
+    //   src: "/images/praise-night.jpeg",
+    //   // link: "/lbrf",
+    // },
     {
       title: "Tick Talk",
       src: "/images/ticktalk.png",
