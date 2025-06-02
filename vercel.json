@@ -8,13 +8,6 @@
           { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" }
         ]
       }
-    ],
-    "redirects": [
-    {
-      "source": "/",
-      "destination": "https://letsreadthebible.club",
-      "permanent": false
-    }
-  ]
+    ]
 
   }
