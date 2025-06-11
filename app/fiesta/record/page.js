@@ -11,8 +11,8 @@ import { IoVideocam } from "react-icons/io5";
 
 
 const mimeType = "video/mp4";
-const baseUrl = "http://localhost:3000"
-// const baseUrl = "https://lets-read-the-bible.vercel.app"
+// const baseUrl = "http://localhost:3000"
+const baseUrl = "https://letsreadthebible.club"
 
 const VideoRecorder = () => {
   // const { uploadFile, uploadProgress } = useFileUpload();
