@@ -34,11 +34,11 @@ const Tab = () => {
 		{
 			id: 5,
 			icon: "/images/child.png",
-			title: "avatar",
+			title: "Games",
 			content:
-				"Create your unique campaign flyer! Personalize your FIESTA avatar and share it with your community to encourage everyone to join the movement.",
-				link:"avatar",
-			btn: "Create my avatar",
+				"Learn, play and have fun with our engaging, interactive games sure to leave you entertained and educated.",
+				link:"games",
+			btn: "Play now",
 		},
 	];
 

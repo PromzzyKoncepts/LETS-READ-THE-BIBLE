@@ -50,11 +50,11 @@ export default function Home() {
       src: "/images/ticktalk.png",
       // link: "/lbrf",
     },
-    {
-      title: "Gratias card",
-      src: "/images/GAFL_WEB.png",
-      // link: "/lbrf",
-    },
+    // {
+    //   title: "Gratias card",
+    //   src: "/images/GAFL_WEB.png",
+    //   // link: "/lbrf",
+    // },
     {
       title: "Comics 1",
       src: "/images/comics.png"
