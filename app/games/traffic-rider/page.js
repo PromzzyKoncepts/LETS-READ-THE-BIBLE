@@ -1,19 +1,16 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 const TrafficRiderGame = () => {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [proxyUrl, setProxyUrl] = useState<string | null>(null);
+  const iframeRef = useRef(null);
 
   useEffect(() => {
-    // Encode the game URL for the proxy
-    const gameUrl = encodeURIComponent('https://www.crazygames.com/embed/traffic-rider-vvq');
-    setProxyUrl(`/api/proxy?url=${gameUrl}`);
-
+    // Adjust iframe height based on window resize
     const handleResize = () => {
       if (iframeRef.current) {
+        // Calculate height based on viewport, leaving some space for UI
         const viewportHeight = window.innerHeight;
-        const calculatedHeight = Math.min(viewportHeight - 100, 800);
+        const calculatedHeight = Math.min(viewportHeight - 100, 800); // Max height 800px
         iframeRef.current.style.height = `${calculatedHeight}px`;
       }
     };
@@ -21,9 +18,10 @@ const TrafficRiderGame = () => {
     // Set initial height
     handleResize();
 
-    // Add event listener for window resize
+    // Add event listener
     window.addEventListener('resize', handleResize);
 
+    // Cleanup
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -31,25 +29,29 @@ const TrafficRiderGame = () => {
 
   return (
     <div className="game-container">
-      {proxyUrl ? (
-        <iframe
-          ref={iframeRef}
-          src={proxyUrl}
-          style={{
-            width: '100%',
-            height: '600px', // Initial height before resize calculation
-            border: 'none',
-            overflow: 'hidden',
-          }}
-          allow="gamepad *; fullscreen *"
-          allowFullScreen
-          title="Traffic Rider Game"
-          loading="eager"
-          sandbox="allow-scripts allow-same-origin allow-popups"
-        />
-      ) : (
-        <div>Loading game...</div>
-      )}
+      <iframe
+        ref={iframeRef}
+        src="https://www.crazygames.com/embed/traffic-rider-vvq"
+        style={{
+          width: '100%',
+          height:'100vh',
+          border: 'none',
+          // borderRadius: '8px',
+          overflow: 'hidden',
+        }}
+        allow="gamepad *; fullscreen *"
+        allowFullScreen
+        title="Traffic Rider Game"
+        loading="eager"
+      />
+      
+      <style jsx>{`
+        .game-container {
+          max-width: 100%;
+          margin: 0 auto;
+          // padding: 20px;
+        }
+      `}</style>
     </div>
   );
 };

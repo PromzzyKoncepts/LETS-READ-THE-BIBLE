@@ -7,6 +7,9 @@
   --foreground: #171717;
 }
 
+.videoAdUi, .videoAdUiTopBar, .videoAdUiTopBarWithGradients, .videoAdUiTopBarTransitions, .enigma-watermark {
+  display: none !important;
+}
 
 .example::-webkit-scrollbar {
   width: 5px;
