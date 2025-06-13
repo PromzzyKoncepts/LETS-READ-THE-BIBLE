@@ -1,16 +1,19 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const TrafficRiderGame = () => {
-  const iframeRef = useRef(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [proxyUrl, setProxyUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    // Adjust iframe height based on window resize
+    // Encode the game URL for the proxy
+    const gameUrl = encodeURIComponent('https://www.crazygames.com/embed/traffic-rider-vvq');
+    setProxyUrl(`/api/proxy?url=${gameUrl}`);
+
     const handleResize = () => {
       if (iframeRef.current) {
-        // Calculate height based on viewport, leaving some space for UI
         const viewportHeight = window.innerHeight;
-        const calculatedHeight = Math.min(viewportHeight - 100, 800); // Max height 800px
+        const calculatedHeight = Math.min(viewportHeight - 100, 800);
         iframeRef.current.style.height = `${calculatedHeight}px`;
       }
     };
@@ -18,10 +21,9 @@ const TrafficRiderGame = () => {
     // Set initial height
     handleResize();
 
-    // Add event listener
+    // Add event listener for window resize
     window.addEventListener('resize', handleResize);
 
-    // Cleanup
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -29,29 +31,25 @@ const TrafficRiderGame = () => {
 
   return (
     <div className="game-container">
-      <iframe
-        ref={iframeRef}
-        src="https://www.crazygames.com/embed/traffic-rider-vvq"
-        style={{
-          width: '100%',
-          height:'100%',
-          border: 'none',
-          // borderRadius: '8px',
-          overflow: 'hidden',
-        }}
-        allow="gamepad *; fullscreen *"
-        allowFullScreen
-        title="Traffic Rider Game"
-        loading="eager"
-      />
-      
-      <style jsx>{`
-        .game-container {
-          max-width: 100%;
-          margin: 0 auto;
-          // padding: 20px;
-        }
-      `}</style>
+      {proxyUrl ? (
+        <iframe
+          ref={iframeRef}
+          src={proxyUrl}
+          style={{
+            width: '100%',
+            height: '600px', // Initial height before resize calculation
+            border: 'none',
+            overflow: 'hidden',
+          }}
+          allow="gamepad *; fullscreen *"
+          allowFullScreen
+          title="Traffic Rider Game"
+          loading="eager"
+          sandbox="allow-scripts allow-same-origin allow-popups"
+        />
+      ) : (
+        <div>Loading game...</div>
+      )}
     </div>
   );
 };
