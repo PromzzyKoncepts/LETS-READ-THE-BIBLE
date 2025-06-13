@@ -10,8 +10,12 @@
 .videoAdUi, .videoAdUiTopBar, .videoAdUiTopBarWithGradients, .videoAdUiTopBarTransitions, .enigma-watermark {
   display: none !important;
 }
-.MuiGrid-root, .MuiGrid-container, .MuiGrid-wrap-xs-nowrap, .css-1xe247z {
+ .MuiGrid-container, .MuiGrid-wrap-xs-nowrap, .css-1xe247z {
   display: none !important;
+}
+
+.css-1h1938b {
+  display: none!important;
 }
 
 .example::-webkit-scrollbar {
