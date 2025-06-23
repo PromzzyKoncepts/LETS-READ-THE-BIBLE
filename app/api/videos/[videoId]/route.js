@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import Video from "@/app/api/models/Video"; // Adjust the path to your Video model
 import dbConnect from "@/app/lib/mongodb"; // Adjust the path to your dbConnect function
+import ApprovedVideo from "../../models/ApprovedVideo";
 
 export async function GET(request, { params }) {
   const { videoId } = await params;
@@ -10,12 +11,17 @@ export async function GET(request, { params }) {
   try {
     await dbConnect();
 
-    // Find the video by its ID
-    const video = await Video.findById(videoId);
-    if (!video) {
-      return NextResponse.json({ error: "Video not found" }, { status: 404 });
+    // First check the ApprovedVideo collection
+    const approvedVideo = await ApprovedVideo.findById(videoId);
+    if (approvedVideo) {
+      return NextResponse.json(approvedVideo, { status: 200 });
     }
-    console.log(video)
+
+    // If not found in ApprovedVideo, check the Video collection
+    const video = await Video.findById(videoId);
+    if (video) {
+      return NextResponse.json(video, { status: 200 });
+    }
     return NextResponse.json(video, { status: 200 });
   } catch (error) {
     console.error("Error fetching video:", error);

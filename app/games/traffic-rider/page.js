@@ -20,7 +20,7 @@ const TrafficRiderGame = () => {
           // Attempt to remove watermarks (may not work due to CORS)
           const iframeDoc = iframeRef.current.contentDocument || iframeRef.current.contentWindow?.document;
           if (iframeDoc) {
-            const watermarkElements = iframeDoc.querySelectorAll('.watermark, .footer, .branding, .MuiGrid-root, .MuiGrid-container, .MuiGrid-wrap-xs-nowrap, .css-1xe247z');
+            const watermarkElements = iframeDoc.querySelectorAll('.watermark, .footer, .branding, .css-1h1938b, .MuiGrid-container, .MuiGrid-wrap-xs-nowrap, .css-1xe247z');
             watermarkElements.forEach(el => el.remove());
             
             const gameContainer = iframeDoc.querySelector('#game-container') || iframeDoc.body;
