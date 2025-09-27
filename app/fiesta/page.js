@@ -118,9 +118,9 @@ const Page = () => {
             <h2 className="text-2xl text-center md:text-4xl font-lucky text-[#d1942b]">
               ONE MORE THING...
             </h2>
-            <small>
+            {/* <small>
               Thank you for registering and creating your fiesta avatar
-            </small>
+            </small> */}
             <p className="text-lg text-center">
               Finally, we need you to capture and upload a quick photo of you or
               your kid(s) reading the Bible
