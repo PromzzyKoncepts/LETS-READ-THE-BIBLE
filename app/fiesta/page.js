@@ -74,7 +74,7 @@ const Page = () => {
       // Check if the popup has already been shown using session storage
       const hasPopupBeenShown = sessionStorage.getItem("hasPopupBeenShown");
       if (!hasPopupBeenShown) {
-        setViewAvatar(false); // Show the popup -- dont
+        setViewAvatar(true); // Show the popup -- dont
         sessionStorage.setItem("hasPopupBeenShown", "true"); // Mark the popup as shown
       }
     }
@@ -100,14 +100,14 @@ const Page = () => {
                 }}
                 className="border-2 border-darkbg rounded-full px-4 py-2"
               >
-                I have created mine
+                CLOSE
               </button>
-              <Link
+              {/* <Link
                 href="/avatar"
                 className="bg-darkbg rounded-full text-white px-4 py-2 hover:border-2 hover:border-white shadow-lg"
               >
                 Create my avatar
-              </Link>
+              </Link>  */}
             </div>
           </div>
         </div>
