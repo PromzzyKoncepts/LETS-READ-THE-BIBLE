@@ -89,9 +89,9 @@ const Page = () => {
               Congratulations
             </h2>
             <p>You successfully registered.</p>
-            <p className="text-lg">
+            {/* <p className="text-lg">
               Next, we recommend you to create your Bible Fiesta Avatar
-            </p>
+            </p> */}
             <div className="flex items-center gap-2 mt-3">
               <button
                 onClick={() => {
