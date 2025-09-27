@@ -287,17 +287,17 @@ const Page = () => {
           </Link>
         </div>
       </div>
-      <div className="hidden">
-        <div className="bg-gradien t-to-b bg-slate-400 mt-10 from-[#EBD7D2] to-white">
-          <Image
-            src="/images/banner3.png"
-            alt="sponsor LBR"
-            className="mx-auto md:py-10 md:w-[85%]"
-            width={1000}
-            height={1000}
-          />
-        </div>
 
+      <div className="bg-gradien t-to-b bg-slate-400 mt-10 from-[#EBD7D2] to-white">
+        <Image
+          src="/images/LBRF-SEPT-Banner.png"
+          alt="sponsor LBR"
+          className="mx-auto md:py-10 md:w-[85%]"
+          width={1000}
+          height={1000}
+        />
+      </div>
+      <div className="hidden">
         <div className="md:flex items-center hidden gap-4 justify-center my-10">
           {card.map((item) => (
             <div key={item.title} className="relative">
