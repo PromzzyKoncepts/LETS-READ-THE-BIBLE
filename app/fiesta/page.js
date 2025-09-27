@@ -74,7 +74,7 @@ const Page = () => {
       // Check if the popup has already been shown using session storage
       const hasPopupBeenShown = sessionStorage.getItem("hasPopupBeenShown");
       if (!hasPopupBeenShown) {
-        setViewAvatar(true); // Show the popup
+        setViewAvatar(false); // Show the popup -- dont
         sessionStorage.setItem("hasPopupBeenShown", "true"); // Mark the popup as shown
       }
     }
