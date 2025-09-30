@@ -190,7 +190,7 @@ const Page = () => {
             LOVETOONS BIBLE READING FIESTA
           </h2>
           <h2 className="text-xl md:text-3xl font-lucky text-[#FD3006] py-1">
-            A 24-HR BIBLE READING RENDEVOUS
+            A 72-HR BIBLE READING RENDEVOUS
           </h2>
 
           <div className="block md:hidden z-[9]">
@@ -214,7 +214,7 @@ const Page = () => {
               Don't just register, take up the mantle...
             </span>{" "}
             Join millions of children around the world in a meaningful journey
-            to read the Bible in just one day!
+            to read the Bible
           </p>
           <p className="mt-1">
             The Lovetoons Bible Reading Fiesta is an inspiring campaign aimed at
