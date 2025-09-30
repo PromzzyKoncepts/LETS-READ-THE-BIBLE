@@ -12,7 +12,6 @@ const translations = {
 
 let currentTranslation = kjvBibleJson; // Default translation
 
-
 export const setTranslation = (translation) => {
   const { setCurrentTranslation } = useBibleStore.getState();
   if (translations[translation]) {
@@ -25,7 +24,7 @@ export const setTranslation = (translation) => {
   }
 };
 
-export const data =  currentTranslation;
+export const data = currentTranslation;
 // console.log(data, "dataaaaaaaa")
 
 export const getBooks = () => {
@@ -52,16 +51,62 @@ export const getChapters = (thebook) => {
 
 export const getNewTestamentBooks = () => {
   // List of New Testament books
-  const newTestamentBooks = [
-    "Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Corinthians", "2 Corinthians",
-    "Galatians", "Ephesians", "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians",
-    "1 Timothy", "2 Timothy", "Titus", "Philemon", "Hebrews", "James", "1 Peter", "2 Peter",
-    "1 John", "2 John", "3 John", "Jude", "Revelation"
+  // const newTestamentBooks = [
+  //   "Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Corinthians", "2 Corinthians",
+  //   "Galatians", "Ephesians", "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians",
+  //   "1 Timothy", "2 Timothy", "Titus", "Philemon", "Hebrews", "James", "1 Peter", "2 Peter",
+  //   "1 John", "2 John", "3 John", "Jude", "Revelation"
+  // ];
+
+  const newTestamentBooks = [];
+
+  const oldTestamentBooks = [
+    "Genesis",
+    "Exodus",
+    "Leviticus",
+    "Numbers",
+    "Deuteronomy",
+    "Joshua",
+    "Judges",
+    "Ruth",
+    "1 Samuel",
+    "2 Samuel",
+    "1 Kings",
+    "2 Kings",
+    "1 Chronicles",
+    "2 Chronicles",
+    "Ezra",
+    "Nehemiah",
+    "Esther",
+    "Job",
+    "Psalms",
+    "Proverbs",
+    "Ecclesiastes",
+    "Song of Solomon",
+    "Isaiah",
+    "Jeremiah",
+    "Lamentations",
+    "Ezekiel",
+    "Daniel",
+    "Hosea",
+    "Joel",
+    "Amos",
+    "Obadiah",
+    "Jonah",
+    "Micah",
+    "Nahum",
+    "Habakkuk",
+    "Zephaniah",
+    "Haggai",
+    "Zechariah",
+    "Malachi",
   ];
+
+  const bibleBooks = [...oldTestamentBooks, ...newTestamentBooks];
 
   const set = new Set();
   data
-    .filter((book) => newTestamentBooks.includes(book.book_name)) // Filter by New Testament book names
+    .filter((book) => bibleBooks.includes(book.book_name)) // Filter by New Testament book names
     .map((book) => {
       const obj = {
         book_name: book.book_name,
@@ -74,12 +119,10 @@ export const getNewTestamentBooks = () => {
 
 export const getChapter = (thebook, thechapter) => {
   return data
-    .filter(
-      (book) => book.book_name === thebook && book.chapter === thechapter
-    )
+    .filter((book) => book.book_name === thebook && book.chapter === thechapter)
     .map((book) => ({
       verse: book.verse,
-      text: book.text
+      text: book.text,
     }));
 };
 
@@ -92,7 +135,7 @@ export const getChaptersInRange = (thebook, startChapter, endChapter) => {
         book.chapter <= endChapter
     )
     .reduce((acc, book) => {
-      if (!acc.some(chapter => chapter.chapter === book.chapter)) {
+      if (!acc.some((chapter) => chapter.chapter === book.chapter)) {
         acc.push({
           book_name: book.book_name,
           chapter: book.chapter,
@@ -106,17 +149,13 @@ export const getChaptersInRange = (thebook, startChapter, endChapter) => {
 
 export const getVerses = (thebook, thechapter) => {
   return data
-    .filter(
-      (book) => book.book_name === thebook && book.chapter === thechapter
-    )
+    .filter((book) => book.book_name === thebook && book.chapter === thechapter)
     .map((book) => book.verse);
 };
 
 export const getVersesInChapter = (thebook, thechapter) => {
   return data
-    .filter(
-      (book) => book.book_name === thebook && book.chapter === thechapter
-    )
+    .filter((book) => book.book_name === thebook && book.chapter === thechapter)
     .map((book) => ({ verse: book.verse, text: book.text }));
 };
 
