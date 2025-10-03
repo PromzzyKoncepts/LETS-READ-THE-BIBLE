@@ -40,7 +40,7 @@ export async function POST(req) {
 
     // Resize images
     avatar.resize({ w: 550, h: 550 }); // Resize avatar
-    userImage.resize({ w: 200, h: 200 }); // Resize user's image
+    userImage.resize({ w: 230, h: 230 }); // Resize user's image
 
     // Merge images (overlay user image on avatar)
     avatar.composite(userImage, 130, 0.5);
