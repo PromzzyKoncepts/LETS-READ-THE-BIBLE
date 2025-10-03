@@ -1,67 +1,67 @@
-'use client'
+"use client";
 
-import React, { useState, useCallback, useRef } from 'react'
-import axios from 'axios'
-import { useDropzone } from 'react-dropzone'
-import toast, { Toaster } from 'react-hot-toast'
+import React, { useState, useCallback, useRef } from "react";
+import axios from "axios";
+import { useDropzone } from "react-dropzone";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function ImageUploadPage() {
-  const [file, setFile] = useState(null)
-  const [fullName, setFullName] = useState('')
-  const [scripture, setScripture] = useState('')
-  const [isUploading, setIsUploading] = useState(false)
-  const [uploadProgress, setUploadProgress] = useState(0)
-  const fileInputRef = useRef(null)
+  const [file, setFile] = useState(null);
+  const [fullName, setFullName] = useState("");
+  const [scripture, setScripture] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const fileInputRef = useRef(null);
 
   const onDrop = useCallback((acceptedFiles) => {
     if (acceptedFiles && acceptedFiles.length > 0) {
-      handleFileSelection(acceptedFiles[0])
+      handleFileSelection(acceptedFiles[0]);
     }
-  }, [])
+  }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'image/jpeg': ['.jpeg', '.jpg'],
-      'image/png': ['.png']
+      "image/jpeg": [".jpeg", ".jpg"],
+      "image/png": [".png"],
     },
-    maxFiles: 1
-  })
+    maxFiles: 1,
+  });
 
   const handleFileSelection = (selectedFile) => {
-    if (!selectedFile.type.match('image.*')) {
-      toast.error('Please select an image file (JPEG, JPG, or PNG)')
-      return
+    if (!selectedFile.type.match("image.*")) {
+      toast.error("Please select an image file (JPEG, JPG, or PNG)");
+      return;
     }
-    setFile(selectedFile)
-  }
+    setFile(selectedFile);
+  };
 
   const handleInputChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
-      handleFileSelection(e.target.files[0])
+      handleFileSelection(e.target.files[0]);
     }
-  }
+  };
 
   const handleUpload = async () => {
     if (!file) {
-      toast.error('Please select an image to upload')
-      return
+      toast.error("Please select an image to upload");
+      return;
     }
 
     if (!fullName.trim()) {
-      toast.error('Please enter your full name')
-      return
+      toast.error("Please enter your full name");
+      return;
     }
 
-    const apiFormData = new FormData()
-    apiFormData.append('file', file)
-    apiFormData.append('name', fullName)
-    apiFormData.append('scripture', scripture)
+    const apiFormData = new FormData();
+    apiFormData.append("file", file);
+    apiFormData.append("name", fullName);
+    apiFormData.append("scripture", scripture);
 
-    setIsUploading(true)
-    setUploadProgress(0)
+    setIsUploading(true);
+    setUploadProgress(0);
 
-    const toastId = toast.loading('Uploading image...')
+    const toastId = toast.loading("Uploading image...");
 
     try {
       const timestamp = Date.now();
@@ -70,54 +70,58 @@ export default function ImageUploadPage() {
         apiFormData,
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
-            'Accept': '*/*',
+            "Content-Type": "multipart/form-data",
+            Accept: "*/*",
           },
           onUploadProgress: (progressEvent) => {
             if (progressEvent.total) {
               const progress = Math.round(
                 (progressEvent.loaded * 100) / progressEvent.total
-              )
-              setUploadProgress(progress)
-              toast.loading(`Uploading: ${progress}%`, { id: toastId })
+              );
+              setUploadProgress(progress);
+              toast.loading(`Uploading: ${progress}%`, { id: toastId });
             }
           },
         }
-      )
+      );
 
-      toast.success('Image uploaded successfully!', { id: toastId })
-      setFile(null)
-      setFullName('')
-      setScripture('')
-      setUploadProgress(0)
+      toast.success("Image uploaded successfully!", { id: toastId });
+      setFile(null);
+      setFullName("");
+      setScripture("");
+      setUploadProgress(0);
       if (fileInputRef.current) {
-        fileInputRef.current.value = ''
+        fileInputRef.current.value = "";
       }
     } catch (error) {
-      console.error('Upload error:', error)
-      toast.error('Failed to upload image', { id: toastId })
+      console.error("Upload error:", error);
+      toast.error("Failed to upload image", { id: toastId });
     } finally {
-      setIsUploading(false)
+      setIsUploading(false);
     }
-  }
+  };
 
   const triggerFileInput = () => {
     if (fileInputRef.current) {
-      fileInputRef.current.click()
+      fileInputRef.current.click();
     }
-  }
+  };
 
   return (
     <div className="min-h-screen font sniglet bg-gray-200 flex md:items-center justify-center p-4">
       <Toaster position="top-center" />
-      
+
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-2xl font-bold text-darkbg mb-6 font-lucky">Upload Image</h1>
-        
+        <h1 className="text-2xl font-bold text-darkbg mb-6 font-lucky">
+          Upload Image
+        </h1>
+
         <div
           {...getRootProps()}
           className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
-            isDragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-400'
+            isDragActive
+              ? "border-blue-500 bg-blue-50"
+              : "border-gray-300 hover:border-blue-400"
           } mb-6`}
         >
           <input {...getInputProps()} />
@@ -182,9 +186,9 @@ export default function ImageUploadPage() {
               </div>
               <button
                 onClick={() => {
-                  setFile(null)
+                  setFile(null);
                   if (fileInputRef.current) {
-                    fileInputRef.current.value = ''
+                    fileInputRef.current.value = "";
                   }
                 }}
                 className="text-red-500 hover:text-red-700"
@@ -209,7 +213,10 @@ export default function ImageUploadPage() {
         )}
 
         <div className="mb-6">
-          <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="fullName"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Your Full Name
           </label>
           <input
@@ -223,7 +230,10 @@ export default function ImageUploadPage() {
           />
         </div>
         <div className="mb-6">
-          <label htmlFor="scripture" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="scripture"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Scripture read
           </label>
           <input
@@ -232,7 +242,7 @@ export default function ImageUploadPage() {
             value={scripture}
             onChange={(e) => setScripture(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            placeholder="John 3:16"
+            placeholder="Genesis 3:16"
             disabled={isUploading}
           />
         </div>
@@ -242,13 +252,13 @@ export default function ImageUploadPage() {
           disabled={isUploading || !file || !fullName.trim()}
           className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
             isUploading || !file || !fullName.trim()
-              ? 'bg-blue-300 cursor-not-allowed'
-              : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
+              ? "bg-blue-300 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           }`}
         >
-          {isUploading ? 'Uploading...' : 'Upload Image'}
+          {isUploading ? "Uploading..." : "Upload Image"}
         </button>
       </div>
     </div>
-  )
+  );
 }

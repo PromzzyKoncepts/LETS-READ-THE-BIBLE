@@ -291,7 +291,7 @@ const Page = () => {
       <div className="bg-gradien t-to-b bg-slate-400 mt-10 from-[#EBD7D2] to-white">
         <Link href="/lbrf">
           <Image
-            src="/images/LBRF-SEPT-Banner.png"
+            src="/images/LBRF-SEPT-Banner-1.png"
             alt="sponsor LBR"
             className="mx-auto md:py-10 md:w-[85%]"
             width={1000}
