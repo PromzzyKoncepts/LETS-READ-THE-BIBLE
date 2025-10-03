@@ -43,7 +43,7 @@ export async function POST(req) {
     userImage.resize({ w: 272, h: 272 }); // Resize user's image
 
     // Merge images (overlay user image on avatar)
-    avatar.composite(userImage, 130, 82);
+    avatar.composite(userImage, 130.5, 82);
 
     const mergedImageBase64 = await avatar.getBase64(JimpMime.png, {
       quality: 50,
