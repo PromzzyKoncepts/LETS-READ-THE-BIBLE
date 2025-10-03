@@ -32,23 +32,46 @@ export async function POST(req) {
 
     // Load the avatar image from Cloudinary
     // const avatarUrl = "https://res.cloudinary.com/dgbeonqpw/image/upload/v1742230506/1000679214_thowre.png";
+    // const avatarUrl = "https://lovetoons.org/img/zzf.png";
+
+    // const avatar = await Jimp.read(avatarUrl);
+
+    // // Load the user's image from the buffer
+    // const userImage = await Jimp.read(userImageBuffer);
+
+    // // Resize images
+    // avatar.resize({ w: 550, h: 550 }); // Resize avatar
+    // userImage.resize({ w: 290, h: 290 }); // Resize user's image
+
+    // // Merge images (overlay user image on avatar)
+    // avatar.composite(userImage, 130, 190.5);
+
+    // const mergedImageBase64 = await avatar.getBase64(JimpMime.png, {
+    //   quality: 50,
+    // }); // Explicitly specify MIME type
+
     const avatarUrl = "https://lovetoons.org/img/zzf.png";
 
     const avatar = await Jimp.read(avatarUrl);
-
-    // Load the user's image from the buffer
     const userImage = await Jimp.read(userImageBuffer);
 
-    // Resize images
-    avatar.resize({ w: 550, h: 550 }); // Resize avatar
-    userImage.resize({ w: 290, h: 290 }); // Resize user's image
+    // Resize both
+    avatar.resize({ w: 550, h: 550 });
+    userImage.resize({ w: 290, h: 290 });
 
-    // Merge images (overlay user image on avatar)
-    avatar.composite(userImage, 130, 190.5);
+    // Create a new canvas same size as avatar
+    const canvas = new Jimp(550, 550, 0x00000000); // transparent background
 
-    const mergedImageBase64 = await avatar.getBase64(JimpMime.png, {
+    // First put user image on canvas (behind)
+    canvas.composite(userImage, 130, 100.5);
+
+    // Then put avatar on top (foreground)
+    canvas.composite(avatar, 0, 0);
+
+    // Export
+    const mergedImageBase64 = await canvas.getBase64(Jimp.MIME_PNG, {
       quality: 50,
-    }); // Explicitly specify MIME type
+    });
 
     // Upload the final merged image to Cloudinary
     const AvatarResult = await cloudinary.uploader.upload(
