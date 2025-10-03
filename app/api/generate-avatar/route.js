@@ -32,7 +32,7 @@ export async function POST(req) {
 
     // Load the avatar image from Cloudinary
     ///const avatarUrl = "https://res.cloudinary.com/dgbeonqpw/image/upload/v1742230506/1000679214_thowre.png";
-    const avatarUrl = "https://lovetoons.org/img/zzf.png";
+    const avatarUrl = "https://lovetoons.org/img/LBRF-AVATAR.png";
     const avatar = await Jimp.read(avatarUrl);
 
     // Load the user's image from the buffer
