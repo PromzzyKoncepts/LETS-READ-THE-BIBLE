@@ -42,7 +42,6 @@ export async function POST(req) {
     // // Resize images
     // avatar.resize({ w: 550, h: 550 }); // Resize avatar
     // userImage.resize({ w: 290, h: 290 }); // Resize user's image
-
     // // Merge images (overlay user image on avatar)
     // avatar.composite(userImage, 130, 190.5);
 
@@ -63,7 +62,7 @@ export async function POST(req) {
     const canvas = new Jimp(550, 550, 0x00000000); // transparent background
 
     // First put user image on canvas (behind)
-    canvas.composite(userImage, 130, 100.5);
+    canvas.composite(userImage, 120, 100.5);
 
     // Then put avatar on top (foreground)
     canvas.composite(avatar, 0, 0);
