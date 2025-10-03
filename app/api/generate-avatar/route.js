@@ -31,8 +31,8 @@ export async function POST(req) {
     const userImageBuffer = Buffer.from(arrayBuffer);
 
     // Load the avatar image from Cloudinary
-    const avatarUrl =
-      "https://res.cloudinary.com/dgbeonqpw/image/upload/v1742230506/1000679214_thowre.png";
+    ///const avatarUrl = "https://res.cloudinary.com/dgbeonqpw/image/upload/v1742230506/1000679214_thowre.png";
+    const avatarUrl = "https://lovetoons.org/img/zzf.png";
     const avatar = await Jimp.read(avatarUrl);
 
     // Load the user's image from the buffer
@@ -43,7 +43,7 @@ export async function POST(req) {
     userImage.resize({ w: 290, h: 290 }); // Resize user's image
 
     // Merge images (overlay user image on avatar)
-    avatar.composite(userImage, 130, 190.5);
+    avatar.composite(userImage, 130, 160.5);
 
     const mergedImageBase64 = await avatar.getBase64(JimpMime.png, {
       quality: 50,
