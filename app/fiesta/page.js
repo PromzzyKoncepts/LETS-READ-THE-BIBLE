@@ -89,9 +89,9 @@ const Page = () => {
               Congratulations
             </h2>
             <p>You successfully registered.</p>
-            {/* <p className="text-lg">
+            <p className="text-lg">
               Next, we recommend you to create your Bible Fiesta Avatar
-            </p> */}
+            </p>
             <div className="flex items-center gap-2 mt-3">
               <button
                 onClick={() => {
@@ -102,12 +102,12 @@ const Page = () => {
               >
                 CLOSE
               </button>
-              {/* <Link
+              <Link
                 href="/avatar"
                 className="bg-darkbg rounded-full text-white px-4 py-2 hover:border-2 hover:border-white shadow-lg"
               >
                 Create my avatar
-              </Link>  */}
+              </Link>
             </div>
           </div>
         </div>
