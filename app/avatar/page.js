@@ -296,7 +296,7 @@ export default function AvatarUploader() {
         width={300}
         height={300}
         className="mx-auto w-[30rem]"
-      /> */}
+        /> */}
 
             <CldImage
               src={avatarUrl} // Use this sample image or upload your own via the Media Explorer
