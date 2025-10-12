@@ -4,7 +4,7 @@ import { WhatsappShareButton, WhatsappIcon, FacebookShareButton, FacebookIcon, T
 import { Copy } from 'lucide-react';
 import { FaFacebook, FaWhatsapp } from 'react-icons/fa6';
 import { IoLogoWhatsapp } from 'react-icons/io5';
-
+import { MdCancel } from "react-icons/md";
 const Share = ({setShare}) => {
 	const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
 	const [copied, setCopied] = useState(false);
@@ -23,9 +23,10 @@ const Share = ({setShare}) => {
 				onClick={() => setShare(false)} 
 			/>
 			<div className="p-3 py-8 md:w-[50vw] flex flex-col text-center items-center  bg-white shadow-lg rounded-2xl z-10">
-
-				<div className='flex flex-col items-center justify-center'>
-					<Image src="/images/letsgo.png" alt="Share" width={500} className='w-[22rem]' height={500} />
+				
+				<div className='flex flex-col items-center justify-center relative'>
+					<Image src="/images/letsgo.png" alt="Share" width={500} className='w-[16rem] md:w-[22rem]' height={500} />
+					<div onClick={() => setShare(false)} className="absolute right-4 top-4 " ><MdCancel /></div>
 					<p className="font-bold font-lucky text-darkbg text-center text-2xl md:text-5xl">Share Campaign Challenge</p>
 					<p className="text-xl font-medium">Share this link to over all your social media and friends</p>
 					<p className="font-lucky text-amber-500">Lets get the whole world to be part of this Bible Reading Fiesta!!!</p>
@@ -43,7 +44,7 @@ const Share = ({setShare}) => {
 						<TelegramIcon size={40} round={true} />
 					</TelegramShareButton>
 
-					<a target='_blank' href={'https://www.kingschat.online'}>
+					<a target='_blank' href={'https://kingschat.online'}>
 						<Image src="/images/kingschat.webp" alt="Share" width={500} className='w-20' height={500} />
 					</a>
 					<TwitterShareButton url={shareUrl}>

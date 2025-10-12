@@ -7,6 +7,47 @@
   --foreground: #171717;
 }
 
+.videoAdUi, .videoAdUiTopBar, .videoAdUiTopBarWithGradients, .videoAdUiTopBarTransitions, .enigma-watermark {
+  display: none !important;
+}
+ .MuiGrid-container, .MuiGrid-wrap-xs-nowrap, .css-1xe247z {
+  display: none !important;
+}
+
+.css-1h1938b {
+  display: none!important;
+}
+
+.example::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+}
+
+/* Add this to your global CSS file */
+.transform {
+  transition: transform 0.3s ease-in-out;
+}
+
+.translate-x-0 {
+  transform: translateX(0);
+}
+
+.-translate-x-full {
+  transform: translateX(-100%);
+}
+
+/* Track */
+.example::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 10px #ddd;
+  border-radius: 10px;
+}
+
+/* Handle */
+.example::-webkit-scrollbar-thumb {
+  background: #973B53;
+  border-radius: 20px;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -272,3 +313,57 @@
   -webkit-text-stroke: .5px #28282861;
 }
 
+
+/* for sliding the scriptures */
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-right {
+  animation: slideInFromRight 1s ease-in-out forwards;
+}
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(100%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-top {
+  animation: slideInFromTop 1s ease-in-out forwards;
+}
+
+
+
+
+
+
+
+.embla {
+  overflow: hidden;
+ }
+ .embla__container {
+  display: flex;
+ }
+ .embla__slide {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 100%;
+  padding: 0 10px;
+ }
+ .embla__slide__img {
+  /* width: 100%; */
+  /* height: 400px; */
+  object-fit: contain;
+ }

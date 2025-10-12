@@ -4,7 +4,7 @@ import DOMPurify from "dompurify";
 import parse from "html-react-parser";
 import TextAnimation from "@/app/utils/TextAnimation";
 
-
+const baseUrl = "https://lets-read-the-bible.vercel.app"
 const DailyVerse = () => {
   const [verse, setVerse] = useState(null);
   const [reference, setReference] = useState(null);
@@ -14,7 +14,7 @@ const DailyVerse = () => {
   useEffect(() => {
     const fetchVerse = async () => {
       try {
-        const response = await fetch("/api/getVerse"); // Ensure this matches the API route
+        const response = await fetch(`${baseUrl}/api/getVerse`); // Ensure this matches the API route
         if (!response.ok) throw new Error("Failed to fetch verse");
         const data = await response.json();
         console.log(data)
@@ -46,7 +46,7 @@ const DailyVerse = () => {
   return (
     <div>
     {verse && (<div className="font-sniglet text-white  flex flex-col justify-start items-start">
-      <h2 className="text-lg  font-lucky text-[#EEA236]">Today`s Scripture</h2>
+      <h2 className="text-lg  font-lucky text-[#EEA236]">Memory Verse</h2>
       <div className="font-bubblegum text-base max-w-[35rem] flex items-end justify-items-end text-left">
         <TextAnimation>
 

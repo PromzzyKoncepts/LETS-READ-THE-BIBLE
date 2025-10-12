@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+const baseUrl = "https://lets-read-the-bible.vercel.app"
 export function useFileUpload() {
   const [isFFmpegLoaded, setIsFFmpegLoaded] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -25,33 +25,33 @@ export function useFileUpload() {
 
   const uploadFile = async (filename, file) => {
     // console.log(filename, 'filename from hook')
-    if (!isFFmpegLoaded) {
-      console.error("FFmpeg is not loaded yet");
-      return false;
-    }
+    // if (!isFFmpegLoaded) {
+    //   console.error("FFmpeg is not loaded yet");
+    //   return false;
+    // }
 
     // Convert file to FFmpeg format
-    const newFileName = filename.file.name.replace(/\s/g, "_"); // Ensure no spaces in filename
+    // const newFileName = filename.file.name.replace(/\s/g, "_"); // Ensure no spaces in filename
     //  await ffmpeg.writeFile( newFileName, await fetchFile(filename.file));
 
-    await ffmpeg.exec(
-      "-i", filename.file, // Input file
-      "-vf", "scale=1280:720", // Resize to 720p
-      "-c:v", "libx264", // Use libx264 codec for video
-      "-b:v", "1000k", // Set video bitrate to 1000 kbps
-      "-crf", "23", // Set Constant Rate Factor for quality
-      "-preset", "fast", // Use fast preset for encoding
-      "-c:a", "aac", // Use AAC codec for audio
-      "-b:a", "128k", // Set audio bitrate to 128 kbps
-      "output.mp4" // Output file
-    );
+    // await ffmpeg.exec(
+    //   "-i", filename.file, // Input file
+    //   "-vf", "scale=1280:720", // Resize to 720p
+    //   "-c:v", "libx264", // Use libx264 codec for video
+    //   "-b:v", "1000k", // Set video bitrate to 1000 kbps
+    //   "-crf", "23", // Set Constant Rate Factor for quality
+    //   "-preset", "fast", // Use fast preset for encoding
+    //   "-c:a", "aac", // Use AAC codec for audio
+    //   "-b:a", "128k", // Set audio bitrate to 128 kbps
+    //   "output.mp4" // Output file
+    // );
     // Get the processed file from FFmpeg
-    const compressedData = ffmpeg.readFile("output.mp4");
-    const compressedBlob = new Blob([compressedData.buffer], { type: "video/mp4" });
+    // const compressedData = ffmpeg.readFile("output.mp4");
+    // const compressedBlob = new Blob([compressedData.buffer], { type: "video/mp4" });
 
 
     // Send a POST request to the API with the filename in the body
-    const result = await axios.post("/api/upload", filename);
+    const result = await axios.post(`${baseUrl}/api/upload`, filename);
 
     // Parse the response to get the signe d URL and fields
     const { url, fields } = result.data;
@@ -64,7 +64,7 @@ export function useFileUpload() {
     });
 
     // ✅ Convert Blob to File before appending
-    const compressedFile = new File([compressedBlob], newFileName, { type: "video/mp4" });
+    // const compressedFile = new File([compressedBlob], newFileName, { type: "video/mp4" });
 
     // ✅ Append file properly
     formData.append("file", filename.file);

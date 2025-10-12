@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { BiArrowToTop, BiLogoFacebook } from "react-icons/bi";
 import { CiMail, CiPhone } from "react-icons/ci";
 import { FaWhatsapp, FaXTwitter } from "react-icons/fa6";
-import FloatingAnimation from "../utils/FloatingAnimation";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -19,54 +18,53 @@ const Footer = () => {
         <div className="wave wave3"></div>
         <div className="wave wave4"></div>
       </section>
-      <FloatingAnimation />
 
       <div className="bg-[#631260] font-sniglet roun ded-t-[3rem] px-5  pb-7 sm:px-24">
         <div className=" text-white  flex flex-wrap items-start justify-between gap-6">
           <div className="flex flex-col">
             <h3 className="text-2xl font-bold text-orange pb-3">Quick Links</h3>
-            <Link href="/orders">LiveTV</Link>
-            <Link href="/user">Watch Videos</Link>
-            <Link href="/auth/login">Sponsor this campaign</Link>
-            <Link href="/favorites">Record your video</Link>
-            <Link href="/favorites">Upload a Video</Link>
+            <Link href="/lrbf">Bible Reading Fiesta</Link>
+            <Link href="/videos">Watch Videos</Link>
+            {/* <Link href="/auth/login">Sponsor this campaign</Link> */}
+            <Link href="/record">Record your video</Link>
+            <Link href="/upload">Upload a Video</Link>
           </div>
           <div className="flex flex-col">
             <h3 className="text-2xl text-orange font-bold  pb-3">Enquiry</h3>
-            <Link href="/about">About Us</Link>
-            <Link href="/contact">Contact Us</Link>
-            <Link href="/contact">Read the bible</Link>
+            {/* <Link href="/about">About Us</Link> */}
+            {/* <Link href="/contact">Contact Us</Link> */}
+            <Link href="/read">Read the bible</Link>
             <Link href="/t&c">Terms and Conditions</Link>
             <Link href="/faqs">FAQS</Link>
           </div>
           <div className="flex flex-col">
             <h3 className="text-2xl text-orange font-bold  pb-3">Support</h3>
-            <Link href="/about" className="flex items-center gap-1">
+            <a href="mailto:lovetoons@gmail.com" className="flex items-center gap-1">
               <CiMail /> Email Support
-            </Link>
-            <Link href="/contact" className="flex items-center gap-1">
+            </a>
+            <a href="tel:07012897856" className="flex items-center gap-1">
               <CiPhone /> Phone Support
-            </Link>
-            <Link href="/dashboard" className="flex items-center gap-1">
+            </a>
+            <a href="https://kingschat.online" className="flex items-center gap-1">
               <Image src="/images/kingschat.webp" alt="Kingschat logo icon" width={20} height={20}/>
                KingsChat Support
-            </Link>
+            </a>
           </div>
           <div className="">
             <h3 className="text-xl text-orange pb-3 font-bold ">Connect with Us</h3>
             <div className="flex gap-3">
-              <Link
-                href="/about"
+              <a
+                href="https://kingschat.online"
                 className=""
               >
                 <Image src="/images/kingschat.webp" alt="Kingschat logo icon" width={40} height={40}/>
-              </Link>
-              <Link
-                href="/contact"
+              </a>
+              <a
+                href="https://x.com/lovetoonstv"
                 className="p-3 bg-primary text-white rounded-[100%]"
               >
                 <FaXTwitter />{" "}
-              </Link>
+              </a>
               
             </div>
           </div>

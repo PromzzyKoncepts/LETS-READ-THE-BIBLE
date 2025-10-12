@@ -1,61 +1,32 @@
-"use client";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { carousels } from "../data/SampleData";
-import { SlArrowRight, SlArrowLeft } from "react-icons/sl";
+import React from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay'
+import Image from 'next/image'
+import Link from 'next/link'
 
-const Swiper = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % carousels.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + carousels.length) % carousels.length
-    );
-  };
-
-  useEffect(() => {
-    const timer = setInterval(nextSlide, 4000);
-    return () => clearInterval(timer);
-  }, []);
-
-  return (
-    <div className="relative my-5 w-2/3 mx-auto h-full sm:h-[16rem]   max-w -lg  overflow-hidden">
-      <div className=" ">
-        {carousels.map((image, index) => (
-          <Image
-            key={index}
-            src={image.src}
-            alt={image.alt}
-            width={1000}
-            height={1000}
-            className={`absolute inset-0 w-full h-full rounded-xl object-cover  transition-opacity duration-500 ease-in-out ${
-              index === currentIndex ? "opacity-100" : "opacity-0"
-            }`}
-          />
-        ))}
-      </div>
-
-      {/* Previous Arrow */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-700 bg-opacity-50 text-white rounded-full p-2 m-2 hover:bg-opacity-75"
-      >
-        <SlArrowLeft  size={24}/>
-      </button>
-
-      {/* Next Arrow */}
-      <button
-        onClick={nextSlide}
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-700 bg-opacity-50 text-white rounded-full p-2 m-2 hover:bg-opacity-75"
-      >
-        <SlArrowRight size={24}/>
-      </button>
-    </div>
-  );
+const ImageCarousel = ({carousels}) => {
+     const [emblaRef] = useEmblaCarousel({
+     loop: true,
+     align: 'center',
+     skipSnaps: false,
+     }, [ Autoplay({ playOnInit: true, delay: 5000 })]);
+    
+      return (
+         <div className="embla" ref={emblaRef}>
+           <div className="embla__container  ">
+           {carousels.map((image, index) => (
+             <Link href={image.link ? image.link: ""} key={index} className="embla__slide ">
+               <Image 
+               src={image.src} 
+               alt={image.title} 
+               width={1500}
+               height={1500}
+               className="embla__slide__img md:h-[400px] h-fit w-fit mx-auto" 
+               />
+             </Link>
+           ))}
+           </div>
+         </div>
+       );
 };
-
-export default Swiper;
+export default ImageCarousel;

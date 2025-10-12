@@ -19,6 +19,7 @@ export const useBibleStore = create()(
           .getElementById("verse-" + activeVerse)
           ?.scrollIntoView({ block: "center", behavior: "smooth" });
       },
+      setCurrentTranslation: (currentTranslation) => set({ currentTranslation }),
     }),
     {
       name: "bible-storage",

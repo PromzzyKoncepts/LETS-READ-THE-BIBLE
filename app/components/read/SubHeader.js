@@ -11,6 +11,9 @@ import { getPassage } from "./readApi";
 import Audio from "./Audio";
 import { IoChevronForwardSharp } from "react-icons/io5";
 import { IoChevronBackSharp } from "react-icons/io5";
+import { RiMenuFold2Line } from "react-icons/ri";
+import Navbar from "./Navbar";
+import { useState } from "react";
 
 const SubHeader = ({ open }) => {
   const activeChapter = useBibleStore((state) => state.activeChapter);
@@ -57,55 +60,39 @@ const SubHeader = ({ open }) => {
     }
   };
 
-  return (
-    <div className="absolute  top-5 z-10 right-5 flex items-center gap-3 ">
-    <div className="flex items-end font-lucky justify-end  bg-orange-200 px-4 rounded-full bg-opacity-80 backdrop-blur-sm py-2">
-    <div className="flex items-center gap-4 ">
-      <div onClick={prevHandler} disabled={checkPrev() === null} title="prev passage" className="bg-darkbg p-3 rounded-full text-white  cursor-pointer"><IoChevronBackSharp size={25} /></div>
-      <h1 className="font-bold text-darkbg text-lg">{activeBook} {activeChapter}</h1>
-      <div  onClick={nextHandler}  disabled={checkNext() === null} title="next passage" className="bg-darkbg p-3 rounded-full text-white cursor-pointer"><IoChevronForwardSharp size={25} /></div>
-    </div>
+  const [isOpen, setIsOpen] = useState(false);
 
-    </div>
-    <div  className="bg-darkbg p-3 rounded-full text-white cursor-pointer">
-    <Audio />
-    </div>
+  return (
+    <div className="absolute top-2 md:top-5 z-10 px-3 md:px-0 md:right-5 flex items-center md:gap-3 gap-3">
+      <div className="flex items-end font-jua justify-end bg-orange-200 px-4 rounded-full bg-opacity-80 backdrop-blur-sm py-2">
+        <div className="flex items-center md:gap-4 gap-2">
+          <div onClick={prevHandler} disabled={checkPrev() === null} title="prev passage" className="bg-darkbg md:p-3 p-2 rounded-full text-white cursor-pointer">
+            <IoChevronBackSharp size={25} />
+          </div>
+          <h1 className="font-bold text-darkbg text-lg">{activeBook} {activeChapter}</h1>
+          <div onClick={nextHandler} disabled={checkNext() === null} title="next passage" className="bg-darkbg md:p-3 p-2 rounded-full text-white cursor-pointer">
+            <IoChevronForwardSharp size={25} />
+          </div>
+        </div>
+      </div>
+      <div className="bg-darkbg md:p-3 p-2 rounded-full text-white cursor-pointer">
+        <Audio />
+      </div>
+      <div onClick={() => setIsOpen(!isOpen)} className="bg-darkbg md:p-3 p-2 rounded-full text-white block md:hidden cursor-pointer">
+        <RiMenuFold2Line size={20} />
+      </div>
+
+
+
+      {isOpen && (
+        <div className="md:hidden block fixed inset-0 bg-darkbg bg-opacity-50 z-20" onClick={() => setIsOpen(false)}>
+          <div className="fixed inset-y-0 left-0 w-64 bg-white z-30 transform transition-transform duration-300 ease-in-out" onClick={(e) => e.stopPropagation()}>
+            <Navbar setOpened={setIsOpen} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default SubHeader;
-
-    // <Box
-    //   sx={{
-    //     height: rem(15),
-    //     display: "flex",
-    //     justifyContent: "space-between",
-    //     alignItems: "center",
-    //   }}
-    //   mb={20}
-    // >
-    //   <ActionIcon
-    //     variant="transparent"
-    //     onClick={prevHandler}
-    //     disabled={checkPrev() === null}
-    //     title="prev-passage-button"
-    //   >
-    //     <IconArrowLeft size={rem(20)} />
-    //   </ActionIcon>
-    //   <ActionIcon variant="transparent" onClick={open}>
-    //     <IconSearch size={rem(20)} />
-    //   </ActionIcon>
-    //   <Title order={4}>
-    //     {activeBookShort} {activeChapter}
-    //   </Title>
-    //   <Audio />
-    //   <ActionIcon
-    //     variant="transparent"
-    //     onClick={nextHandler}
-    //     disabled={checkNext() === null}
-    //     title="next-passage-button"
-    //   >
-    //     <IconArrowRight size={rem(20)} />
-    //   </ActionIcon>
-    // </Box>
