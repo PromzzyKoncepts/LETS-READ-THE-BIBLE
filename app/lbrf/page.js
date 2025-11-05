@@ -207,20 +207,32 @@ const Page = () => {
               onChange={(e) => setFullName(e.target.value)}
             />
           </div>
+
           <div className="flex flex-col gap-1 w-full">
-            <label>KingsChat(Optional)</label>
+            <label className="flex items-center gap-2">
+              <Image
+                src="/images/kingschat.webp"
+                alt="KingsChat logo icon"
+                width={40}
+                height={40}
+                priority={false}
+              />
+              KingsChat (Optional)
+            </label>
+
             <div className="flex items-center gap-3 py-2 border-b border-slate-500">
               @
               <input
                 name="name"
                 type="text"
-                className="border-0 outline-0  bg-transparent text-darkbg w-full"
-                placeholder="Enter your kingsChat username"
+                className="border-0 outline-0 bg-transparent text-darkbg w-full"
+                placeholder="Enter your KingsChat username"
                 value={kingsChatHandle}
                 onChange={(e) => setKingsChatHandle(e.target.value)}
               />
             </div>
           </div>
+
           <div className="flex flex-col gap-1 w-full">
             <label>Email address</label>
             <input
