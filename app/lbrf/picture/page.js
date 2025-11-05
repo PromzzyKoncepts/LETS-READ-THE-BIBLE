@@ -4,6 +4,7 @@ import React, { useState, useCallback, useRef } from "react";
 import axios from "axios";
 import { useDropzone } from "react-dropzone";
 import toast, { Toaster } from "react-hot-toast";
+import Link from "next/link";
 
 export default function ImageUploadPage() {
   const [file, setFile] = useState(null);
@@ -12,6 +13,7 @@ export default function ImageUploadPage() {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const fileInputRef = useRef(null);
+  const [showPopup, setShowPopup] = useState(false);
 
   const onDrop = useCallback((acceptedFiles) => {
     if (acceptedFiles && acceptedFiles.length > 0) {
@@ -90,6 +92,7 @@ export default function ImageUploadPage() {
       setFullName("");
       setScripture("");
       setUploadProgress(0);
+      setShowPopup(true);
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
@@ -110,6 +113,36 @@ export default function ImageUploadPage() {
   return (
     <div className="min-h-screen font sniglet bg-gray-200 flex md:items-center justify-center p-4">
       <Toaster position="top-center" />
+
+      {showPopup && (
+        <div className="font-sniglet z-[99] fixed top-0 h-screen w-full bg-darkbg bg-opacity-40 backdrop-blur-sm flex items-center justify-center">
+          <div className="bg-white rounded-2xl shadow-lg py-7 px-4 max-w-2xl md:px-10 flex items-center gap-2 flex-col">
+            <h2 className="text-2xl text-center md:text-4xl font-lucky text-[#d1942b]">
+              Thank you for uploading your participation picture!
+            </h2>
+            {/* <small>
+              Thank you for registering and creating your fiesta avatar
+            </small> */}
+            {/* <p className="text-lg text-center">Upload another picture</p> */}
+            <div className="flex items-center gap-2 mt-3">
+              <button
+                onClick={() => {
+                  setShowPopup(false);
+                }}
+                className="border-2 border-darkbg rounded-full px-4 py-2"
+              >
+                Upload another picture
+              </button>
+              <Link
+                href="/"
+                className="bg-darkbg rounded-full text-white px-4 py-2 hover:border-2 hover:border-white shadow-lg"
+              >
+                Go Home
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
         <h1 className="text-2xl font-bold text-darkbg mb-6 font-lucky">

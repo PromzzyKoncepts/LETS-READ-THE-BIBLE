@@ -195,18 +195,6 @@ const Page = () => {
           <div className="h-0.5 w-36 md:w-44 rounded-xl bg-darkbg" />
         </div>
         <div className="flex  flex-col gap-4 w-full px-8 md:px-20 lg:px-36">
-          <div className="flex flex-col gap-1 w-full">
-            <label>Email address</label>
-            <input
-              name="email"
-              className="border-0 outline-0 py-2 focus:border-b-2 border-b focus:border-darkbg border-slate-500 bg-transparent  text-darkbg"
-              required
-              type="email"
-              placeholder="Enter Email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
           <div className="flex flex-col gap-1">
             <label>Full name</label>
             <input
@@ -232,6 +220,18 @@ const Page = () => {
                 onChange={(e) => setKingsChatHandle(e.target.value)}
               />
             </div>
+          </div>
+          <div className="flex flex-col gap-1 w-full">
+            <label>Email address</label>
+            <input
+              name="email"
+              className="border-0 outline-0 py-2 focus:border-b-2 border-b focus:border-darkbg border-slate-500 bg-transparent  text-darkbg"
+              required
+              type="email"
+              placeholder="Enter Email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
           <button
             onClick={handleRegister}
