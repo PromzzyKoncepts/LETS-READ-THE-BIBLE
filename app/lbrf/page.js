@@ -213,8 +213,8 @@ const Page = () => {
               <Image
                 src="/images/kingschat.webp"
                 alt="KingsChat logo icon"
-                width={40}
-                height={40}
+                width={30}
+                height={30}
                 priority={false}
               />
               KingsChat (Optional)
