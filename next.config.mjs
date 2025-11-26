@@ -43,15 +43,15 @@ const nextConfig = {
     ];
   },
 
-  async redirects() {
-    return [
-      {
-        source: "/:path*", // Match all routes
-        destination: "https://lovetoons.org/lbrf", // Fixed redirect target
-        permanent: false, // 307 Temporary redirect
-      },
-    ];
-  },
+  // async redirects() {
+  //   return [
+  //     {
+  //       source: "/:path*", // Match all routes
+  //       destination: "https://lovetoons.org/lbrf", // Fixed redirect target
+  //       permanent: false, // 307 Temporary redirect
+  //     },
+  //   ];
+  // },
 };
 
 export default nextConfig;
