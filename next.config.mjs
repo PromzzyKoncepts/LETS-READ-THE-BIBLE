@@ -47,7 +47,7 @@ const nextConfig = {
     return [
       {
         source: "/fiesta/:path*", // matches anything after /fiesta
-        destination: "https://letsreadthebible.club/fiesta",
+        destination: "https://letsreadthebible.club",
         permanent: false,
       },
     ];
