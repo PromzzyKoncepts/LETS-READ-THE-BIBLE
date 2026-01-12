@@ -43,7 +43,7 @@ export default function Home() {
 
   const card = [
     {
-      title: "Year of Manifestation",
+      title: "Year of Manifestationn",
       src: "https://lovetoons.org/img/YEAR_OF_MANIFESTATION_web2.png",
       // link: "/lbrf",
     },
