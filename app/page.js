@@ -42,11 +42,11 @@ export default function Home() {
   }, []);
 
   const card = [
-    {
-      title: "Lovetoons Bible reading fiesta",
-      src: "/images/LBRF-SEPT-Banner-1.png",
-      link: "/lbrf",
-    },
+    // {
+    //   title: "Lovetoons Bible reading fiesta",
+    //   src: "/images/LBRF-SEPT-Banner-1.png",
+    //   link: "/lbrf",
+    // },
     {
       title: "Tick Talk",
       src: "/images/ticktalk.png",
@@ -57,18 +57,18 @@ export default function Home() {
     //   src: "/images/GAFL_WEB.png",
     //   // link: "/lbrf",
     // },
-    {
-      title: "Comics 1",
-      src: "/images/comics.png",
-    },
+    // {
+    //   title: "Comics 1",
+    //   src: "/images/comics.png",
+    // },
     {
       title: "Comics 3",
       src: "/images/comics2.png",
     },
-    {
-      title: "fiesta 2",
-      src: "/images/year.jpg",
-    },
+    // {
+    //   title: "fiesta 2",
+    //   src: "/images/year.jpg",
+    // },
   ];
 
   return (
