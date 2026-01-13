@@ -46,7 +46,7 @@
     "lucide-react": "^0.475.0",
     "mongodb": "^6.14.0",
     "mongoose": "^8.11.0",
-    "next": "^15.2.5",
+    "next": "15.2.8",
     "next-cloudinary": "^6.16.0",
     "papaparse": "^5.5.2",
     "react": "^19.1.0",
