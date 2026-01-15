@@ -12,6 +12,7 @@ import InteractiveFigures from "./components/InteractiveFigures";
 import Footer from "@/app/components/Footer";
 import BottomBar from "@/app/components/MobileNav";
 import Swiper from "@/app/components/Swiper";
+import SalvationSection from "@/app/components/SalvationSection";
 
 const baseUrl = "https://lets-read-the-bible.vercel.app";
 
@@ -60,10 +61,6 @@ export default function Home() {
       title: "Comics 3",
       src: "/images/comics2.png",
     },
-    // {
-    //   title: "fiesta 2",
-    //   src: "/images/year.jpg",
-    // },
   ];
 
   return (
@@ -194,7 +191,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className=" bg-[#8E8EB1] px-5 md:px-28 md:pt-16 py-7 min-h-screen">
+      <div className="hidden bg-[#8E8EB1] px-5 md:px-28 md:pt-16 py-7 min-h-screen">
         <h1 className="text-4xl md:text-6xl text-center  text-slate-900 font-lucky">
           Testimonies and feedbacks
         </h1>
@@ -237,6 +234,8 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <SalvationSection />
 
       <Footer />
     </div>
