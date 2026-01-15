@@ -53,11 +53,6 @@ export default function Home() {
       // link: "/lbrf",
     },
     // {
-    //   title: "Gratias card",
-    //   src: "/images/GAFL_WEB.png",
-    //   // link: "/lbrf",
-    // },
-    // {
     //   title: "Comics 1",
     //   src: "/images/comics.png",
     // },
