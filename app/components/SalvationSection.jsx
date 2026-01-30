@@ -58,7 +58,7 @@ export default function SalvationSection() {
                   controls
                   controlsList="nodownload"
                   onContextMenu={(e) => e.preventDefault()}
-                  poster="./img/Screenshot 2025-06-06 181955.png"
+                  poster="https://lovetoons.org/img/TTHTHTHT.png"
                   className="w-full rounded"
                 >
                   <source src={videoLinks[selectedLanguage]} type="video/mp4" />
