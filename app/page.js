@@ -55,6 +55,11 @@ export default function Home() {
     },
     {
       title: "Tick Talk",
+      src: "/images/Month of the throne room slider.jpg",
+      // link: "/lbrf",
+    },
+    {
+      title: "Tick Talk",
       src: "/images/ticktalk.png",
       // link: "/lbrf",
     },
