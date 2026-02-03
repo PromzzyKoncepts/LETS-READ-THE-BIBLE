@@ -54,7 +54,7 @@ export default function Home() {
       // link: "/lbrf",
     },
     {
-      title: "Tick Talk",
+      title: "Throne room",
       src: "/images/Month of the throne room slider.jpg",
       // link: "/lbrf",
     },
