@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   AppShell,
   MantineProvider,
@@ -11,11 +11,9 @@ import MyHeader from "../components/read/MyHeader";
 import { useState } from "react";
 import Passage from "../components/read/Passage.js";
 import { SearchModal } from "../components/read/SearchModal";
-import '@mantine/core/styles.css';
+import "@mantine/core/styles.css";
 import Navbar from "../components/read/Navbar";
 const Read = () => {
-
-
   const [opened, setOpened] = useState(true);
   const [modalOpened, modalFn] = useDisclosure(false);
   useWindowEvent("keydown", (event) => {
@@ -30,19 +28,18 @@ const Read = () => {
   });
 
   return (
-    <div className="flex">
-      <div className="hidden md:block"><Navbar /></div>
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-      >
+    <div className="flex" style="background:#f4c2c2">
+      <div className="hidden md:block">
+        <Navbar />
+      </div>
+      <MantineProvider withGlobalStyles withNormalizeCSS>
         <AppShell>
           <Passage open={modalFn.open} />
           {/* <SearchModal opened={modalOpened} close={modalFn.close} /> */}
         </AppShell>
       </MantineProvider>
     </div>
-  )
-}
+  );
+};
 
-export default Read
+export default Read;
