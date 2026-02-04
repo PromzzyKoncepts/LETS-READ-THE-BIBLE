@@ -28,7 +28,7 @@ const Read = () => {
   });
 
   return (
-    <div className="flex" style="background:#f4c2c2">
+    <div className="flex bg-[#f4c2c2]">
       <div className="hidden md:block">
         <Navbar />
       </div>
