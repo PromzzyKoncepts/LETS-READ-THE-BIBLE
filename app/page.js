@@ -55,7 +55,7 @@ export default function Home() {
     },
     {
       title: "Throne room",
-      src: "/images/Month of the throne room slider.jpg",
+      src: "https://lovetoons.org/img/Monthofthethroneroomslider.jpg.jpeg",
       // link: "/lbrf",
     },
     {
