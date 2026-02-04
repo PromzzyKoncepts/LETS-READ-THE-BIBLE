@@ -19,7 +19,7 @@ const Tab = () => {
       title: "upload a Video",
       content:
         "Record a video of yourself reading the Bible and upload it to join our global Bible-reading campaign.",
-      link: "/fiesta/upload",
+      link: "fiesta/upload",
       btn: "Upload Video",
     },
     {
