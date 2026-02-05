@@ -45,7 +45,7 @@ export default function Home() {
   const card = [
     {
       title: "Year of Manifestationn",
-      src: "https://lovetoons.org/img/Lovetoons Affirmation Extravaganza web.jpg.jpeg",
+      src: "https://lovetoons.org/img/Lovetoons_Affirmation_Extravaganza_web.jpg",
       link: "https://lovetoons.org/lae",
     },
     {
