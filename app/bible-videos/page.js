@@ -154,7 +154,7 @@ export default function BiblePlaylistPage() {
             Bible Reading
           </h1>
           <p className="text-lg md:text-xl text-blue-600 font-semibold">
-            Watch and learn about God's love!
+            Watch and learn about God&apos;s love!
           </p>
 
           {/* Decorative elements */}
@@ -253,7 +253,7 @@ export default function BiblePlaylistPage() {
                 <span className="mr-2">💡</span> Did You Know?
               </h3>
               <p className="text-orange-700">
-                The Bible is the most translated book in the world! It's
+                The Bible is the most translated book in the world! It&apos;s
                 available in over 700 languages.
               </p>
             </div>

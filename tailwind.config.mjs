@@ -17,14 +17,21 @@ export default {
         schoolbell: ['"Schoolbell"', "sans-serif"],
         bubblegum: ['"Bubblegum Sans"', "sans-serif"],
         nunito: ['"nunito"', "sans-serif"],
-        modak:['"Modak"', 'sans-serif'],
-        lucky:['"Luckiest Guy"', 'sans-serif'],
-        sniglet:['"Sniglet"', 'sans-serif'],
-        jua:['"Jua"', 'sans-serif'],
+        modak: ['"Modak"', "sans-serif"],
+        lucky: ['"Luckiest Guy"', "sans-serif"],
+        sniglet: ['"Sniglet"', "sans-serif"],
+        jua: ['"Jua"', "sans-serif"],
       },
     },
+    keyframes: {
+      slowBounce: {
+        "0%, 100%": { transform: "translateY(0%)" },
+        "50%": { transform: "translateY(-10%)" },
+      },
+    },
+    animation: {
+      slowBounce: "slowBounce 3s ease-in-out infinite",
+    },
   },
-  plugins: [
-    require('tailwindcss-animated')
-  ],
+  plugins: [require("tailwindcss-animated")],
 };
