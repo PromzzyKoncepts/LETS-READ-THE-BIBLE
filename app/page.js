@@ -59,6 +59,11 @@ export default function Home() {
       // link: "/lbrf",
     },
     {
+      title: "Throne room",
+      src: "https://lovetoons.org/img/mack_most.png",
+      // link: "/lbrf",
+    },
+    {
       title: "Tick Talk",
       src: "/images/ticktalk.png",
       // link: "/lbrf",
