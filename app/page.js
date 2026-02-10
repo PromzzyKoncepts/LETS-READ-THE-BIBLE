@@ -2,17 +2,16 @@
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import DailyVerse from "./components/Dailyverse";
 import { useEffect, useState } from "react";
 import FloatingAnimation from "./utils/FloatingAnimation";
 // import Swiper from "./components/Swiper";
 import Tab from "./components/Tab";
 import AnimatedCounter from "./utils/CountingAnimation";
 import InteractiveFigures from "./components/InteractiveFigures";
-import Footer from "@/app/components/Footer";
-import BottomBar from "@/app/components/MobileNav";
-import Swiper from "@/app/components/Swiper";
-import SalvationSection from "@/app/components/SalvationSection";
+import Footer from "./components/Footer";
+import BottomBar from "./components/MobileNav";
+import Swiper from "./components/Swiper";
+import SalvationSection from "./components/SalvationSection";
 
 const baseUrl = "https://lets-read-the-bible.vercel.app";
 
@@ -232,10 +231,10 @@ export default function Home() {
               Explore Our Videos
             </h1>
 
-            <section className="py-10 px-4 md:px-20 hidden">
+            <section className="py-10 px-4 md:px-20 ">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Column 1 */}
-                <div className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div className="bg-[#228fa5] text-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                   <div className="relative w-full">
                     <Link href="/bible-videos" className="block">
                       <div className="flex flex-col items-center">
@@ -251,13 +250,13 @@ export default function Home() {
                   </div>
                   <div className="p-4">
                     <h3 className="text-lg font-semibold mb-2">LBRF</h3>
-                    <p className="text-gray-600 mb-4">
+                    <p className="text-gray-100 mb-4">
                       Watch our bible reading videos for kids!
                     </p>
 
                     <Link
                       href="/bible-videos"
-                      className="text-blue-600 hover:underline font-medium"
+                      className="text-gray-600 bg-[#e2faff] px-2 py-1 hover:bg-[#186473] hover:text-white rounded  font-medium"
                     >
                       Watch Now
                     </Link>
@@ -265,9 +264,9 @@ export default function Home() {
                 </div>
 
                 {/* Column 2 */}
-                <div className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div className="bg-[#e87917] text-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                   <div className="relative w-full ">
-                    <Link href="/bible-videos" className="block">
+                    <Link href="/daily-bible" className="block">
                       <div className="flex flex-col items-center">
                         <Image
                           src="/images/bible-daily.png"
@@ -283,13 +282,13 @@ export default function Home() {
                     <h3 className="text-lg font-semibold mb-2">
                       Daily Bible Reading
                     </h3>
-                    <p className="text-gray-600 mb-4">
+                    <p className="text-gray-100 mb-4">
                       Complete the reading of the Bible by following our daily
                       Bible reading.
                     </p>
                     <Link
-                      href="/item-two"
-                      className="text-blue-600 hover:underline font-medium"
+                      href="/daily-bible"
+                      className="text-[#564110] hover:bg-[#564110] hover:text-white font-medium bg-[#ffe7d1]  px-2 py-1 rounded-lg tex"
                     >
                       Watch todays reading
                     </Link>
@@ -430,7 +429,7 @@ export default function Home() {
         </div>
       </div>
 
-      <SalvationSection />
+      {/* <SalvationSection /> */}
 
       <Footer />
     </div>

@@ -1,6 +1,6 @@
 import "./globals.css";
 import Header from "./components/Header";
-import BottomBar from "@/app/components/MobileNav";
+import BottomBar from "./components/MobileNav";
 import { Suspense } from "react";
 
 export const metadata = {
