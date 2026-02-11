@@ -67,10 +67,10 @@ export default function Home() {
       src: "/images/ticktalk.png",
       // link: "/lbrf",
     },
-    {
-      title: "Praise Night",
-      src: "https://lovetoons.org/img/PRAISE-NIGHT-27.png",
-    },
+    // {
+    //   title: "Praise Night",
+    //   src: "https://lovetoons.org/img/PRAISE-NIGHT-27.png",
+    // },
     {
       title: "Comics 3",
       src: "/images/comics2.png",
