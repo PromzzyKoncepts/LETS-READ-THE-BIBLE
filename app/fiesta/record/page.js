@@ -1,18 +1,17 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import Link from "next/link"
+import Link from "next/link";
 import { CgMediaLive } from "react-icons/cg";
 import { FaMicrophone, FaCamera } from "react-icons/fa6";
-import { useFileUpload } from "@/app/utils/useFileUpload";
+import { useFileUpload } from "/app/utils/useFileUpload";
 import axios from "axios";
-import { getBooks, getChapters } from '@/app/components/read/readApi';
+import { getBooks, getChapters } from "/app/components/read/readApi";
 import { MdCloudDownload, MdCloudUpload } from "react-icons/md";
 import { IoVideocam } from "react-icons/io5";
 
-
 const mimeType = "video/mp4";
 // const baseUrl = "http://localhost:3000"
-const baseUrl = "https://letsreadthebible.club"
+const baseUrl = "https://letsreadthebible.club";
 
 const VideoRecorder = () => {
   // const { uploadFile, uploadProgress } = useFileUpload();
@@ -32,22 +31,25 @@ const VideoRecorder = () => {
   const [uploaded, setUploaded] = useState(false);
 
   const [books, setBooks] = useState([]);
-  const [selectedBook, setSelectedBook] = useState('');
+  const [selectedBook, setSelectedBook] = useState("");
   const [chapters, setChapters] = useState([]);
-  const [selectedChapterStart, setSelectedChapterStart] = useState('');
-  const [selectedChapterEnd, setSelectedChapterEnd] = useState('');
+  const [selectedChapterStart, setSelectedChapterStart] = useState("");
+  const [selectedChapterEnd, setSelectedChapterEnd] = useState("");
   const [isSingleChapter, setIsSingleChapter] = useState(false);
-  const [kidFullname, setKidFullname] = useState('');
-  const [parentFullname, setParentFullname] = useState('');
+  const [kidFullname, setKidFullname] = useState("");
+  const [parentFullname, setParentFullname] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
   const [showModal, setShowModal] = useState(false);
-
 
   const getAvailableDevices = async () => {
     try {
       const allDevices = await navigator.mediaDevices.enumerateDevices();
-      const audioDevices = allDevices.filter((device) => device.kind === "audioinput");
-      const videoDevices = allDevices.filter((device) => device.kind === "videoinput");
+      const audioDevices = allDevices.filter(
+        (device) => device.kind === "audioinput"
+      );
+      const videoDevices = allDevices.filter(
+        (device) => device.kind === "videoinput"
+      );
       setDevices({ audio: audioDevices, video: videoDevices });
       if (audioDevices.length) setSelectedAudioDevice(audioDevices[0].deviceId);
       if (videoDevices.length) setSelectedVideoDevice(videoDevices[0].deviceId);
@@ -65,16 +67,24 @@ const VideoRecorder = () => {
     if ("MediaRecorder" in window) {
       try {
         const videoConstraints = {
-          deviceId: selectedVideoDevice ? { exact: selectedVideoDevice } : undefined,
+          deviceId: selectedVideoDevice
+            ? { exact: selectedVideoDevice }
+            : undefined,
         };
         const audioConstraints = {
-          deviceId: selectedAudioDevice ? { exact: selectedAudioDevice } : undefined,
+          deviceId: selectedAudioDevice
+            ? { exact: selectedAudioDevice }
+            : undefined,
           noiseSuppression: true,
           echoCancellation: true,
         };
 
-        const audioStream = await navigator.mediaDevices.getUserMedia({ audio: audioConstraints });
-        const videoStream = await navigator.mediaDevices.getUserMedia({ video: videoConstraints });
+        const audioStream = await navigator.mediaDevices.getUserMedia({
+          audio: audioConstraints,
+        });
+        const videoStream = await navigator.mediaDevices.getUserMedia({
+          video: videoConstraints,
+        });
 
         setPermission(true);
 
@@ -105,13 +115,11 @@ const VideoRecorder = () => {
   };
 
   const restartRecording = async () => {
-    getCameraPermission()
+    getCameraPermission();
     setCountdown(5);
-    setVideoChunks([])
-    setRecordedVideo(null)
-
+    setVideoChunks([]);
+    setRecordedVideo(null);
   };
-
 
   useEffect(() => {
     if (countdown === null) return;
@@ -158,8 +166,6 @@ const VideoRecorder = () => {
     };
   }, [audioContext]);
 
-
-
   useEffect(() => {
     const fetchedBooks = getBooks();
     setBooks(fetchedBooks);
@@ -174,46 +180,54 @@ const VideoRecorder = () => {
 
   const handleUpload2 = async () => {
     if (!recordedVideo) {
-      console.log('No video file selected.');
+      console.log("No video file selected.");
       return;
     }
 
     // Create a Blob from the recorded video URL
-  const response = await fetch(recordedVideo);
-  const blob = await response.blob();
-  const videoName = `${selectedBook} ${selectedChapterStart} ${selectedChapterEnd && " - "} ${selectedChapterEnd && selectedChapterEnd}`;
+    const response = await fetch(recordedVideo);
+    const blob = await response.blob();
+    const videoName = `${selectedBook} ${selectedChapterStart} ${
+      selectedChapterEnd && " - "
+    } ${selectedChapterEnd && selectedChapterEnd}`;
 
     const formData = new FormData();
-    formData.append('file', blob, videoName);
-    formData.append('kid_fullname', kidFullname);
-    formData.append('parent_fullname', parentFullname);
-    formData.append('book', selectedBook);
-    formData.append('chapter_start', selectedChapterStart);
-    formData.append('chapter_end', selectedChapterEnd);
+    formData.append("file", blob, videoName);
+    formData.append("kid_fullname", kidFullname);
+    formData.append("parent_fullname", parentFullname);
+    formData.append("book", selectedBook);
+    formData.append("chapter_start", selectedChapterStart);
+    formData.append("chapter_end", selectedChapterEnd);
 
     setIsUploading(true);
     setShowModal(true);
 
     try {
-      const response = await axios.post(`${baseUrl}/api/upload-fiesta`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        onUploadProgress: (progressEvent) => {
-          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          setUploadProgress(percentCompleted);
-        },
-      });
+      const response = await axios.post(
+        `${baseUrl}/api/upload-fiesta`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          onUploadProgress: (progressEvent) => {
+            const percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            setUploadProgress(percentCompleted);
+          },
+        }
+      );
 
       if (response.status === 200) {
-        console.log('Video uploaded successfully!');
-        setUploaded(true)
+        console.log("Video uploaded successfully!");
+        setUploaded(true);
       } else {
         setUploaded(false);
       }
     } catch (error) {
-      console.error('Error uploading video:', error);
-      console.log('Failed to upload video.');
+      console.error("Error uploading video:", error);
+      console.log("Failed to upload video.");
     } finally {
       setIsUploading(false);
       setShowModal(false);
@@ -222,8 +236,8 @@ const VideoRecorder = () => {
 
   const handleBookChange = (event) => {
     setSelectedBook(event.target.value);
-    setSelectedChapterStart('');
-    setSelectedChapterEnd('');
+    setSelectedChapterStart("");
+    setSelectedChapterEnd("");
   };
 
   const handleChapterStartChange = (event) => {
@@ -237,7 +251,7 @@ const VideoRecorder = () => {
   const handleCheckboxChange = () => {
     setIsSingleChapter(!isSingleChapter);
     if (!isSingleChapter) {
-      setSelectedChapterEnd('');
+      setSelectedChapterEnd("");
     }
   };
 
@@ -261,18 +275,35 @@ const VideoRecorder = () => {
       {!isUploading && recordedVideo && uploaded && (
         <div className="absolute inset-0 bg-darkbg bg-opacity-50 flex items-center justify-center">
           <div className="bg-white py-8 px-16 z-[9999] rounded-lg shadow-lg flex flex-col items-center justify-center gap-1">
-            <h3 className="text-2xl md:text-7xl text-center font-modak text-pinkbg">Gloraaay!</h3>
-            <p className="text-center font-lucky font-light text-darkbg text-lg">Great Job! Your video has been successfully uploaded</p>
-            <p className="text-center text-darkbg text-lg">Thank you for being a part of this Glorious campaign</p>
-            <small className="text-center">Due to our <Link href="/t&c" className="hover:underline text-blue-600">Guidelines and conditions</Link>, your video is currently being reviewed. <br /> Please Wait... </small>
+            <h3 className="text-2xl md:text-7xl text-center font-modak text-pinkbg">
+              Gloraaay!
+            </h3>
+            <p className="text-center font-lucky font-light text-darkbg text-lg">
+              Great Job! Your video has been successfully uploaded
+            </p>
+            <p className="text-center text-darkbg text-lg">
+              Thank you for being a part of this Glorious campaign
+            </p>
+            <small className="text-center">
+              Due to our{" "}
+              <Link href="/t&c" className="hover:underline text-blue-600">
+                Guidelines and conditions
+              </Link>
+              , your video is currently being reviewed. <br /> Please Wait...{" "}
+            </small>
 
-            <button onClick={
-              () => {
-                setUploaded(false)
-                setRecordedVideo(null)
-              }
-            } className="bg-darkbg  px-5 py-2 rounded-xl text-white mt-5">Record again</button>
-            <Link href="/upload" className="underline mt-3">Upload Instead</Link>
+            <button
+              onClick={() => {
+                setUploaded(false);
+                setRecordedVideo(null);
+              }}
+              className="bg-darkbg  px-5 py-2 rounded-xl text-white mt-5"
+            >
+              Record again
+            </button>
+            <Link href="/upload" className="underline mt-3">
+              Upload Instead
+            </Link>
           </div>
         </div>
       )}
@@ -290,41 +321,42 @@ const VideoRecorder = () => {
               className="colors rounded-xl border-white border-4 shadow-lg shadow-gray-400 md:w-[60rem] w-full h-[75vh] md:h-[25rem] object-cover transform scale-x-[-1]"
             ></video>
             {!permission && !recordedVideo && (
-            <button
-              onClick={getCameraPermission}
-              className="absolute bottom-4 block md:hidden right-4 bg-gradient-to-tr shadow-slate-600 from-[#ac6430] text-white to-[#f4b120] font-bold rounded-full px-7 py-2 shadow-md"
-            >
-              {"Preview Camera"}
-            </button>
-          )}
+              <button
+                onClick={getCameraPermission}
+                className="absolute bottom-4 block md:hidden right-4 bg-gradient-to-tr shadow-slate-600 from-[#ac6430] text-white to-[#f4b120] font-bold rounded-full px-7 py-2 shadow-md"
+              >
+                {"Preview Camera"}
+              </button>
+            )}
 
-{permission && recordingStatus === "inactive" && (
-            <button
-              onClick={startRecording}
-              className="absolute bottom-4 right-4 bg-gradient-to-tr md:hidden block colors from-[#EE7822] text-slate-100 to-[#EFB741] font-bold rounded-full px-7 py-2 shadow-md"
-            >
-              Start Recording
-            </button>
-          )}
-          {recordingStatus === "recording" && (
-            <button
-              onClick={stopRecording}
-              className="bg-gradient-to-b absolute bottom-4 right-4 from-red-600 md:hidden block to-red-900 hover:from-red-900 hover:to-red-600 text-white rounded-full px-7 py-2 shadow-md"
-            >
-              Stop Recording
-            </button>
-          )}
+            {permission && recordingStatus === "inactive" && (
+              <button
+                onClick={startRecording}
+                className="absolute bottom-4 right-4 bg-gradient-to-tr md:hidden block colors from-[#EE7822] text-slate-100 to-[#EFB741] font-bold rounded-full px-7 py-2 shadow-md"
+              >
+                Start Recording
+              </button>
+            )}
+            {recordingStatus === "recording" && (
+              <button
+                onClick={stopRecording}
+                className="bg-gradient-to-b absolute bottom-4 right-4 from-red-600 md:hidden block to-red-900 hover:from-red-900 hover:to-red-600 text-white rounded-full px-7 py-2 shadow-md"
+              >
+                Stop Recording
+              </button>
+            )}
           </div>
         )}
         {countdown !== null && countdown !== 0 && (
           <div className="flex justify-center items-center absolute">
-            <p className="text-7xl font-bold text-[#282828] stroke animate-ping">{countdown}</p>
+            <p className="text-7xl font-bold text-[#282828] stroke animate-ping">
+              {countdown}
+            </p>
           </div>
         )}
         {recordedVideo && (
           <div className="recorded-player flex md:flex-row flex-col md:items-start items-center gap-2 md:gap-5 pb-7">
             <div className=" flex flex-col items-center justify-center gap-3 bg-gradient-to-t from-[#f8f8f8] to-white rounded-2xl ">
-
               <video
                 className="bg-[#333] rounded-2xl container md:w-[60rem] w-full h-full md:h-[25rem] object-cover border-[#f8f8f8] border-4"
                 src={recordedVideo}
@@ -333,43 +365,71 @@ const VideoRecorder = () => {
 
               <div className="w-full flex flex-col md:flex-row md:items-center justify-between  font-lucky md:px-10 px-5 pb-5">
                 <div className="">
-                  {kidFullname && (<p className="text-pinkbg"><span className="text-slate-500">Read By:</span> {kidFullname} </p>)}
+                  {kidFullname && (
+                    <p className="text-pinkbg">
+                      <span className="text-slate-500">Read By:</span>{" "}
+                      {kidFullname}{" "}
+                    </p>
+                  )}
                   <div className="text-2xl md:text-3xl text-darkbg">
-                    {selectedBook} {selectedChapterStart} {selectedChapterEnd && ` - ${selectedChapterEnd}`}
+                    {selectedBook} {selectedChapterStart}{" "}
+                    {selectedChapterEnd && ` - ${selectedChapterEnd}`}
                   </div>
                 </div>
-                <div className=" flex items-center justify-center gap-2 md:gap-6 pt-4 md:pt-0"><button
-                  onClick={restartRecording}
-                  className="bg-gradient-to-tr colors from-[#EE7822] to-[#EFB741] font-bold rounded-full px-4 md:px-10 py-1.5 md:py-2.5 md:text-lg shadow-md flex items-center !text-[#9E4242] gap-2 md:gap-3 tracking-wider"
-                >
-                  <IoVideocam color="#9E4242" size={30} /> Try Again
-                </button>
+                <div className=" flex items-center justify-center gap-2 md:gap-6 pt-4 md:pt-0">
+                  <button
+                    onClick={restartRecording}
+                    className="bg-gradient-to-tr colors from-[#EE7822] to-[#EFB741] font-bold rounded-full px-4 md:px-10 py-1.5 md:py-2.5 md:text-lg shadow-md flex items-center !text-[#9E4242] gap-2 md:gap-3 tracking-wider"
+                  >
+                    <IoVideocam color="#9E4242" size={30} /> Try Again
+                  </button>
 
-                <a
-                  download
-                  href={recordedVideo}
-                  className="bg-gradient-to-t from-darkbg to-[#ef419b] text-white rounded-full px-3 md:px-7 py-1.5 md:py-2.5 shadow-md flex items-center md:text-lg gap-2 md:gap-3 w-fit"
-                >
-                  <MdCloudDownload  size={30} /> Download
-                </a></div>
-                
+                  <a
+                    download
+                    href={recordedVideo}
+                    className="bg-gradient-to-t from-darkbg to-[#ef419b] text-white rounded-full px-3 md:px-7 py-1.5 md:py-2.5 shadow-md flex items-center md:text-lg gap-2 md:gap-3 w-fit"
+                  >
+                    <MdCloudDownload size={30} /> Download
+                  </a>
+                </div>
               </div>
             </div>
 
             <div className="col-span-2 flex flex-col gap-1.5 bg-[#f8f8f8] p-5 text-left">
-              <h2 className="font-lucky text-3xl text-center text-darkbg">Bible Reading Details</h2>
+              <h2 className="font-lucky text-3xl text-center text-darkbg">
+                Bible Reading Details
+              </h2>
               <div className="flex flex-col gap-2">
-                <label htmlFor='fullname'>Kids Full name</label>
-                <input type="text" name="fullname" placeholder="Enter full name" className='p-3 focus:outline-pinkbg focus:outline-1' value={kidFullname} onChange={(e) => setKidFullname(e.target.value)} />
+                <label htmlFor="fullname">Kids Full name</label>
+                <input
+                  type="text"
+                  name="fullname"
+                  placeholder="Enter full name"
+                  className="p-3 focus:outline-pinkbg focus:outline-1"
+                  value={kidFullname}
+                  onChange={(e) => setKidFullname(e.target.value)}
+                />
               </div>
 
               <div className="flex flex-col gap-2">
-                <label htmlFor='fullname'>Parent or Guardians Full name</label>
-                <input type="text" placeholder="Parent(s) or Guardian's Name(optional)" className='p-3 focus:outline-pinkbg focus:outline-1' value={parentFullname} onChange={(e) => setParentFullname(e.target.value)} />
+                <label htmlFor="fullname">Parent or Guardians Full name</label>
+                <input
+                  type="text"
+                  placeholder="Parent(s) or Guardian's Name(optional)"
+                  className="p-3 focus:outline-pinkbg focus:outline-1"
+                  value={parentFullname}
+                  onChange={(e) => setParentFullname(e.target.value)}
+                />
               </div>
 
-              <label htmlFor='fullname'>Which Book of the bible did you read?</label>
-              <select value={selectedBook} className='p-3' onChange={handleBookChange}>
+              <label htmlFor="fullname">
+                Which Book of the bible did you read?
+              </label>
+              <select
+                value={selectedBook}
+                className="p-3"
+                onChange={handleBookChange}
+              >
                 <option value="">Select a Book</option>
                 {books.map((book) => (
                   <option key={book.book_id} value={book.book_name}>
@@ -378,9 +438,14 @@ const VideoRecorder = () => {
                 ))}
               </select>
 
-              <label htmlFor='fullname'>What chapter(s) did you read?</label>
+              <label htmlFor="fullname">What chapter(s) did you read?</label>
               <div className="flex items-center gap-3">
-                <select className='p-3 w-20 disabled:opacity-50 disabled:bg-slate-200' value={selectedChapterStart} onChange={handleChapterStartChange} disabled={!selectedBook}>
+                <select
+                  className="p-3 w-20 disabled:opacity-50 disabled:bg-slate-200"
+                  value={selectedChapterStart}
+                  onChange={handleChapterStartChange}
+                  disabled={!selectedBook}
+                >
                   <option value="">Select a Chapter</option>
                   {chapters.map((chapter, index) => (
                     <option key={index} value={chapter}>
@@ -396,13 +461,14 @@ const VideoRecorder = () => {
                   disabled={!selectedBook || isSingleChapter}
                 >
                   <option value="">Select a Chapter</option>
-                  {chapters.filter((chapter) => chapter > selectedChapterStart).map((chapter, index) => (
-                    <option key={index} value={chapter}>
-                      {chapter}
-                    </option>
-                  ))}
+                  {chapters
+                    .filter((chapter) => chapter > selectedChapterStart)
+                    .map((chapter, index) => (
+                      <option key={index} value={chapter}>
+                        {chapter}
+                      </option>
+                    ))}
                 </select>
-
                 <div className="flex items-center gap-2">
                   <input
                     type="checkbox"
@@ -411,7 +477,6 @@ const VideoRecorder = () => {
                   />
                   <label className="text-sm">Only one chapter</label>
                 </div>
-
               </div>
               <button
                 onClick={handleUpload2}
@@ -422,7 +487,6 @@ const VideoRecorder = () => {
               </button>
               {/* <button onClick={handleUpload} disabled={!selectedBook && !selectedChapterStart } className=" text-black rounded-md px-5 py-2.5 text-xl font-lucky  bg-gradient-to-tr from-[#EE7822] to-[#EFB741] active:bg-gradient-to-bl hover:rounded disabled:opacity-20">Upload Video</button> */}
             </div>
-
           </div>
         )}
       </div>
@@ -430,7 +494,9 @@ const VideoRecorder = () => {
         <div className="md:flex mt-5 g items-center justify-center">
           {!recordedVideo && (
             <div className="md:flex flex-row items-center hidden ">
-              <div className="bg-darkbg p-2.5"><FaMicrophone color="white" /></div>
+              <div className="bg-darkbg p-2.5">
+                <FaMicrophone color="white" />
+              </div>
               <select
                 id="audioSelect"
                 value={selectedAudioDevice || "Microphone Device"}
@@ -447,7 +513,9 @@ const VideoRecorder = () => {
           )}
           {!recordedVideo && (
             <div className="md:flex flex-row items-start hidden">
-              <div className="bg-darkbg p-2.5"><FaCamera color="white" /></div>
+              <div className="bg-darkbg p-2.5">
+                <FaCamera color="white" />
+              </div>
               <select
                 id="videoSelect"
                 value={selectedVideoDevice || "Camera Device"}
@@ -486,7 +554,6 @@ const VideoRecorder = () => {
               Stop Recording
             </button>
           )}
-          
         </div>
       </main>
     </div>

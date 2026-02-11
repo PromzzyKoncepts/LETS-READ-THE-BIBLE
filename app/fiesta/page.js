@@ -7,7 +7,7 @@ import { MdEmergencyRecording } from "react-icons/md";
 import { IoPersonCircleSharp, IoShareSocialSharp } from "react-icons/io5";
 import { IoMdCloudUpload } from "react-icons/io";
 import { RiLoginCircleFill } from "react-icons/ri";
-import Footer from "@/app/components/Footer";
+import Footer from "/app/components/Footer";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import Swiper from "../components/Swiper";

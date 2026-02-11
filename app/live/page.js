@@ -1,14 +1,13 @@
-// "use client";
-// import Image from "next/image";
+"use client";
 
-// const Live = () => {
-//   const router = useRouter();
+import { useRouter } from "next/navigation";
 
-//   return (
-//     <div>
-//       <h1>Hello</h1>
-//     </div>
-//   );
-// };
+export default function Live() {
+  const router = useRouter();
 
-// export default Live;
+  return (
+    <div>
+      <h1>Hello</h1>
+    </div>
+  );
+}

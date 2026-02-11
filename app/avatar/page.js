@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 import axios from "axios";
 import Image from "next/image";
 import Cropper from "react-easy-crop";
-import getCroppedImg from "@/app/utils/cropImage";
+import getCroppedImg from "/app/utils/cropImage";
 import { FaTrash } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import {

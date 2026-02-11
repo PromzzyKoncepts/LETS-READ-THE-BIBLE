@@ -6,7 +6,7 @@ import {
   getBooks,
   getNewTestamentBooks,
   getChapters,
-} from "@/app/components/read/readApi";
+} from "/app/components/read/readApi";
 import axios from "axios";
 import toast from "react-hot-toast";
 
