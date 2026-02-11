@@ -318,7 +318,7 @@ export default function Home() {
                       This is a description for item three.
                     </p>
                     <Link
-                      href="/item-three"
+                      href="/videos"
                       className="text-blue-600 hover:underline font-medium"
                     >
                       Learn More
