@@ -5,14 +5,10 @@ import { useState } from "react";
 
 // Image URLs for each day (you can replace these with actual images)
 const DATE_IMAGES = {
-  default:
-    "https://images.unsplash.com/photo-1544717305-2782549b5136?w=400&h-300&fit=crop", // Default Bible study image
-  today:
-    "https://images.unsplash.com/photo-1519074069444-1ba4fff66d16?w=400&h=300&fit=crop",
-  recent:
-    "https://images.unsplash.com/photo-1555505019-8c3f1c4aba5f?w=400&h=300&fit=crop",
-  yesterday:
-    "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&h=300&fit=crop",
+  default: "images/bible-image.png", // Default Bible study image
+  today: "images/bible-image.png",
+  recent: "images/bible-image.png",
+  yesterday: "images/bible-image.png",
 };
 
 const DAY_EMOJIS = {
