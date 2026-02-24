@@ -50,6 +50,11 @@ const nextConfig = {
         destination: "https://letsreadthebible.club",
         permanent: false,
       },
+      {
+        source: "/avatar",
+        destination: "/",
+        permanent: false,
+      },
     ];
   },
 };
