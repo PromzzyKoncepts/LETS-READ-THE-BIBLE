@@ -25,7 +25,7 @@ const Header = () => {
             href={`/`}
             className="text-white hover:text-slate-800 hover:border transition-all duration-500 ease hover:font-bold hover:bg-gradient-to-tr from-[#EE7822] to-[#EFB741] active:bg-gradient-to-bl hover:rounded-full hover:px-5 hover:py-2"
           >
-            HOME
+            Home
           </Link>
 
           <Link
@@ -53,7 +53,7 @@ const Header = () => {
             href={`/games`}
             className="text-white hover:text-slate-800 hover:border  transition-all duration-500 ease hover:font-bold hover:bg-gradient-to-tr from-[#EE7822] to-[#EFB741] active:bg-gradient-to-bl hover:rounded-full hover:px-5 hover:py-2"
           >
-            Bible Games
+            Games
           </Link>
           {/* <Link href={`/fiesta`} className="text-white hover:text-slate-800 hover:border  transition-all duration-500 ease hover:font-bold hover:bg-gradient-to-tr from-[#EE7822] to-[#EFB741] active:bg-gradient-to-bl hover:rounded-full hover:px-5 hover:py-2">
             View Fiesta
