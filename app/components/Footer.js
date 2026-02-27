@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -23,7 +23,7 @@ const Footer = () => {
         <div className=" text-white  flex flex-wrap items-start justify-between gap-6">
           <div className="flex flex-col">
             <h3 className="text-2xl font-bold text-orange pb-3">Quick Links</h3>
-            <Link href="/lrbf">Bible Reading Fiesta</Link>
+            {/* <Link href="/lrbf">Bible Reading Fiesta</Link> */}
             <Link href="/videos">Watch Videos</Link>
             {/* <Link href="/auth/login">Sponsor this campaign</Link> */}
             <Link href="/record">Record your video</Link>
@@ -34,30 +34,34 @@ const Footer = () => {
             {/* <Link href="/about">About Us</Link> */}
             {/* <Link href="/contact">Contact Us</Link> */}
             <Link href="/read">Read the bible</Link>
-            <Link href="/t&c">Terms and Conditions</Link>
-            <Link href="/faqs">FAQS</Link>
+            {/* <Link href="/t&c">Terms and Conditions</Link> */}
+            {/* <Link href="/faqs">FAQS</Link> */}
           </div>
           <div className="flex flex-col">
             <h3 className="text-2xl text-orange font-bold  pb-3">Support</h3>
-            <a href="mailto:lovetoons@gmail.com" className="flex items-center gap-1">
+            {/* <a href="mailto:lovetoons@gmail.com" className="flex items-center gap-1">
               <CiMail /> Email Support
-            </a>
-            <a href="tel:07012897856" className="flex items-center gap-1">
+            </a> */}
+            {/* <a href="tel:07012897856" className="flex items-center gap-1">
               <CiPhone /> Phone Support
             </a>
             <a href="https://kingschat.online" className="flex items-center gap-1">
               <Image src="/images/kingschat.webp" alt="Kingschat logo icon" width={20} height={20}/>
                KingsChat Support
-            </a>
+            </a> */}
           </div>
           <div className="">
-            <h3 className="text-xl text-orange pb-3 font-bold ">Connect with Us</h3>
+            <h3 className="text-xl text-orange pb-3 font-bold ">
+              Connect with Us
+            </h3>
             <div className="flex gap-3">
-              <a
-                href="https://kingschat.online"
-                className=""
-              >
-                <Image src="/images/kingschat.webp" alt="Kingschat logo icon" width={40} height={40}/>
+              <a href="https://kingschat.online" className="">
+                <Image
+                  src="/images/kingschat.webp"
+                  alt="Kingschat logo icon"
+                  width={40}
+                  height={40}
+                />
               </a>
               <a
                 href="https://x.com/lovetoonstv"
@@ -65,7 +69,6 @@ const Footer = () => {
               >
                 <FaXTwitter />{" "}
               </a>
-              
             </div>
           </div>
         </div>
@@ -79,10 +82,7 @@ const Footer = () => {
               name="email"
               className="bg-transparent text-black p-2 w-full focus:outline-none"
             />
-            <button
-              type="submit"
-              className="  bg-[#9C29B2] rounded-r-xl p-3"
-            >
+            <button type="submit" className="  bg-[#9C29B2] rounded-r-xl p-3">
               subscribe
             </button>
           </form>
@@ -91,8 +91,7 @@ const Footer = () => {
         <hr className="my-6 border-slate-500" />
 
         <div className="text-xs text-center  text-slate-400 sm:float-right">
-          Copyright &copy; {currentYear} Lovetoons TV All Rights
-          Reserved
+          Copyright &copy; {currentYear} Lovetoons TV All Rights Reserved
         </div>
       </div>
     </div>
