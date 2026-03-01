@@ -52,16 +52,16 @@ export default function Home() {
       src: "https://lovetoons.org/img/YEAR_OF_MANIFESTATION_web2.png",
       // link: "/lbrf",
     },
-    {
-      title: "Throne room",
-      src: "https://lovetoons.org/img/Monthofthethroneroomslider.jpg.jpeg",
-      // link: "/lbrf",
-    },
-    {
-      title: "Throne room",
-      src: "https://lovetoons.org/img/mack_most.png",
-      // link: "/lbrf",
-    },
+    // {
+    //   title: "Throne room",
+    //   src: "https://lovetoons.org/img/Monthofthethroneroomslider.jpg.jpeg",
+    //   // link: "/lbrf",
+    // },
+    // {
+    //   title: "Throne room",
+    //   src: "https://lovetoons.org/img/mack_most.png",
+    //   // link: "/lbrf",
+    // },
     {
       title: "Tick Talk",
       src: "/images/ticktalk.png",
