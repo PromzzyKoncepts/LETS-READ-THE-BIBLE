@@ -204,7 +204,7 @@ export default function Home() {
                 height={300}
                 className="w-full object-cover h-full rounded-2xl"
                 muted={false} // Ensure audio is enabled
-                controls={true} // Hide controls
+                controls // Hide controls
                 loop={false}
               />
             </div>
