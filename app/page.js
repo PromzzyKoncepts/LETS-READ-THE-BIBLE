@@ -191,11 +191,21 @@ export default function Home() {
               <h2 className="text-xl font-bold text-center text-blue-700 p-4">
                 Kids Memory Verse
               </h2>
-              <img
+              {/* <img
                 src="images/memory-verse-day-1.jpg"
                 alt="Daily Memory Verse"
                 aria-hidden="true"
                 className="w-full  mx-auto object-contain drop-shadow-2xl "
+              /> */}
+
+              <video
+                src="https://cdn1.kingschat.online/uploads/media/563d295662c6c0106900164b/dWxuWmlEb1k2MWVmb0JKL2pzSFluZz09/Day_1_Full_1.mp4"
+                width={300}
+                height={300}
+                className="w-full object-cover h-full rounded-2xl"
+                muted={false} // Ensure audio is enabled
+                controls={false} // Hide controls
+                loop={true}
               />
             </div>
           </div>
