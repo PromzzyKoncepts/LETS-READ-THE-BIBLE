@@ -42,11 +42,11 @@ export default function Home() {
   }, []);
 
   const card = [
-    {
-      title: "Year of Manifestationn",
-      src: "https://lovetoons.org/img/Lovetoons_Affirmation_Extravaganza_web.jpg",
-      link: "https://lovetoons.org/lae",
-    },
+    // {
+    //   title: "Year of Manifestationn",
+    //   src: "https://lovetoons.org/img/Lovetoons_Affirmation_Extravaganza_web.jpg",
+    //   link: "https://lovetoons.org/lae",
+    // },
     {
       title: "Year of Manifestationn",
       src: "https://lovetoons.org/img/YEAR_OF_MANIFESTATION_web2.png",
