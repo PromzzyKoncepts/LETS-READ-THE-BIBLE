@@ -207,6 +207,12 @@ export default function Home() {
                 controls // Hide controls
                 loop={false}
               />
+
+              <img
+                src="https://cdn1.kingschat.online/uploads/media/53d9893773312e341fb91400/RWt0L1lPK0pkYlB1cm5ucG5YWjlsUT09/MARCH_3RD_CARD_FOR_PLATFORM_1.png"
+                alt="March 3rd Card"
+                className="w-full  mx-auto object-contain drop-shadow-2xl "
+              />
             </div>
           </div>
         </div>
