@@ -199,7 +199,7 @@ export default function Home() {
               /> */}
 
               <video
-                src="https://cdn1.kingschat.online/uploads/media/563d295662c6c0106900164b/dWxuWmlEb1k2MWVmb0JKL2pzSFluZz09/Day_1_Full_1.mp4"
+                src="http://lovetoons.org/videos/Day_3_Full_1.mp4"
                 width={300}
                 height={300}
                 className="w-full object-cover h-full rounded-2xl"
