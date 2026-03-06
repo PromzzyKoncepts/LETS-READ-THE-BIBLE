@@ -199,7 +199,7 @@ export default function Home() {
               /> */}
 
               <video
-                src="https://cdn1.kingschat.online/uploads/media/563d295662c6c0106900164b/YnB5RnRBaTdyZi9xVTViQUtQZ2N6Zz09/Day_5_Full_1.mp4"
+                src="https://cdn1.kingschat.online/uploads/media/563d295662c6c0106900164b/V3hxNmtFaUx3MDRBQ04xSUIyZG9LZz09/Dayy_6_Full_1.mp4"
                 width={300}
                 height={300}
                 className="w-full object-cover h-full rounded-2xl"
