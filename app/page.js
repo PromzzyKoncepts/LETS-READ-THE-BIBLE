@@ -209,8 +209,8 @@ export default function Home() {
               />
 
               <img
-                src="https://cdn1.kingschat.online/uploads/media/53d9893773312e341fb91400/a3Eza2E0ZHpJVlBJQ0EwT3NKelV6UT09/MARCH_5TH_CARD_FOR_PLATFORM.png"
-                alt="March 4th Card"
+                src="https://cdn1.kingschat.online/uploads/media/53d9893773312e341fb91400/ZVlVUjBUR2ZjUlZ1cjRLbmxOZEp6UT09/MARCH_6TH_CARD_FOR_PLATFORM.png"
+                alt="March 6th Card"
                 className="w-full  mx-auto object-contain drop-shadow-2xl "
               />
             </div>
