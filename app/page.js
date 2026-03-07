@@ -199,7 +199,7 @@ export default function Home() {
               /> */}
 
               <video
-                src="https://cdn1.kingschat.online/uploads/media/563d295662c6c0106900164b/V3hxNmtFaUx3MDRBQ04xSUIyZG9LZz09/Dayy_6_Full_1.mp4"
+                src="https://cdn1.kingschat.online/uploads/media/53d9893773312e341fb91400/S2FNb1dpTnFuM3haVmtJVU5kWW52dz09/March_7Th_1.m4v"
                 width={300}
                 height={300}
                 className="w-full object-cover h-full rounded-2xl"
@@ -209,7 +209,7 @@ export default function Home() {
               />
 
               <img
-                src="https://cdn1.kingschat.online/uploads/media/53d9893773312e341fb91400/ZVlVUjBUR2ZjUlZ1cjRLbmxOZEp6UT09/MARCH_6TH_CARD_FOR_PLATFORM.png"
+                src="https://cdn1.kingschat.online/uploads/media/53d9893773312e341fb91400/ajEwaWhYWUJmaEd0WEgwUTJ3dTEydz09/MARCH_7TH_CARD_FOR_PLATFORM.png"
                 alt="March 6th Card"
                 className="w-full  mx-auto object-contain drop-shadow-2xl "
               />
