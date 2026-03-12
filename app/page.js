@@ -199,7 +199,7 @@ export default function Home() {
               /> */}
 
               <video
-                src="https://cdn1.kingschat.online/uploads/media/62bd6bfbbc221e000744b76b/ZUNWL0hiR2xnWWRjMEMreVhJU0dwZz09/149600.mp4"
+                src="https://cdn1.kingschat.online/uploads/media/53d9893773312e341fb91400/ajJ2T1Fyalk0eTVaN3FrZC9TbHdkZz09/FOR_SOCIALS.mov"
                 width={300}
                 height={300}
                 className="w-full object-cover h-full rounded-2xl"
@@ -209,9 +209,8 @@ export default function Home() {
               />
 
               <img
-                src="https://cdn1.kingschat.online/uploads/media/53d9893773312e341fb91400/UUlhalg5WEFpaURIbnRjbnd5WmVDUT09/platform_card_mar_9.png"
-                alt="March 6th Card"
-                className="w-full  mx-auto object-contain drop-shadow-2xl  hidden"
+                src="https://cdn1.kingschat.online/uploads/media/53d9893773312e341fb91400/UUlhalg5WEFpaURIbnRjbnd5WmVDUT09/platform_card_mar_9.png"alt="March 6th Card"
+                className="w-full  mx-auto object-contain drop-shadow-2xl  "
               />
             </div>
           </div>
