@@ -45,11 +45,11 @@ const nextConfig = {
 
   async redirects() {
     return [
-      {
-        source: "/fiesta/:path*", // matches anything after /fiesta
-        destination: "https://letsreadthebible.club",
-        permanent: false,
-      },
+      // {
+      //   source: "/fiesta/:path*", // matches anything after /fiesta
+      //   destination: "https://letsreadthebible.club",
+      //   permanent: false,
+      // },
       {
         source: "/avatar",
         destination: "/",
