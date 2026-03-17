@@ -208,11 +208,11 @@ export default function Home() {
                 loop={false}
               />
 
-              <img
+              {/* <img
                 src="https://cdn1.kingschat.online/uploads/media/53d9893773312e341fb91400/cFRPREJmeEMwQ2hPMjRueXdmejVZQT09/card_for_platform_114th.png"
                 alt="March 6th Card"
                 className="w-full  mx-auto object-contain drop-shadow-2xl  "
-              />
+              /> */}
             </div>
           </div>
         </div>
