@@ -146,7 +146,6 @@ export default function BiblePlaylistPage() {
           className={`cloud cloud-3 ${showClouds ? "animate-float-fast" : ""}`}
         />
       </div>
-
       <div className="bp-inner">
         {/* ── Header ── */}
         <header className="bp-header">
