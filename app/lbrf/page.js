@@ -14,25 +14,20 @@ const loginOptions = {
 };
 
 const baseUrl = "https://letsreadthebible.club";
-// const baseUrl = "https://lets-read-the-bible.vercel.app"
 
 const Page = () => {
   const router = useRouter();
-  const [success, setSuccess] = useState(false);
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
   const [kingsChatHandle, setKingsChatHandle] = useState(null);
   const [viewAvatar, setViewAvatar] = useState(false);
 
   useEffect(() => {
-    // Ensure this code runs only on the client side
     if (typeof window !== "undefined") {
-      // Check if the popup has already been shown using session storage
       const hasPopupBeenShown = sessionStorage.getItem("hasPopupBeenShown");
       if (!hasPopupBeenShown) {
-        // setViewAvatar(true); // Show the popup
         setViewAvatar(false);
-        sessionStorage.setItem("hasPopupBeenShown", "true"); // Mark the popup as shown
+        sessionStorage.setItem("hasPopupBeenShown", "true");
       }
     }
   }, []);
@@ -43,18 +38,14 @@ const Page = () => {
   };
 
   async function registerUser(userData) {
-    console.log(userData);
     try {
       const response = await fetch(`http://lovetoons.org/php/lbrf.php`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
       });
       const result = await response.json();
       if (result?.error) {
-        console.error("Registeration failed!", result.message);
         toast.error(result.message);
       } else if (result?.result) {
         localStorage.setItem("user", JSON.stringify(userData));
@@ -65,19 +56,16 @@ const Page = () => {
       console.error("Error registering user:", error);
     }
   }
+
   async function registerKCUser(userData) {
-    console.log(userData);
     try {
       const response = await fetch(`http://lovetoons.org/php/lbrf.php`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
       });
       const result = await response.json();
       if (result?.error) {
-        console.error("Registeration failed!", result.message);
         toast.error(result.message);
       } else if (result?.result) {
         localStorage.setItem("user", JSON.stringify(userData));
@@ -88,32 +76,24 @@ const Page = () => {
       console.error("Error registering user:", error);
     }
   }
+
   function loginWithKingsChat() {
     kingsChatWebSdk
       .login(loginOptions)
       .then((authenticationTokenResponse) => {
-        console.log(authenticationTokenResponse.accessToken);
         fetchUserProfile(authenticationTokenResponse.accessToken);
       })
       .catch((error) => console.error(error));
   }
 
   async function fetchUserProfile(accessToken) {
-    console.log(accessToken);
     try {
       const response = await fetch(
         "https://connect.kingsch.at/developer/api/profile",
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
+        { headers: { Authorization: `Bearer ${accessToken}` } }
       );
       const data = await response.json();
-      console.log(data.profile);
       const { username, name, email } = data?.profile;
-
-      // Send data to MongoDB
       await registerKCUser({
         email,
         fullName: name,
@@ -126,136 +106,444 @@ const Page = () => {
   }
 
   return (
-    <div className="grid md:grid-cols-2 items-start max-h-screen font-sniglet">
-      <Toaster position="top-right" />
-      {viewAvatar && (
-        <div className="font-sniglet z-[99] fixed top-0 h-screen w-full bg-darkbg bg-opacity-30 backdrop-blur-sm flex items-center justify-center">
-          <div className="bg-white rounded-2xl shadow-lg py-10 mx-5 px-4 md:px-10 flex items-center gap-2 flex-col">
-            <h2 className="text-3xl text-center md:text-5xl font-lucky text-[#d1942b]">
-              WELCOME TO LBRF
-            </h2>
-            {/* <p>Show us your participation</p> */}
-            <p className="text-lg text-center md:max-w-3xl">
-              Kindly take a picture of you reading the scripture{" "}
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap');
+
+        .lbrf-root {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          min-height: 100vh;
+          font-family: 'DM Sans', sans-serif;
+          background: #0c0c1a;
+        }
+        @media (max-width: 768px) {
+          .lbrf-root { grid-template-columns: 1fr; }
+          .lbrf-banner { height: 200px !important; }
+        }
+
+        /* ── OVERLAY ── */
+        .lbrf-overlay {
+          position: fixed; inset: 0; z-index: 99;
+          background: rgba(12,12,26,0.65);
+          backdrop-filter: blur(6px);
+          display: flex; align-items: center; justify-content: center;
+          padding: 1rem;
+        }
+        .lbrf-dialog {
+          background: #fff;
+          border-radius: 22px;
+          padding: 2.5rem 2rem;
+          max-width: 420px; width: 100%;
+          text-align: center;
+          box-shadow: 0 32px 80px rgba(0,0,0,0.35);
+          animation: fadeUp .3s ease;
+        }
+        @keyframes fadeUp {
+          from { transform: translateY(16px); opacity: 0; }
+          to   { transform: translateY(0);    opacity: 1; }
+        }
+        .lbrf-dialog-title {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(2rem, 5vw, 2.8rem);
+          color: #c8851f;
+          letter-spacing: 2px;
+          margin: 0 0 .6rem;
+        }
+        .lbrf-dialog p {
+          color: #555; font-size: .95rem;
+          margin: 0 0 1.75rem; line-height: 1.65;
+        }
+        .lbrf-dialog-actions { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
+        .btn-ghost {
+          border: 2px solid #0c0c1a; background: transparent; color: #0c0c1a;
+          border-radius: 999px; padding: .6rem 1.4rem;
+          font-size: .875rem; font-weight: 500; cursor: pointer;
+          font-family: 'DM Sans', sans-serif;
+          transition: background .18s, color .18s;
+        }
+        .btn-ghost:hover { background: #0c0c1a; color: #fff; }
+        .btn-upload-dialog {
+          background: #0c0c1a; color: #f5c257;
+          border: 2px solid #0c0c1a;
+          border-radius: 999px; padding: .6rem 1.4rem;
+          font-size: .875rem; font-weight: 600; cursor: pointer;
+          text-decoration: none;
+          font-family: 'DM Sans', sans-serif;
+          transition: background .18s, box-shadow .18s;
+        }
+        .btn-upload-dialog:hover { background: #1e1e3a; box-shadow: 0 6px 20px rgba(0,0,0,.3); }
+
+        /* ── BANNER ── */
+        .lbrf-banner {
+          position: relative;
+          overflow: hidden;
+          height: 100vh;
+        }
+        .lbrf-banner-overlay {
+          position: absolute; inset: 0;
+          background: linear-gradient(to right, rgba(12,12,26,.5) 0%, rgba(12,12,26,.1) 100%);
+          pointer-events: none;
+        }
+        .lbrf-banner-badge {
+          position: absolute; bottom: 2rem; left: 2rem;
+          background: rgba(12,12,26,.78);
+          border: 1px solid rgba(245,194,87,.35);
+          border-radius: 12px;
+          padding: .7rem 1.1rem;
+          backdrop-filter: blur(4px);
+        }
+        .lbrf-banner-badge-title {
+          font-family: 'Bebas Neue', sans-serif;
+          color: #f5c257;
+          font-size: 1.05rem;
+          letter-spacing: 1.5px;
+          margin: 0;
+        }
+        .lbrf-banner-badge-sub {
+          color: rgba(255,255,255,.65);
+          font-size: .75rem;
+          font-weight: 300;
+          margin: 2px 0 0;
+        }
+
+        /* ── FORM PANEL ── */
+        .lbrf-panel {
+          background: #f7f5f0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 2.5rem 2rem;
+          overflow-y: auto;
+          position: relative;
+          min-height: 100vh;
+        }
+        .lbrf-panel::before {
+          content: '';
+          position: absolute; top: 0; left: 0; right: 0; height: 4px;
+          background: linear-gradient(90deg, #c8851f 0%, #f5c257 50%, #c8851f 100%);
+        }
+
+        .lbrf-logo { width: 84px; margin-bottom: 1.25rem; }
+
+        .lbrf-heading {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(1.7rem, 3vw, 2.2rem);
+          color: #0c0c1a;
+          letter-spacing: 2px;
+          margin: 0 0 .2rem;
+          text-align: center;
+        }
+        .lbrf-sub {
+          color: #999;
+          font-size: .82rem;
+          text-align: center;
+          margin: 0 0 1.75rem;
+          font-weight: 300;
+          letter-spacing: .02em;
+        }
+
+        /* ── CTA BUTTONS ── */
+        .lbrf-ctas {
+          display: flex; flex-direction: column; gap: .65rem;
+          width: 100%; max-width: 360px;
+          margin-bottom: 1.5rem;
+        }
+        .btn-bible {
+          display: flex; align-items: center; justify-content: center; gap: .55rem;
+          background: #1a6b2e; color: #fff;
+          border-radius: 11px; padding: .8rem 1.25rem;
+          font-weight: 600; font-size: .875rem;
+          text-decoration: none; border: none; cursor: pointer;
+          font-family: 'DM Sans', sans-serif;
+          transition: background .18s, transform .14s;
+          box-shadow: 0 4px 16px rgba(26,107,46,.22);
+        }
+        .btn-bible:hover { background: #155c26; transform: translateY(-1px); }
+
+        .btn-kingschat {
+          display: flex; align-items: center; justify-content: center; gap: .55rem;
+          background: #1565c0; color: #fff;
+          border-radius: 11px; padding: .8rem 1.25rem;
+          font-weight: 600; font-size: .875rem;
+          border: none; cursor: pointer;
+          font-family: 'DM Sans', sans-serif;
+          transition: background .18s, transform .14s;
+          box-shadow: 0 4px 16px rgba(21,101,192,.22);
+        }
+        .btn-kingschat:hover { background: #0d47a1; transform: translateY(-1px); }
+
+        /* ── DIVIDER ── */
+        .lbrf-divider {
+          display: flex; align-items: center; gap: .7rem;
+          width: 100%; max-width: 360px;
+          margin-bottom: 1.4rem;
+          color: #bbb; font-size: .78rem;
+          font-weight: 300;
+        }
+        .lbrf-divider::before, .lbrf-divider::after {
+          content: ''; flex: 1; height: 1px; background: #e0ddd8;
+        }
+
+        /* ── FORM ── */
+        .lbrf-form { width: 100%; max-width: 360px; display: flex; flex-direction: column; gap: .9rem; }
+
+        .lbrf-field { display: flex; flex-direction: column; gap: .3rem; }
+        .lbrf-label {
+          font-size: .72rem; font-weight: 500;
+          color: #666;
+          text-transform: uppercase; letter-spacing: .07em;
+          display: flex; align-items: center; gap: .4rem;
+        }
+        .lbrf-input-wrap {
+          display: flex; align-items: center;
+          background: #fff;
+          border: 1.5px solid #e0ddd8;
+          border-radius: 10px;
+          padding: .62rem .85rem;
+          gap: .5rem;
+          transition: border-color .18s, box-shadow .18s;
+        }
+        .lbrf-input-wrap:focus-within {
+          border-color: #c8851f;
+          box-shadow: 0 0 0 3px rgba(200,133,31,.11);
+        }
+        .lbrf-input-wrap input {
+          border: none; outline: none; background: transparent;
+          font-size: .92rem; color: #1a1a2e; width: 100%;
+          font-family: 'DM Sans', sans-serif;
+        }
+        .lbrf-input-wrap input::placeholder { color: #c0bdb8; }
+        .lbrf-prefix { color: #bbb; font-size: .92rem; user-select: none; }
+        .lbrf-icon { flex-shrink: 0; color: #ccc; }
+
+        .btn-register {
+          margin-top: .3rem;
+          background: linear-gradient(135deg, #c8851f 0%, #f0b93a 100%);
+          color: #1a0e00;
+          border: none; border-radius: 11px;
+          padding: .88rem;
+          font-size: .95rem; font-weight: 700;
+          cursor: pointer; letter-spacing: .04em;
+          font-family: 'DM Sans', sans-serif;
+          transition: opacity .18s, transform .14s, box-shadow .18s;
+          box-shadow: 0 4px 18px rgba(200,133,31,.32);
+        }
+        .btn-register:hover {
+          opacity: .93; transform: translateY(-1px);
+          box-shadow: 0 8px 26px rgba(200,133,31,.38);
+        }
+        .btn-register:active { transform: translateY(0); }
+
+        .lbrf-footnote {
+          margin-top: 1.25rem;
+          font-size: .72rem; color: #bbb;
+          text-align: center; line-height: 1.65;
+          max-width: 300px;
+          font-weight: 300;
+        }
+      `}</style>
+
+      <div className="lbrf-root">
+        <Toaster position="top-right" />
+
+        {/* ── WELCOME OVERLAY ── */}
+        {viewAvatar && (
+          <div className="lbrf-overlay">
+            <div className="lbrf-dialog">
+              <p className="lbrf-dialog-title">Welcome to LBRF</p>
+              <p>
+                Kindly take a picture of you reading the scripture and upload it
+                to show your participation.
+              </p>
+              <div className="lbrf-dialog-actions">
+                <button
+                  className="btn-ghost"
+                  onClick={() => setViewAvatar(false)}
+                >
+                  Register instead
+                </button>
+                <Link href="/lbrf/picture" className="btn-upload-dialog">
+                  Upload my picture
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── LEFT: BANNER ── */}
+        <div className="lbrf-banner">
+          <Image
+            src="/images/banner2.png"
+            alt="LBRF banner"
+            fill
+            style={{ objectFit: "cover" }}
+            priority
+          />
+          <div className="lbrf-banner-overlay" />
+          <div className="lbrf-banner-badge">
+            <p className="lbrf-banner-badge-title">LBRF 2025</p>
+            <p className="lbrf-banner-badge-sub">
+              Loveworld Bible Reading Festival
             </p>
-            <div className="flex items-center gap-2 mt-3">
-              <button
-                onClick={() => {
-                  setViewAvatar(false);
-                  // setViewPicture(true)
-                }}
-                className="border-2 border-darkbg rounded-full px-4 py-2"
+          </div>
+        </div>
+
+        {/* ── RIGHT: FORM PANEL ── */}
+        <div className="lbrf-panel">
+          <Image
+            src="/images/logo_fiesta.png"
+            alt="LBRF Logo"
+            width={84}
+            height={84}
+            className="lbrf-logo"
+          />
+
+          <h1 className="lbrf-heading">Create your account</h1>
+          <p className="lbrf-sub">Join thousands reading the Word together</p>
+
+          {/* Quick CTAs */}
+          <div className="lbrf-ctas">
+            <Link href="/lbrf/picture" className="btn-bible">
+              <svg
+                className="lbrf-icon"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                Register instead
-              </button>
-              <Link
-                href="/lbrf/picture"
-                className="bg-darkbg rounded-full text-white px-4 py-2 border-2 hover:shadow-md hover:shadow-slate-500 border-white shadow-lg"
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+              </svg>
+              Upload Bible reading picture
+            </Link>
+            <button className="btn-kingschat" onClick={loginWithKingsChat}>
+              <svg
+                className="lbrf-icon"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                Upload my picture
-              </Link>
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+              Register with KingsChat
+            </button>
+          </div>
+
+          <div className="lbrf-divider">or register manually</div>
+
+          {/* Manual form */}
+          <form className="lbrf-form" onSubmit={handleRegister}>
+            <div className="lbrf-field">
+              <label className="lbrf-label">Full name</label>
+              <div className="lbrf-input-wrap">
+                <svg
+                  className="lbrf-icon"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Enter your full name"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required
+                />
+              </div>
             </div>
-          </div>
-        </div>
-      )}
-      <div className=" col-span-1">
-        <Image
-          src="/images/banner2.png"
-          className="md:w-full h-[10rem] md:h-screen object-cover"
-          alt="banner"
-          width={500}
-          height={500}
-        />
-      </div>
-      <div className="flex flex-col items-center  md:pt-14 bg-[#dddcef] h-screen">
-        <Image
-          src="/images/logo_fiesta.png"
-          className="w-36 md:w-40"
-          alt="banner"
-          width={500}
-          height={500}
-        />
 
-        <div className="flex gap-4 flex-col items-center ">
-          <Link
-            href="/lbrf/picture"
-            className="bg-gradient-to-t from-lime-800 to-lime-500 hover:border-white hover:border-2 hover:shadow-lg hover:shadow-slate-400 px-5 py-4 font-lucky rounded-lg text-white  text-lg"
-          >
-            Upload your Bible reading picture
-          </Link>
-          <a
-            onClick={loginWithKingsChat}
-            className="bg-gradient-to-t from-blue-800 to-[#2F92E5] font-lucky tracking-wider cursor-pointer px-7 py-4 rounded-xl text-white  border-2 border-white hover:shadow-md hover:shadow-slate-400"
-            target="_blank"
-          >
-            {" "}
-            Register with KingsChat
-          </a>
-        </div>
-        <div className="flex items-center pt-6  gap-3 opacity-60 mx-auto">
-          <div className="h-0.5 w-36 md:w-44 rounded-xl bg-darkbg" /> or{" "}
-          <div className="h-0.5 w-36 md:w-44 rounded-xl bg-darkbg" />
-        </div>
-        <div className="flex  flex-col gap-4 w-full px-8 md:px-20 lg:px-36">
-          <div className="flex flex-col gap-1">
-            <label>Full name</label>
-            <input
-              name="name"
-              className="border-0 outline-0 focus:border-b-2 border-b py-2 focus:border-darkbg border-slate-500 bg-transparent  text-darkbg"
-              required
-              type="text"
-              placeholder="Enter your full-name"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-            />
-          </div>
-
-          <div className="flex flex-col gap-1 w-full">
-            <label className="flex items-center gap-2">
-              <Image
-                src="/images/kingschat.webp"
-                alt="KingsChat logo icon"
-                width={30}
-                height={30}
-                priority={false}
-              />
-              KingsChat (Optional)
-            </label>
-
-            <div className="flex items-center gap-3 py-2 border-b border-slate-500">
-              @
-              <input
-                name="name"
-                type="text"
-                className="border-0 outline-0 bg-transparent text-darkbg w-full"
-                placeholder="Enter your KingsChat username"
-                value={kingsChatHandle}
-                onChange={(e) => setKingsChatHandle(e.target.value)}
-              />
+            <div className="lbrf-field">
+              <label className="lbrf-label">
+                <Image
+                  src="/images/kingschat.webp"
+                  alt="KingsChat"
+                  width={14}
+                  height={14}
+                  style={{ borderRadius: 2 }}
+                />
+                KingsChat username
+                <span
+                  style={{
+                    color: "#bbb",
+                    fontWeight: 300,
+                    textTransform: "none",
+                    letterSpacing: 0,
+                  }}
+                >
+                  (optional)
+                </span>
+              </label>
+              <div className="lbrf-input-wrap">
+                <span className="lbrf-prefix">@</span>
+                <input
+                  type="text"
+                  placeholder="your_username"
+                  value={kingsChatHandle ?? ""}
+                  onChange={(e) => setKingsChatHandle(e.target.value)}
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="flex flex-col gap-1 w-full">
-            <label>Email address</label>
-            <input
-              name="email"
-              className="border-0 outline-0 py-2 focus:border-b-2 border-b focus:border-darkbg border-slate-500 bg-transparent  text-darkbg"
-              required
-              type="email"
-              placeholder="Enter Email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <button
-            onClick={handleRegister}
-            className="bg-gradient-to-t from-[#F82F00] to-[#F89108] hover:border-white hover:border-2 hover:shadow-lg hover:shadow-slate-400 px-5 py-2 rounded-lg text-white "
-          >
-            Register Now!
-          </button>
+            <div className="lbrf-field">
+              <label className="lbrf-label">Email address</label>
+              <div className="lbrf-input-wrap">
+                <svg
+                  className="lbrf-icon"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+
+            <button type="submit" className="btn-register">
+              Register Now →
+            </button>
+          </form>
+
+          <p className="lbrf-footnote">
+            By registering you agree to participate in the Loveworld Bible
+            Reading Festival.
+          </p>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
