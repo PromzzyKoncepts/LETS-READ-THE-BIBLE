@@ -150,12 +150,12 @@ export default function BiblePlaylistPage() {
       <div className="bp-inner">
         {/* ── Header ── */}
         <header className="bp-header">
-          <p className="bp-eyebrow">Loveworld Bible Reading Festival</p>
+          <p className="bp-eyebrow">Lovetoons Bible Reading Fiesta</p>
           <h1 className="bp-title">
             Bible <span className="bp-title-accent">Reading</span>
           </h1>
           <p className="bp-subtitle">Watch and learn about God&apos;s love!</p>
-          <div className="bp-icons-row">
+          <div className="bp-icons-row hidden">
             {["✨", "⭐", "🕊️", "❤️", "⭐", "✨"].map((e, i) => (
               <span key={i}>{e}</span>
             ))}
