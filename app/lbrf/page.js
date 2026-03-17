@@ -39,7 +39,7 @@ const Page = () => {
 
   async function registerUser(userData) {
     try {
-      const response = await fetch(`http://lovetoons.org/php/lbrf.php`, {
+      const response = await fetch(`https://lovetoons.org/php/lbrf.php`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
@@ -59,7 +59,7 @@ const Page = () => {
 
   async function registerKCUser(userData) {
     try {
-      const response = await fetch(`http://lovetoons.org/php/lbrf.php`, {
+      const response = await fetch(`https://lovetoons.org/php/lbrf.php`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
@@ -445,7 +445,7 @@ const Page = () => {
           </div>
 
           <div className="lbrf-banner-badge">
-            <p className="lbrf-banner-badge-title">LBRF 2025</p>
+            <p className="lbrf-banner-badge-title">LBRF 2026</p>
             <p className="lbrf-banner-badge-sub">
               Loveworld Bible Reading Festival
             </p>
