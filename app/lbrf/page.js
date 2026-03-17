@@ -447,7 +447,7 @@ const Page = () => {
           <div className="lbrf-banner-badge">
             <p className="lbrf-banner-badge-title">LBRF 2026</p>
             <p className="lbrf-banner-badge-sub">
-              Loveworld Bible Reading Festival
+              Loveworld Bible Reading Fiesta
             </p>
           </div>
         </div>
@@ -525,7 +525,7 @@ const Page = () => {
                 </svg>
                 <input
                   type="text"
-                  name="name"
+                  name="fullName"
                   placeholder="Enter your full name"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
@@ -559,6 +559,7 @@ const Page = () => {
                 <span className="lbrf-prefix">@</span>
                 <input
                   type="text"
+                  name="kingsChatHandle"
                   placeholder="your_username"
                   value={kingsChatHandle ?? ""}
                   onChange={(e) => setKingsChatHandle(e.target.value)}
@@ -601,7 +602,7 @@ const Page = () => {
 
           <p className="lbrf-footnote">
             By registering you agree to participate in the Loveworld Bible
-            Reading Festival.
+            Reading Fiesta.
           </p>
         </div>
       </div>
