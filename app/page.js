@@ -541,10 +541,10 @@ export default function Home() {
             <Link href="/videos" className="view-all-btn">
               View all Videos →
             </Link>
-
-            <Footer />
           </section>
         )}
+
+        <Footer />
       </div>
     </>
   );
