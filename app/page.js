@@ -456,9 +456,9 @@ export default function Home() {
         <Tab />
 
         {/* ─── SWIPER BAND ─── */}
-        <div className="swiper-band">
-          <Swiper carousels={card} />
-        </div>
+        {/* <div className="swiper-band"> */}
+        <Swiper carousels={card} />
+        {/* </div> */}
 
         {/* ─── CHANNELS ─── */}
         <section className="channels-section">
