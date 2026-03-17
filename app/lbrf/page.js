@@ -343,6 +343,51 @@ const Page = () => {
           max-width: 300px;
           font-weight: 300;
         }
+
+        /* ── FLOATING SCRIPTURE BADGES ── */
+        .scripture-badge {
+          position: absolute;
+          display: flex; align-items: center; gap: .65rem;
+          background: rgba(255,255,255,0.92);
+          backdrop-filter: blur(8px);
+          border-radius: 14px;
+          padding: .55rem .85rem .55rem .55rem;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 1px 0 rgba(255,255,255,0.6) inset;
+          border: 1px solid rgba(255,255,255,0.7);
+          min-width: 190px;
+          animation: floatBadge 4s ease-in-out infinite;
+          z-index: 10;
+          cursor: default;
+          user-select: none;
+        }
+        .scripture-badge:nth-child(1) { top: 2rem; right: 1.5rem; animation-delay: 0s; }
+        .scripture-badge:nth-child(2) { top: 6rem; right: 1.5rem; animation-delay: 1.8s; }
+        @keyframes floatBadge {
+          0%, 100% { transform: translateY(0px); }
+          50%       { transform: translateY(-6px); }
+        }
+        .scripture-badge-icon {
+          width: 40px; height: 40px;
+          border-radius: 10px;
+          display: flex; align-items: center; justify-content: center;
+          font-size: 1.3rem;
+          flex-shrink: 0;
+        }
+        .scripture-badge-icon.faith {
+          background: linear-gradient(135deg, #f0b93a 0%, #c8851f 100%);
+        }
+        .scripture-badge-icon.love {
+          background: linear-gradient(135deg, #e05c7a 0%, #a0244e 100%);
+        }
+        .scripture-badge-text { display: flex; flex-direction: column; gap: 1px; }
+        .scripture-badge-title {
+          font-size: .82rem; font-weight: 600;
+          color: #1a1a2e; line-height: 1.2;
+        }
+        .scripture-badge-verse {
+          font-size: .72rem; color: #888;
+          font-weight: 300; line-height: 1.2;
+        }
       `}</style>
 
       <div className="lbrf-root">
@@ -382,6 +427,23 @@ const Page = () => {
             priority
           />
           <div className="lbrf-banner-overlay" />
+
+          {/* ── FLOATING SCRIPTURE BADGES ── */}
+          <div className="scripture-badge">
+            <div className="scripture-badge-icon faith">✦</div>
+            <div className="scripture-badge-text">
+              <span className="scripture-badge-title">Faith</span>
+              <span className="scripture-badge-verse">Hebrews 11:1</span>
+            </div>
+          </div>
+          <div className="scripture-badge" style={{ top: "6rem" }}>
+            <div className="scripture-badge-icon love">♥</div>
+            <div className="scripture-badge-text">
+              <span className="scripture-badge-title">Love</span>
+              <span className="scripture-badge-verse">John 3:16</span>
+            </div>
+          </div>
+
           <div className="lbrf-banner-badge">
             <p className="lbrf-banner-badge-title">LBRF 2025</p>
             <p className="lbrf-banner-badge-sub">
