@@ -48,14 +48,9 @@ const ImageCarousel = ({ carousels = [] }) => {
         .carousel-root {
           position: relative;
           width: 100%;
-          max-width: 900px;
-          margin: 0 auto;
-          padding: 1.5rem 0 2.5rem;
         }
         .carousel-viewport {
           overflow: hidden;
-          border-radius: 20px;
-          box-shadow: 0 20px 60px rgba(0,0,0,.18);
         }
         .carousel-track {
           display: flex;
@@ -73,10 +68,7 @@ const ImageCarousel = ({ carousels = [] }) => {
         .carousel-img {
           width: 100%;
           height: auto;
-          max-height: 440px;
-          object-fit: cover;
           display: block;
-          border-radius: 20px;
         }
 
         /* gradient shimmer on the image */
@@ -84,8 +76,7 @@ const ImageCarousel = ({ carousels = [] }) => {
           content: '';
           position: absolute;
           inset: 0;
-          border-radius: 20px;
-          background: linear-gradient(to top, rgba(12,8,30,.35) 0%, transparent 50%);
+          background: linear-gradient(to top, rgba(12,8,30,.25) 0%, transparent 50%);
           pointer-events: none;
         }
 
@@ -120,7 +111,9 @@ const ImageCarousel = ({ carousels = [] }) => {
           display: flex;
           justify-content: center;
           gap: .5rem;
-          margin-top: 1.1rem;
+          position: absolute;
+          bottom: .75rem;
+          left: 0; right: 0;
         }
         .carousel-dot {
           border: none; cursor: pointer;
