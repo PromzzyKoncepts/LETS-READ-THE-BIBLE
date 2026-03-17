@@ -74,17 +74,17 @@ const Page = () => {
     {
       href: "/fiesta/upload",
       icon: <IoMdCloudUpload size={22} />,
-      label: "Select a chapter",
+      label: "Upload a video of you reading the bible",
       gradient: "linear-gradient(135deg, #c7c7e0 0%, #8E8EB1 100%)",
       textColor: "#1e1e3a",
     },
-    {
-      href: "/fiesta/upload",
-      icon: <IoMdCloudUpload size={22} />,
-      label: "Upload now",
-      gradient: "linear-gradient(135deg, #22c55e 0%, #84cc16 100%)",
-      textColor: "#052e0e",
-    },
+    // {
+    //   href: "/fiesta/upload",
+    //   icon: <IoMdCloudUpload size={22} />,
+    //   label: "Upload now",
+    //   gradient: "linear-gradient(135deg, #22c55e 0%, #84cc16 100%)",
+    //   textColor: "#052e0e",
+    // },
     {
       href: "/record",
       icon: <MdEmergencyRecording size={22} />,

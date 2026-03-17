@@ -3,11 +3,7 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import FloatingAnimation from "./utils/FloatingAnimation";
-// import Swiper from "./components/Swiper";
 import Tab from "./components/Tab";
-import AnimatedCounter from "./utils/CountingAnimation";
-import InteractiveFigures from "./components/InteractiveFigures";
 import Footer from "./components/Footer";
 import BottomBar from "./components/MobileNav";
 import Swiper from "./components/Swiper";
@@ -24,430 +20,532 @@ export default function Home() {
         const response = await axios.get(
           `${baseUrl}/api/videos/video-approved`
         );
-        if (response.status !== 200) {
-          throw new Error("Failed to fetch videos");
-        }
-
-        const { data } = response;
-        const limitedVideos = data.slice(0, 12); // Limit to 20 videos
-        setVideos(limitedVideos);
+        if (response.status !== 200) throw new Error("Failed to fetch videos");
+        setVideos(response.data.slice(0, 12));
       } catch (error) {
         console.error(error.message);
-      } finally {
-        console.log("Videos loaded successfully");
       }
     };
-
     fetchVideos();
   }, []);
 
   const card = [
-    // {
-    //   title: "Year of Manifestationn",
-    //   src: "https://lovetoons.org/img/Lovetoons_Affirmation_Extravaganza_web.jpg",
-    //   link: "https://lovetoons.org/lae",
-    // },
     {
-      title: "Year of Manifestationn",
+      title: "Year of Manifestation",
       src: "https://lovetoons.org/img/YEAR_OF_MANIFESTATION_web2.png",
-      // link: "/lbrf",
     },
-    // {
-    //   title: "Throne room",
-    //   src: "https://lovetoons.org/img/Monthofthethroneroomslider.jpg.jpeg",
-    //   // link: "/lbrf",
-    // },
-    // {
-    //   title: "Throne room",
-    //   src: "https://lovetoons.org/img/mack_most.png",
-    //   // link: "/lbrf",
-    // },
+    { title: "Tick Talk", src: "/images/ticktalk.png" },
+    { title: "Comics 3", src: "/images/comics2.png" },
+  ];
+
+  const raceItems = [
     {
-      title: "Tick Talk",
-      src: "/images/ticktalk.png",
-      // link: "/lbrf",
+      letter: "R",
+      color: ["#4ade80", "#16a34a"],
+      label: "Read a verse everyday",
     },
-    // {
-    //   title: "Praise Night",
-    //   src: "https://lovetoons.org/img/PRAISE-NIGHT-27.png",
-    // },
+    { letter: "A", color: ["#60a5fa", "#2563eb"], label: "Apply the Word" },
+    { letter: "C", color: ["#fb923c", "#ea580c"], label: "Confess the Word" },
     {
-      title: "Comics 3",
-      src: "/images/comics2.png",
+      letter: "E",
+      color: ["#c084fc", "#9333ea"],
+      label: "Excel & Manifest Truth",
+    },
+  ];
+
+  const channels = [
+    {
+      href: "/bible-videos",
+      img: "/images/fiesta.png",
+      bg: "#1a7a91",
+      title: "LBRF",
+      desc: "Watch our Bible reading videos for kids!",
+      cta: "Watch Now",
+      ctaBg: "#e2faff",
+      ctaColor: "#0f4a57",
+    },
+    {
+      href: "/daily-bible",
+      img: "/images/bible-daily.png",
+      bg: "#c8620e",
+      title: "Daily Bible Reading",
+      desc: "Complete the reading of the Bible by following our daily plan.",
+      cta: "Watch today's reading",
+      ctaBg: "#ffe7d1",
+      ctaColor: "#5a3500",
+    },
+    {
+      href: "/videos",
+      img: "/images/campaign.png",
+      bg: "#fff",
+      title: "Let's Read the Bible Campaign",
+      desc: "Join millions of children discovering the Word of God.",
+      cta: "Learn More",
+      ctaBg: "#e8eeff",
+      ctaColor: "#1a3ab5",
     },
   ];
 
   return (
-    <div className="">
-      {/* <FloatingAnimation /> */}
-      {/* <video
-        src="/pinkbg.mp4"
-        autoPlay
-        muted
-        loop
-        className=" w-full saturate-100 object-cover  min-h-[14rem] md:h-full absolute top-0"
-      /> */}
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap');
 
-      <img
-        src="images/letsreadthebible.jpg" // or .png / .webp
-        alt="Background"
-        className="w-full saturate-100 object-cover min-h-[14rem] md:h-full absolute top-0"
-      />
+        * { box-sizing: border-box; }
 
-      {/* Kids Background Image */}
-      <div className="relative md:h-screen pt-5 md:pt-0 max-w-7xl mx-auto flex items-center justify-center">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full px-6">
-          {/* Column 1 */}
-          <div className="flex items-center justify-center">
-            <div className="w-full max-w-xl mx-auto">
-              <div className="relative rounded-[32px] bg-[#5a1056f4] px-6 py-8 shadow-[0_30px_60px_rgba(0,0,0,0.25)]">
-                <img
-                  src="images/kidsbible.png" // your image path
-                  alt="lets read the bible"
-                  aria-hidden="true"
-                  className="absolute inset-0 w-full h-full object-cover rounded-[32px] opacity-20"
-                />
-                {/* HEADER */}
-                <div className="text-center mb-8">
-                  <h1 className="text-6xl font-extrabold tracking-wide flex justify-center gap-1">
-                    <span className="text-green-500 drop-shadow-[0_6px_0_rgba(0,0,0,0.15)]">
-                      R
-                    </span>
-                    <span className="text-purple-500 drop-shadow-[0_6px_0_rgba(0,0,0,0.15)]">
-                      A
-                    </span>
-                    <span className="text-orange-500 drop-shadow-[0_6px_0_rgba(0,0,0,0.15)]">
-                      C
-                    </span>
-                    <span className="text-blue-500 drop-shadow-[0_6px_0_rgba(0,0,0,0.15)]">
-                      E
-                    </span>
-                  </h1>
+        .home-root {
+          font-family: 'DM Sans', sans-serif;
+          background: #f5f2ec;
+          overflow-x: hidden;
+        }
 
-                  {/* Subtitle */}
-                  <div className="relative inline-block mt-4">
-                    <div className="absolute inset-0 rounded-full bg-orange-700 translate-y-1"></div>
-                    <div className="relative rounded-full bg-gradient-to-b from-orange-400 to-orange-600 px-8 py-2 text-white font-bold shadow-lg">
-                      Read A Chapter Everyday
-                    </div>
-                  </div>
-                </div>
+        /* ─── HERO ───────────────────────────────── */
+        .hero-section {
+          position: relative;
+          min-height: 100svh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          padding: 5rem 1.25rem 3rem;
+        }
+        .hero-bg {
+          position: absolute; inset: 0;
+          width: 100%; height: 100%;
+          object-fit: cover;
+          z-index: 0;
+        }
+        .hero-bg-overlay {
+          position: absolute; inset: 0; z-index: 1;
+          background: linear-gradient(160deg, rgba(12,8,30,.72) 0%, rgba(60,20,80,.6) 60%, rgba(12,8,30,.8) 100%);
+        }
+        .hero-inner {
+          position: relative; z-index: 2;
+          max-width: 1100px; width: 100%;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 2.5rem;
+          align-items: center;
+        }
+        @media (max-width: 768px) {
+          .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
+          .hero-verse-col { order: -1; }
+        }
 
-                {/* R */}
-                <div className="relative flex items-center mb-5">
-                  <div className="relative z-10 w-14 h-14 rounded-full bg-gradient-to-b from-green-400 to-green-600 flex items-center justify-center text-white text-4xl font-extrabold shadow-[0_8px_0_rgba(0,0,0,0.25)]">
-                    R
-                  </div>
-                  <div className="-ml-3 flex-1 rounded-full bg-gradient-to-b from-green-400 to-green-600 px-6 py-4 text-white font-semibold shadow-[0_10px_0_rgba(0,0,0,0.25)]">
-                    Read a verse everyday
-                  </div>
-                </div>
+        /* RACE card */
+        .race-card {
+          background: rgba(90,16,86,.88);
+          border-radius: 28px;
+          padding: 2rem 1.75rem 0;
+          box-shadow: 0 30px 70px rgba(0,0,0,.4);
+          position: relative;
+          overflow: hidden;
+          border: 1px solid rgba(255,255,255,.1);
+        }
+        .race-card-bg {
+          position: absolute; inset: 0;
+          width: 100%; height: 100%;
+          object-fit: cover;
+          border-radius: 28px;
+          opacity: .12;
+        }
+        .race-title-row {
+          display: flex; justify-content: center; gap: .35rem;
+          margin-bottom: .75rem;
+          position: relative;
+        }
+        .race-letter {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 4.5rem;
+          line-height: 1;
+          filter: drop-shadow(0 6px 0 rgba(0,0,0,.25));
+        }
+        .race-pill {
+          position: relative; display: inline-block; margin-bottom: 1.5rem;
+          text-align: center;
+        }
+        .race-pill-shadow {
+          position: absolute; inset: 0;
+          border-radius: 999px;
+          background: #92400e;
+          transform: translateY(3px);
+        }
+        .race-pill-face {
+          position: relative;
+          border-radius: 999px;
+          background: linear-gradient(to bottom, #f97316, #ea580c);
+          padding: .5rem 2rem;
+          color: #fff;
+          font-weight: 700;
+          font-size: .9rem;
+          letter-spacing: .04em;
+        }
+        .race-row {
+          display: flex; align-items: center;
+          margin-bottom: .9rem;
+          position: relative;
+        }
+        .race-row-circle {
+          width: 52px; height: 52px;
+          border-radius: 50%;
+          display: flex; align-items: center; justify-content: center;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 2rem;
+          color: #fff;
+          flex-shrink: 0;
+          z-index: 1;
+          box-shadow: 0 6px 0 rgba(0,0,0,.3);
+        }
+        .race-row-bar {
+          flex: 1;
+          margin-left: -14px;
+          border-radius: 999px;
+          padding: .75rem 1rem .75rem 1.5rem;
+          color: #fff;
+          font-weight: 600;
+          font-size: .88rem;
+          box-shadow: 0 8px 0 rgba(0,0,0,.2);
+        }
+        .race-bible-img {
+          width: 80%;
+          margin: 1.5rem auto -3.5rem;
+          display: block;
+          filter: drop-shadow(0 16px 24px rgba(0,0,0,.4));
+          animation: slowBounce 3s ease-in-out infinite;
+        }
+        @keyframes slowBounce {
+          0%,100% { transform: translateY(0); }
+          50%      { transform: translateY(-10px); }
+        }
 
-                {/* A */}
-                <div className="relative flex items-center mb-5">
-                  <div className="relative z-10 w-14 h-14 rounded-full bg-gradient-to-b from-blue-400 to-blue-600 flex items-center justify-center text-white text-4xl font-extrabold shadow-[0_8px_0_rgba(0,0,0,0.25)]">
-                    A
-                  </div>
-                  <div className="-ml-3 flex-1 rounded-full bg-gradient-to-b from-blue-400 to-blue-600 px-6 py-4 text-white font-semibold shadow-[0_10px_0_rgba(0,0,0,0.25)]">
-                    Apply the Word
-                  </div>
-                </div>
+        /* Memory verse col */
+        .verse-card {
+          background: #fff;
+          border-radius: 20px;
+          overflow: hidden;
+          box-shadow: 0 20px 60px rgba(0,0,0,.25);
+        }
+        .verse-card-header {
+          background: linear-gradient(135deg, #1565c0, #0d47a1);
+          padding: .85rem 1rem;
+          text-align: center;
+        }
+        .verse-card-header h2 {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 1.3rem;
+          letter-spacing: 2px;
+          color: #fff;
+          margin: 0;
+        }
 
-                {/* C */}
-                <div className="relative flex items-center mb-5">
-                  <div className="relative z-10 w-14 h-14 rounded-full bg-gradient-to-b from-orange-400 to-orange-600 flex items-center justify-center text-white text-4xl font-extrabold shadow-[0_8px_0_rgba(0,0,0,0.25)]">
-                    C
-                  </div>
-                  <div className="-ml-3 flex-1 rounded-full bg-gradient-to-b from-orange-400 to-orange-600 px-6 py-4 text-white font-semibold shadow-[0_10px_0_rgba(0,0,0,0.25)]">
-                    Confess the Word
-                  </div>
-                </div>
+        /* ─── SWIPER BAND ──────────────────────────── */
+        .swiper-band {
+          background: linear-gradient(to bottom, #ede9ff, #fff);
+          padding: 2rem 0 3rem;
+        }
 
-                {/* E */}
-                <div className="relative flex items-center">
-                  <div className="relative z-10 w-14 h-14 rounded-full bg-gradient-to-b from-purple-400 to-purple-600 flex items-center justify-center text-white text-4xl font-extrabold shadow-[0_8px_0_rgba(0,0,0,0.25)]">
-                    E
-                  </div>
-                  <div className="-ml-3 flex-1 rounded-full bg-gradient-to-b from-purple-400 to-purple-600 px-6 py-4 text-white font-semibold shadow-[0_10px_0_rgba(0,0,0,0.25)]">
-                    Excel &amp; Manifest Truth
-                  </div>
-                </div>
+        /* ─── CHANNELS SECTION ─────────────────────── */
+        .channels-section {
+          background: #fff8f4;
+          padding: 4rem 1.25rem;
+        }
+        .section-eyebrow {
+          font-size: .75rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: .14em;
+          color: #c8851f;
+          text-align: center;
+          margin: 0 0 .4rem;
+        }
+        .section-title {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(2rem, 4vw, 3rem);
+          letter-spacing: 2px;
+          color: #0c0c1a;
+          text-align: center;
+          margin: 0 0 2.5rem;
+        }
+        .channels-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+          gap: 1.25rem;
+          max-width: 1000px;
+          margin: 0 auto;
+        }
+        .channel-card {
+          border-radius: 18px;
+          overflow: hidden;
+          box-shadow: 0 6px 24px rgba(0,0,0,.1);
+          transition: transform .2s, box-shadow .2s;
+          display: flex; flex-direction: column;
+          text-decoration: none;
+        }
+        .channel-card:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(0,0,0,.18); }
+        .channel-card-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+        .channel-card-body {
+          padding: 1rem 1.1rem 1.25rem;
+          flex: 1;
+          display: flex; flex-direction: column; gap: .5rem;
+        }
+        .channel-card-title { font-weight: 700; font-size: .95rem; color: inherit; margin: 0; }
+        .channel-card-desc  { font-size: .82rem; opacity: .75; margin: 0; flex: 1; line-height: 1.5; }
+        .channel-card-cta {
+          display: inline-block;
+          padding: .38rem .9rem;
+          border-radius: 8px;
+          font-size: .78rem; font-weight: 600;
+          text-decoration: none;
+          width: fit-content;
+          margin-top: .25rem;
+          transition: opacity .15s;
+        }
+        .channel-card-cta:hover { opacity: .8; }
 
-                <div className="relative -mb-16 mt-10">
-                  <img
-                    src="https://letsreadthebible.club/_next/image?url=%2Fimages%2Freadbible.png&w=1080&q=75"
-                    alt="lets read the bible"
-                    aria-hidden="true"
-                    className="w-full max-w-sm mx-auto object-contain drop-shadow-2xl animate-slowBounce"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+        /* ─── VIDEOS SECTION ───────────────────────── */
+        .videos-section {
+          background: linear-gradient(to bottom, #fce4e4, #fff8f4);
+          padding: 4rem 1.25rem 2rem;
+        }
+        .videos-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+          gap: 1rem;
+          max-width: 1100px;
+          margin: 2rem auto 0;
+          padding: 0 0 1rem;
+        }
+        .video-card {
+          position: relative;
+          border-radius: 16px;
+          overflow: hidden;
+          aspect-ratio: 9/14;
+          background: #334;
+          box-shadow: 0 4px 16px rgba(0,0,0,.15);
+          transition: transform .18s, box-shadow .18s;
+          text-decoration: none;
+          display: block;
+        }
+        .video-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,.22); }
+        .video-card video { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .video-card-label {
+          position: absolute; bottom: .75rem; left: .75rem; right: .75rem;
+          background: rgba(12,12,26,.65);
+          backdrop-filter: blur(6px);
+          border-radius: 10px;
+          padding: .45rem .75rem;
+          color: #fff;
+          font-size: .78rem; font-weight: 500;
+        }
 
-          {/* Column 2 */}
-          <div className="flex items-center justify-center">
-            <div className="bg-white rounded-2xl">
-              <h2 className="text-xl font-bold text-center text-blue-700 p-4">
-                Kids Memory Verse
-              </h2>
-              {/* <img
-                src="images/memory-verse-day-1.jpg"
-                alt="Daily Memory Verse"
+        .view-all-btn {
+          display: flex;
+          align-items: center; justify-content: center;
+          width: fit-content;
+          margin: 2rem auto 0;
+          background: #0c0c1a; color: #f5c257;
+          padding: .75rem 2rem;
+          border-radius: 999px;
+          font-weight: 700; font-size: .9rem;
+          text-decoration: none;
+          letter-spacing: .04em;
+          transition: background .18s, transform .14s;
+          box-shadow: 0 4px 18px rgba(0,0,0,.2);
+        }
+        .view-all-btn:hover { background: #1e1e3a; transform: translateY(-2px); }
+      `}</style>
+
+      <div className="home-root">
+        {/* ─── HERO ─── */}
+        <section className="hero-section">
+          <img
+            src="/images/letsreadthebible.jpg"
+            alt=""
+            className="hero-bg"
+            aria-hidden="true"
+          />
+          <div className="hero-bg-overlay" />
+
+          <div className="hero-inner">
+            {/* RACE card */}
+            <div className="race-card">
+              <img
+                src="/images/kidsbible.png"
+                alt=""
+                className="race-card-bg"
                 aria-hidden="true"
-                className="w-full  mx-auto object-contain drop-shadow-2xl "
-              /> */}
-
-              <video
-                src="https://cdn1.kingschat.online/uploads/media/53d9893773312e341fb91400/OCtqSTc1dVZBOXk1Yk14Vk1TYmpqQT09/Leo_14Th_March_Main_1.m4v"
-                width={300}
-                height={300}
-                className="w-full object-cover h-full rounded-2xl"
-                muted={false} // Ensure audio is enabled
-                controls // Hide controls
-                loop={false}
               />
 
-              {/* <img
-                src="https://cdn1.kingschat.online/uploads/media/53d9893773312e341fb91400/cFRPREJmeEMwQ2hPMjRueXdmejVZQT09/card_for_platform_114th.png"
-                alt="March 6th Card"
-                className="w-full  mx-auto object-contain drop-shadow-2xl  "
-              /> */}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <Tab />
-
-      <div className="bg-gradient-to-b from-[#EBD7D2] to-white">
-        {/* <Link  href="/lbrf">
-        <Image src="/images/banner3.png" alt="sponsor LBR" className="mx-auto md:py-10 md:w-[85%]" width={1000} height={1000} />
-        </Link> */}
-        <Swiper carousels={card} />
-      </div>
-      <div className=" bg-[#F4C2C2] md:pt-10">
-        {/* <div className="flex hidden flex-col md:flex-row gap-8 md:gap-16 colors font-sniglet  items-center justify-center bg-slate-100 md:w-fit md:py-20 py-8 rounded-b-[10%] md:rounded-xl  md:px-16 shadow-lg shadow-gray-700 m-auto">
-          <div className="flex flex-col gap-2 text-xl items-center">
-            <AnimatedCounter targetNumber={104} fontSize={"5"} />
-            Participating Countries & Cities
-          </div>
-          <div className="flex flex-col gap-2 text-xl items-center">
-            <AnimatedCounter targetNumber={20000000} fontSize={"8"} />
-            Kids Read the Bible
-          </div>
-          <div className="flex flex-col gap-2 text-xl items-center">
-            <AnimatedCounter targetNumber={1000} fontSize={"5"} />
-            Videos Uploaded
-          </div>
-        </div> */}
-        {videos && (
-          <div>
-            <h1 className="text-4xl md:text-6xl text-center mt-10 text-slate-900 font-sniglet">
-              Explore Our Videos
-            </h1>
-
-            <section className="py-10 px-4 md:px-20 ">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Column 1 */}
-                <div className="bg-[#228fa5] text-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                  <div className="relative w-full">
-                    <Link href="/bible-videos" className="block">
-                      <div className="flex flex-col items-center">
-                        <Image
-                          src="/images/fiesta.png"
-                          alt="Bible Reading Fiesta"
-                          width={1000}
-                          height={1000}
-                          className="w-full h-auto object-contain"
-                        />
-                      </div>
-                    </Link>
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold mb-2">LBRF</h3>
-                    <p className="text-gray-100 mb-4">
-                      Watch our bible reading videos for kids!
-                    </p>
-
-                    <Link
-                      href="/bible-videos"
-                      className="text-gray-600 bg-[#e2faff] px-2 py-1 hover:bg-[#186473] hover:text-white rounded  font-medium"
+              <div className="race-title-row">
+                {["R", "A", "C", "E"].map((l, i) => {
+                  const colors = [
+                    ["#4ade80", "#16a34a"],
+                    ["#60a5fa", "#2563eb"],
+                    ["#fb923c", "#ea580c"],
+                    ["#c084fc", "#9333ea"],
+                  ];
+                  return (
+                    <span
+                      key={l}
+                      className="race-letter"
+                      style={{
+                        color: colors[i][0],
+                        WebkitTextStroke: `2px ${colors[i][1]}`,
+                      }}
                     >
-                      Watch Now
-                    </Link>
-                  </div>
-                </div>
+                      {l}
+                    </span>
+                  );
+                })}
+              </div>
 
-                {/* Column 2 */}
-                <div className="bg-[#e87917] text-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                  <div className="relative w-full ">
-                    <Link href="/daily-bible" className="block">
-                      <div className="flex flex-col items-center">
-                        <Image
-                          src="/images/bible-daily.png"
-                          alt="Bible Reading Fiesta"
-                          width={1000}
-                          height={1000}
-                          className="w-full h-auto object-contain"
-                        />
-                      </div>
-                    </Link>
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold mb-2">
-                      Daily Bible Reading
-                    </h3>
-                    <p className="text-gray-100 mb-4">
-                      Complete the reading of the Bible by following our daily
-                      Bible reading.
-                    </p>
-                    <Link
-                      href="/daily-bible"
-                      className="text-[#564110] hover:bg-[#564110] hover:text-white font-medium bg-[#ffe7d1]  px-2 py-1 rounded-lg tex"
-                    >
-                      Watch todays reading
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Column 3 */}
-                <div className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                  <div className="relative w-full">
-                    <Link href="/bible-videos" className="block">
-                      <div className="flex flex-col items-center">
-                        <Image
-                          src="/images/campaign.png"
-                          alt="Bible Reading Fiesta"
-                          width={1000}
-                          height={1000}
-                          className="w-full h-auto object-contain"
-                        />
-                      </div>
-                    </Link>
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold mb-2">
-                      Let&apos;s the bible campaign
-                    </h3>
-                    <p className="text-gray-600 mb-4">
-                      This is a description for item three.
-                    </p>
-                    <Link
-                      href="/videos"
-                      className="text-blue-600 hover:underline font-medium"
-                    >
-                      Learn More
-                    </Link>
-                  </div>
+              <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+                <div className="race-pill">
+                  <div className="race-pill-shadow" />
+                  <div className="race-pill-face">Read A Chapter Everyday</div>
                 </div>
               </div>
-            </section>
 
-            <div className="grid md:grid-cols-4 gap-3 pt-4 px-5 md:px-28">
-              {videos.map((item, index) => (
+              {raceItems.map(({ letter, color, label }) => (
+                <div className="race-row" key={letter}>
+                  <div
+                    className="race-row-circle"
+                    style={{
+                      background: `linear-gradient(to bottom, ${color[0]}, ${color[1]})`,
+                    }}
+                  >
+                    {letter}
+                  </div>
+                  <div
+                    className="race-row-bar"
+                    style={{
+                      background: `linear-gradient(to bottom, ${color[0]}, ${color[1]})`,
+                    }}
+                  >
+                    {label}
+                  </div>
+                </div>
+              ))}
+
+              <img
+                src="https://letsreadthebible.club/_next/image?url=%2Fimages%2Freadbible.png&w=1080&q=75"
+                alt="Read the Bible"
+                className="race-bible-img"
+              />
+            </div>
+
+            {/* Memory verse */}
+            <div className="verse-card">
+              <div className="verse-card-header">
+                <h2>Kids Memory Verse</h2>
+              </div>
+              <video
+                src="https://cdn1.kingschat.online/uploads/media/53d9893773312e341fb91400/OCtqSTc1dVZBOXk1Yk14Vk1TYmpqQT09/Leo_14Th_March_Main_1.m4v"
+                width={400}
+                height={400}
+                style={{ width: "100%", display: "block" }}
+                controls
+                loop={false}
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* ─── TAB ─── */}
+        <Tab />
+
+        {/* ─── SWIPER BAND ─── */}
+        <div className="swiper-band">
+          <Swiper carousels={card} />
+        </div>
+
+        {/* ─── CHANNELS ─── */}
+        <section className="channels-section">
+          <p className="section-eyebrow">Explore Content</p>
+          <h2 className="section-title">Explore Our Videos</h2>
+          <div className="channels-grid">
+            {channels.map((ch) => (
+              <Link
+                key={ch.href}
+                href={ch.href}
+                className="channel-card"
+                style={{
+                  background: ch.bg,
+                  color: ch.bg === "#fff" ? "#1a1a2e" : "#fff",
+                }}
+              >
+                <Image
+                  src={ch.img}
+                  alt={ch.title}
+                  width={600}
+                  height={450}
+                  className="channel-card-img"
+                />
+                <div className="channel-card-body">
+                  <p className="channel-card-title">{ch.title}</p>
+                  <p className="channel-card-desc">{ch.desc}</p>
+                  <span
+                    className="channel-card-cta"
+                    style={{ background: ch.ctaBg, color: ch.ctaColor }}
+                  >
+                    {ch.cta}
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* ─── VIDEOS GRID ─── */}
+        {videos.length > 0 && (
+          <section className="videos-section">
+            <p className="section-eyebrow">Community</p>
+            <h2 className="section-title">Featured Readings</h2>
+
+            <div className="videos-grid">
+              {videos.map((item) => (
                 <Link
                   key={item.id}
                   href={`/videos/${item.id}`}
-                  className="relative hover:group hover: cursor-pointer hover:border-2 border-white bg-slate-500 rounded-2xl hover:shadow-md hover:shadow-slate-600"
+                  className="video-card"
+                  onMouseEnter={(e) =>
+                    e.currentTarget.querySelector("video")?.play()
+                  }
+                  onMouseLeave={(e) => {
+                    const v = e.currentTarget.querySelector("video");
+                    if (v) {
+                      v.pause();
+                      v.currentTime = 0;
+                    }
+                  }}
                 >
-                  <div
-                    className="w-full h-[20rem] hover:group"
-                    onMouseEnter={(e) => {
-                      const video = e.currentTarget.querySelector("video");
-                      if (video) {
-                        video.play();
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      const video = e.currentTarget.querySelector("video");
-                      if (video) {
-                        video.pause();
-                        video.currentTime = 0; // Reset video to the beginning
-                      }
-                    }}
-                  >
-                    <video
-                      src={item.url}
-                      width={300}
-                      height={300}
-                      className="w-full object-cover h-full rounded-2xl"
-                      muted={false} // Ensure audio is enabled
-                      controls={false} // Hide controls
-                      loop={true}
-                    />
-                    <div className="absolute bottom-4 group-bg-opacity-100 right-4 backdrop-blur-sm rounded-full text-lg px-5 py-3 text-white hover:bg-opacity-100 bg-opacity-50 bg-darkbg">
-                      <h3 className="">
-                        {item.book} {item.chapter_start}{" "}
-                        {item.chapter_end &&
-                          item.chapter_end !== item.chapter_start &&
-                          ` - ${item.chapter_end}`}
-                      </h3>
-                    </div>
+                  <video
+                    src={item.url}
+                    width={300}
+                    height={400}
+                    muted
+                    loop
+                    playsInline
+                  />
+                  <div className="video-card-label">
+                    {item.book} {item.chapter_start}
+                    {item.chapter_end &&
+                      item.chapter_end !== item.chapter_start &&
+                      ` – ${item.chapter_end}`}
                   </div>
                 </Link>
               ))}
             </div>
-          </div>
+
+            <Link href="/videos" className="view-all-btn">
+              View all Videos →
+            </Link>
+          </section>
         )}
 
-        <div className="py-10">
-          <Link
-            href="/videos"
-            className="font-lucky text-lg px-6 py-2 text-white bg-darkbg rounded-full mx-auto flex items-center justify-center flex-col w-fit "
-          >
-            View all Videos
-          </Link>
-        </div>
+        <Footer />
       </div>
-
-      <div className="hidden bg-[#8E8EB1] px-5 md:px-28 md:pt-16 py-7 min-h-screen">
-        <h1 className="text-4xl md:text-6xl text-center  text-slate-900 font-lucky">
-          Testimonies and feedbacks
-        </h1>
-        <p className="text-lg font-sniglet text-center py-2">
-          Share your life-transforming testimonies and any feedbacks with us
-        </p>
-
-        <div className="col-span-2 mt-10 mx-auto md:w-[70%] flex flex-col gap-4 bg-[#fff] rounded-2xl shadow-lg p-10">
-          <h3 className="text-3xl text-primary font-lucky">
-            We are just one chat away!
-          </h3>
-          <div className="flex flex-col ">
-            <label>Full name</label>
-            <input
-              placeholder="eg: John Doe"
-              className="border-b border-black focus:border-primary py-2 bg-transparent outline-0 placeholder:text-slate-600"
-            />
-          </div>
-          <div className="flex flex-col ">
-            <label>Email address</label>
-            <input
-              placeholder="eg: johndoe@gmail.com"
-              className="border-b border-black focus:border-primary py-2 bg-transparent outline-0 placeholder:text-slate-600"
-            />
-          </div>
-          <div className="flex flex-col ">
-            <label>Message</label>
-            <textarea
-              rows="10"
-              cols={30}
-              placeholder="write a short and descriptive message to us..."
-              className=" w-full border-0 resize-none  focus:border-primary focus:border p-3 bg-[#f4f4f4] rounded-2xl outline-0 placeholder:text-slate-600"
-            />
-          </div>
-
-          <div>
-            <button className="w-fit px-5 py-2 bg-primary mx-auto rounded-full  hover:shadow-md text-white">
-              Send message
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* <SalvationSection /> */}
-
-      <Footer />
-    </div>
+    </>
   );
 }
