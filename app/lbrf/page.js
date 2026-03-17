@@ -30,7 +30,8 @@ const Page = () => {
       // Check if the popup has already been shown using session storage
       const hasPopupBeenShown = sessionStorage.getItem("hasPopupBeenShown");
       if (!hasPopupBeenShown) {
-        setViewAvatar(true); // Show the popup
+        // setViewAvatar(true); // Show the popup
+        setViewAvatar(false);
         sessionStorage.setItem("hasPopupBeenShown", "true"); // Mark the popup as shown
       }
     }
@@ -38,13 +39,13 @@ const Page = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    await registerUser({ email, fullName, kingsChatHandle });
+    await registerUser({ email, fullName, kingsChatHandle, type: "lbrf" });
   };
 
   async function registerUser(userData) {
     console.log(userData);
     try {
-      const response = await fetch(`${baseUrl}/api/register-fiesta`, {
+      const response = await fetch(`http://lovetoons.org/php/lbrf.php`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -67,7 +68,7 @@ const Page = () => {
   async function registerKCUser(userData) {
     console.log(userData);
     try {
-      const response = await fetch(`${baseUrl}/api/kc-register-fiesta`, {
+      const response = await fetch(`http://lovetoons.org/php/lbrf.php`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -117,6 +118,7 @@ const Page = () => {
         email,
         fullName: name,
         kingsChatHandle: username,
+        type: "kingschat",
       });
     } catch (error) {
       console.error("Error fetching user profile:", error);
