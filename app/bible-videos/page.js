@@ -131,65 +131,66 @@ export default function BiblePlaylistPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-yellow-50 p-4 md:p-6">
+    <div className="bp-root">
       {/* Animated Clouds Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div
           className={`cloud cloud-1 ${showClouds ? "animate-float-slow" : ""}`}
-        ></div>
+        />
         <div
           className={`cloud cloud-2 ${
             showClouds ? "animate-float-medium" : ""
           }`}
-        ></div>
+        />
         <div
           className={`cloud cloud-3 ${showClouds ? "animate-float-fast" : ""}`}
-        ></div>
+        />
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        {/* Header */}
-        <header className="text-center mb-6 md:mb-8 mt-[100px]">
-          <h1 className="text-4xl md:text-5xl font-bold text-blue-800 mb-2 animate-bounce-slow">
-            Bible Reading
+      <div className="bp-inner">
+        {/* ── Header ── */}
+        <header className="bp-header">
+          <p className="bp-eyebrow">Loveworld Bible Reading Festival</p>
+          <h1 className="bp-title">
+            Bible <span className="bp-title-accent">Reading</span>
           </h1>
-          <p className="text-lg md:text-xl text-blue-600 font-semibold">
-            Watch and learn about God&apos;s love!
-          </p>
-
-          {/* Decorative elements */}
-          <div className="flex justify-center space-x-4 mt-4">
-            <span className="text-3xl">✨</span>
-            <span className="text-3xl">⭐</span>
-            <span className="text-3xl">🕊️</span>
-            <span className="text-3xl">❤️</span>
-            <span className="text-3xl">⭐</span>
-            <span className="text-3xl">✨</span>
+          <p className="bp-subtitle">Watch and learn about God&apos;s love!</p>
+          <div className="bp-icons-row">
+            {["✨", "⭐", "🕊️", "❤️", "⭐", "✨"].map((e, i) => (
+              <span key={i}>{e}</span>
+            ))}
           </div>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-          {/* 🎬 Video Player */}
-          <div className="lg:col-span-2">
-            <div className="bg-gradient-to-r from-blue-100 to-purple-100 p-5 md:p-6 rounded-3xl shadow-2xl border-4 border-yellow-300 transform hover:scale-[1.01] transition-transform duration-300">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl md:text-3xl font-bold text-purple-800 flex items-center">
-                  <span className="mr-3">{currentBook?.icon || "📖"}</span>
-                  {currentBook?.title}
-                  <span className="ml-3 text-xl bg-yellow-300 text-purple-800 px-3 py-1 rounded-full">
-                    {currentIndex + 1} / {playlist.length}
+        <div className="bp-grid">
+          {/* ── Video Player ── */}
+          <div className="bp-player-col">
+            <div className="bp-player-card">
+              {/* Card header */}
+              <div className="bp-player-header">
+                <div className="bp-now-playing-meta">
+                  <span className="bp-book-icon">
+                    {currentBook?.icon || "📖"}
                   </span>
-                </h2>
+                  <div>
+                    <p className="bp-now-playing-label">Now Playing</p>
+                    <h2 className="bp-book-title">{currentBook?.title}</h2>
+                  </div>
+                </div>
+                <span className="bp-counter">
+                  {currentIndex + 1} <span style={{ opacity: 0.45 }}>/</span>{" "}
+                  {playlist.length}
+                </span>
 
-                {/* Testament Selector for mobile */}
-                <div className="lg:hidden">
+                {/* Testament selector — mobile */}
+                <div className="bp-mobile-select">
                   <select
                     value={testament}
                     onChange={(e) => {
                       setTestament(e.target.value);
                       setCurrentIndex(0);
                     }}
-                    className="p-2 rounded-full bg-white border-2 border-yellow-400 text-purple-800 font-bold"
+                    className="bp-select"
                   >
                     <option value="newtestament">New Testament</option>
                     <option value="oldtestament">Old Testament</option>
@@ -197,8 +198,8 @@ export default function BiblePlaylistPage() {
                 </div>
               </div>
 
-              {/* Video Container */}
-              <div className="relative rounded-2xl overflow-hidden shadow-xl">
+              {/* Video */}
+              <div className="bp-video-wrap">
                 <video
                   ref={videoRef}
                   key={`${testament}-${currentIndex}`}
@@ -209,149 +210,624 @@ export default function BiblePlaylistPage() {
                   onPause={() => setIsPlaying(false)}
                   controlsList="nodownload"
                   onContextMenu={(e) => e.preventDefault()}
-                  className="w-full h-auto rounded-2xl"
+                  className="bp-video"
                 >
                   <source src={currentBook?.url} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
 
                 {/* Custom Play Controls Overlay */}
-                <div className="absolute bottom-8  left-0 right-0 flex justify-center space-x-4 hidden md:visible">
+                <div className="absolute bottom-8 left-0 right-0 flex justify-center space-x-4 hidden md:visible">
                   <button
                     onClick={playPrevious}
-                    className="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-3 rounded-full shadow-lg hover:scale-110 transform transition-transform duration-200"
+                    className="bp-overlay-btn blue"
                   >
-                    <span className="text-xl">⏮️</span>
+                    <span>⏮️</span>
                   </button>
-
-                  <button
-                    onClick={playNext}
-                    className="bg-gradient-to-r from-green-500 to-teal-500 text-white p-3 rounded-full shadow-lg hover:scale-110 transform transition-transform duration-200"
-                  >
-                    <span className="text-xl">⏭️</span>
+                  <button onClick={playNext} className="bp-overlay-btn green">
+                    <span>⏭️</span>
                   </button>
                 </div>
               </div>
 
-              {/* Video Status */}
-              <div className="mt-4 flex items-center justify-center">
+              {/* Status + nav */}
+              <div className="bp-player-footer">
                 <div
-                  className={`px-4 py-2 rounded-full ${
-                    isPlaying
-                      ? "bg-green-100 text-green-800"
-                      : "bg-yellow-100 text-yellow-800"
-                  }`}
+                  className={`bp-status ${isPlaying ? "playing" : "paused"}`}
                 >
-                  {isPlaying ? "▶️ Now Playing" : "⏸️ Paused"}
+                  {isPlaying ? "▶ Playing" : "⏸ Paused"}
+                </div>
+                <div className="bp-nav-btns">
+                  <button onClick={playPrevious} className="bp-nav-btn">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z" />
+                    </svg>
+                    Prev
+                  </button>
+                  <button onClick={playNext} className="bp-nav-btn primary">
+                    Next
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M6 18l8.5-6L6 6v12zm2.5-6 5.5 3.9V8.1L8.5 12zM16 6h2v12h-2z" />
+                    </svg>
+                  </button>
                 </div>
               </div>
             </div>
 
-            {/* Fun Facts Box */}
-            <div className="mt-6 bg-gradient-to-r from-yellow-100 to-orange-100 p-4 rounded-2xl border-2 border-orange-300">
-              <h3 className="text-xl font-bold text-orange-800 mb-2 flex items-center">
-                <span className="mr-2">💡</span> Did You Know?
-              </h3>
-              <p className="text-orange-700">
-                The Bible is the most translated book in the world! It&apos;s
-                available in over 700 languages.
-              </p>
+            {/* Did You Know */}
+            <div className="bp-funfact">
+              <span className="bp-funfact-icon">💡</span>
+              <div>
+                <p className="bp-funfact-title">Did You Know?</p>
+                <p className="bp-funfact-text">
+                  The Bible is the most translated book in the world — available
+                  in over 700 languages!
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* 📜 Playlist */}
-          <div className="bg-gradient-to-b from-purple-50 to-pink-50 p-5 md:p-6 rounded-3xl shadow-2xl border-4 border-pink-300">
-            {/* Testament Selector for desktop */}
-            <div className="mb-6 hidden lg:block">
-              <label className="block mb-3 text-lg font-bold text-purple-800">
-                📚 Select Testament
-              </label>
-              <div className="flex space-x-4">
-                <button
-                  onClick={() => {
-                    setTestament("newtestament");
-                    setCurrentIndex(0);
-                  }}
-                  className={`flex-1 py-3 rounded-xl text-lg font-bold transition-all duration-300 ${
-                    testament === "newtestament"
-                      ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg transform scale-105"
-                      : "bg-white text-purple-700 border-2 border-purple-300 hover:border-purple-500"
-                  }`}
-                >
-                  New Testament
-                </button>
-                <button
-                  onClick={() => {
-                    setTestament("oldtestament");
-                    setCurrentIndex(0);
-                  }}
-                  className={`flex-1 py-3 hidden rounded-xl text-lg font-bold transition-all duration-300 ${
-                    testament === "oldtestament"
-                      ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg transform scale-105"
-                      : "bg-white text-amber-700 border-2 border-amber-300 hover:border-amber-500"
-                  }`}
-                >
-                  Old Testament
-                </button>
-              </div>
+          {/* ── Playlist ── */}
+          <div className="bp-playlist-card">
+            {/* Testament selector — desktop */}
+            <div className="bp-testament-toggle">
+              <button
+                onClick={() => {
+                  setTestament("newtestament");
+                  setCurrentIndex(0);
+                }}
+                className={`bp-toggle-btn ${
+                  testament === "newtestament" ? "active-new" : ""
+                }`}
+              >
+                New Testament
+              </button>
+              {/* Old Testament button hidden as per original */}
+              <button
+                onClick={() => {
+                  setTestament("oldtestament");
+                  setCurrentIndex(0);
+                }}
+                className={`bp-toggle-btn hidden ${
+                  testament === "oldtestament" ? "active-old" : ""
+                }`}
+              >
+                Old Testament
+              </button>
             </div>
 
-            {/* Playlist Items */}
-            <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2">
+            <p className="bp-playlist-label">
+              Playlist · {playlist.length} segments
+            </p>
+
+            <div className="bp-playlist-scroll">
               {playlist.map((item, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`w-full text-left p-4 rounded-2xl transition-all duration-300 transform hover:scale-[1.02] flex items-center
-                    ${
-                      index === currentIndex
-                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-xl"
-                        : `${item.color} text-purple-800 hover:bg-gradient-to-r hover:from-purple-100 hover:to-pink-100`
-                    }`}
+                  className={`bp-playlist-item ${
+                    index === currentIndex ? "active" : ""
+                  }`}
                 >
-                  <span className="text-2xl mr-3">{item.icon}</span>
-                  <span className="text-lg font-semibold">{item.title}</span>
+                  <span className="bp-item-num">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="bp-item-icon">{item.icon}</span>
+                  <span className="bp-item-title">{item.title}</span>
                   {index === currentIndex && (
-                    <span className="ml-auto animate-pulse">▶️</span>
+                    <span className="bp-item-playing">
+                      <span />
+                      <span />
+                      <span />
+                    </span>
                   )}
                 </button>
               ))}
-            </div>
-
-            {/* Playlist Controls */}
-            <div className="mt-6 flex justify-between">
-              <button
-                onClick={playPrevious}
-                className="bg-gradient-to-r from-blue-400 to-blue-600 text-white px-4 py-3 rounded-xl font-bold flex items-center hover:shadow-lg transform hover:scale-105 transition-all duration-300"
-              >
-                <span className="mr-2">⏮️</span> Previous
-              </button>
-              <button
-                onClick={playNext}
-                className="bg-gradient-to-r from-green-400 to-green-600 text-white px-4 py-3 rounded-xl font-bold flex items-center hover:shadow-lg transform hover:scale-105 transition-all duration-300"
-              >
-                Next <span className="ml-2">⏭️</span>
-              </button>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <footer className="mt-8 text-center text-blue-600">
-          <p className="text-lg">
-            <span className="font-bold">Remember:</span> Jesus loves you! ❤️
+        <footer className="bp-footer hidden">
+          <p>
+            <span className="bp-footer-bold">Remember:</span> Jesus loves you!
+            ❤️
           </p>
-          <div className="flex justify-center space-x-6 mt-4 text-2xl">
-            <span>🕊️</span>
-            <span>🙏</span>
-            <span>❤️</span>
-            <span>⭐</span>
+          <div className="bp-footer-icons">
+            {["🕊️", "🙏", "❤️", "⭐"].map((e, i) => (
+              <span key={i}>{e}</span>
+            ))}
           </div>
         </footer>
       </div>
 
-      {/* Add custom styles for clouds and animations */}
       <style jsx>{`
+        @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap");
+
+        .bp-root {
+          font-family: "DM Sans", sans-serif;
+          min-height: 100svh;
+          background: #0e0b20;
+          position: relative;
+          overflow-x: hidden;
+        }
+
+        /* starfield */
+        .bp-root::before {
+          content: "";
+          position: fixed;
+          inset: 0;
+          z-index: 0;
+          background: radial-gradient(
+              ellipse at 18% 12%,
+              rgba(100, 30, 160, 0.5) 0%,
+              transparent 55%
+            ),
+            radial-gradient(
+              ellipse at 82% 75%,
+              rgba(20, 60, 160, 0.4) 0%,
+              transparent 55%
+            ),
+            radial-gradient(
+              ellipse at 50% 45%,
+              rgba(200, 133, 31, 0.12) 0%,
+              transparent 65%
+            ),
+            #0e0b20;
+          pointer-events: none;
+        }
+
+        .bp-inner {
+          position: relative;
+          z-index: 1;
+          max-width: 1160px;
+          margin: 0 auto;
+          padding: 7rem 1.25rem 4rem;
+        }
+
+        /* ── header ── */
+        .bp-header {
+          text-align: center;
+          margin-bottom: 2.5rem;
+        }
+        .bp-eyebrow {
+          font-size: 0.68rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.18em;
+          color: #f5c257;
+          margin-bottom: 0.4rem;
+        }
+        .bp-title {
+          font-family: "Bebas Neue", sans-serif;
+          font-size: clamp(3rem, 8vw, 5.5rem);
+          letter-spacing: 3px;
+          line-height: 1;
+          color: #fff;
+          margin-bottom: 0.4rem;
+        }
+        .bp-title-accent {
+          color: #f5c257;
+        }
+        .bp-subtitle {
+          color: rgba(255, 255, 255, 0.45);
+          font-size: 0.88rem;
+          font-weight: 300;
+        }
+        .bp-icons-row {
+          display: flex;
+          gap: 0.65rem;
+          justify-content: center;
+          margin-top: 0.85rem;
+          font-size: 1.4rem;
+        }
+
+        /* ── layout ── */
+        .bp-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+        @media (min-width: 1024px) {
+          .bp-grid {
+            grid-template-columns: 1fr 360px;
+            gap: 2rem;
+          }
+        }
+
+        /* ── player card ── */
+        .bp-player-card {
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 24px;
+          overflow: hidden;
+          backdrop-filter: blur(12px);
+        }
+        .bp-player-header {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 1.1rem 1.25rem;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+          flex-wrap: wrap;
+        }
+        .bp-now-playing-meta {
+          display: flex;
+          align-items: center;
+          gap: 0.65rem;
+          flex: 1;
+          min-width: 0;
+        }
+        .bp-book-icon {
+          font-size: 1.6rem;
+          flex-shrink: 0;
+        }
+        .bp-now-playing-label {
+          font-size: 0.65rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.12em;
+          color: #f5c257;
+          margin-bottom: 1px;
+        }
+        .bp-book-title {
+          font-weight: 700;
+          font-size: 1rem;
+          color: #fff;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .bp-counter {
+          font-family: "Bebas Neue", sans-serif;
+          font-size: 1.3rem;
+          color: rgba(255, 255, 255, 0.4);
+          letter-spacing: 1px;
+          flex-shrink: 0;
+        }
+        .bp-mobile-select {
+          display: none;
+        }
+        @media (max-width: 1023px) {
+          .bp-mobile-select {
+            display: block;
+          }
+        }
+        .bp-select {
+          background: rgba(255, 255, 255, 0.08);
+          color: #fff;
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          border-radius: 10px;
+          padding: 0.4rem 0.75rem;
+          font-family: "DM Sans", sans-serif;
+          font-size: 0.82rem;
+          font-weight: 600;
+          outline: none;
+          cursor: pointer;
+        }
+
+        .bp-video-wrap {
+          position: relative;
+          background: #000;
+        }
+        .bp-video {
+          width: 100%;
+          height: auto;
+          display: block;
+          max-height: 480px;
+          object-fit: contain;
+        }
+
+        .bp-overlay-btn {
+          padding: 0.65rem;
+          border-radius: 50%;
+          border: none;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.2rem;
+          transition: transform 0.15s;
+        }
+        .bp-overlay-btn:hover {
+          transform: scale(1.1);
+        }
+        .bp-overlay-btn.blue {
+          background: linear-gradient(135deg, #60a5fa, #2563eb);
+        }
+        .bp-overlay-btn.green {
+          background: linear-gradient(135deg, #4ade80, #16a34a);
+        }
+
+        .bp-player-footer {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0.9rem 1.25rem;
+          border-top: 1px solid rgba(255, 255, 255, 0.07);
+          gap: 0.75rem;
+          flex-wrap: wrap;
+        }
+        .bp-status {
+          font-size: 0.75rem;
+          font-weight: 600;
+          padding: 0.35rem 0.9rem;
+          border-radius: 999px;
+          letter-spacing: 0.04em;
+        }
+        .bp-status.playing {
+          background: rgba(74, 222, 128, 0.15);
+          color: #4ade80;
+          border: 1px solid rgba(74, 222, 128, 0.3);
+        }
+        .bp-status.paused {
+          background: rgba(251, 191, 36, 0.15);
+          color: #fbbf24;
+          border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .bp-nav-btns {
+          display: flex;
+          gap: 0.6rem;
+        }
+        .bp-nav-btn {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          background: rgba(255, 255, 255, 0.08);
+          color: rgba(255, 255, 255, 0.8);
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          border-radius: 10px;
+          padding: 0.5rem 1rem;
+          font-size: 0.82rem;
+          font-weight: 600;
+          font-family: "DM Sans", sans-serif;
+          cursor: pointer;
+          transition: background 0.18s, transform 0.14s;
+        }
+        .bp-nav-btn:hover {
+          background: rgba(255, 255, 255, 0.14);
+          transform: translateY(-1px);
+        }
+        .bp-nav-btn.primary {
+          background: rgba(245, 194, 87, 0.15);
+          color: #f5c257;
+          border-color: rgba(245, 194, 87, 0.3);
+        }
+        .bp-nav-btn.primary:hover {
+          background: rgba(245, 194, 87, 0.25);
+        }
+
+        /* funfact */
+        .bp-funfact {
+          display: flex;
+          gap: 1rem;
+          align-items: flex-start;
+          margin-top: 1.1rem;
+          background: rgba(234, 137, 55, 0.1);
+          border: 1px solid rgba(234, 137, 55, 0.25);
+          border-radius: 16px;
+          padding: 1rem 1.25rem;
+        }
+        .bp-funfact-icon {
+          font-size: 1.5rem;
+          flex-shrink: 0;
+          margin-top: 1px;
+        }
+        .bp-funfact-title {
+          font-weight: 700;
+          color: #f5c257;
+          font-size: 0.88rem;
+          margin-bottom: 0.25rem;
+        }
+        .bp-funfact-text {
+          color: rgba(255, 255, 255, 0.55);
+          font-size: 0.82rem;
+          line-height: 1.6;
+        }
+
+        /* ── playlist card ── */
+        .bp-playlist-card {
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 24px;
+          padding: 1.25rem;
+          backdrop-filter: blur(12px);
+          display: flex;
+          flex-direction: column;
+        }
+
+        .bp-testament-toggle {
+          display: none;
+          gap: 0.5rem;
+          margin-bottom: 1rem;
+        }
+        @media (min-width: 1024px) {
+          .bp-testament-toggle {
+            display: flex;
+          }
+        }
+        .bp-toggle-btn {
+          flex: 1;
+          padding: 0.6rem;
+          border-radius: 10px;
+          font-family: "DM Sans", sans-serif;
+          font-size: 0.82rem;
+          font-weight: 600;
+          cursor: pointer;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          background: rgba(255, 255, 255, 0.06);
+          color: rgba(255, 255, 255, 0.5);
+          transition: all 0.2s;
+        }
+        .bp-toggle-btn:hover {
+          background: rgba(255, 255, 255, 0.1);
+          color: #fff;
+        }
+        .bp-toggle-btn.active-new {
+          background: linear-gradient(
+            135deg,
+            rgba(96, 165, 250, 0.3),
+            rgba(37, 99, 235, 0.3)
+          );
+          color: #93c5fd;
+          border-color: rgba(96, 165, 250, 0.4);
+        }
+        .bp-toggle-btn.active-old {
+          background: linear-gradient(
+            135deg,
+            rgba(251, 191, 36, 0.25),
+            rgba(234, 88, 12, 0.25)
+          );
+          color: #fcd34d;
+          border-color: rgba(251, 191, 36, 0.35);
+        }
+
+        .bp-playlist-label {
+          font-size: 0.68rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.12em;
+          color: rgba(255, 255, 255, 0.3);
+          margin-bottom: 0.75rem;
+        }
+
+        .bp-playlist-scroll {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+          max-height: 500px;
+          overflow-y: auto;
+          padding-right: 4px;
+        }
+        .bp-playlist-scroll::-webkit-scrollbar {
+          width: 4px;
+        }
+        .bp-playlist-scroll::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.04);
+          border-radius: 4px;
+        }
+        .bp-playlist-scroll::-webkit-scrollbar-thumb {
+          background: rgba(245, 194, 87, 0.3);
+          border-radius: 4px;
+        }
+
+        .bp-playlist-item {
+          display: flex;
+          align-items: center;
+          gap: 0.7rem;
+          width: 100%;
+          text-align: left;
+          padding: 0.7rem 0.85rem;
+          border-radius: 12px;
+          border: 1px solid transparent;
+          background: transparent;
+          cursor: pointer;
+          font-family: "DM Sans", sans-serif;
+          transition: background 0.18s, border-color 0.18s, transform 0.12s;
+          color: rgba(255, 255, 255, 0.55);
+        }
+        .bp-playlist-item:hover {
+          background: rgba(255, 255, 255, 0.07);
+          color: rgba(255, 255, 255, 0.85);
+          transform: translateX(2px);
+        }
+        .bp-playlist-item.active {
+          background: linear-gradient(
+            135deg,
+            rgba(200, 133, 31, 0.25),
+            rgba(245, 194, 87, 0.15)
+          );
+          border-color: rgba(245, 194, 87, 0.35);
+          color: #fff;
+        }
+        .bp-item-num {
+          font-family: "Bebas Neue", sans-serif;
+          font-size: 0.95rem;
+          color: rgba(255, 255, 255, 0.25);
+          flex-shrink: 0;
+          width: 22px;
+        }
+        .bp-playlist-item.active .bp-item-num {
+          color: #f5c257;
+        }
+        .bp-item-icon {
+          font-size: 1.1rem;
+          flex-shrink: 0;
+        }
+        .bp-item-title {
+          font-size: 0.87rem;
+          font-weight: 500;
+          flex: 1;
+        }
+
+        /* animated bars for now-playing */
+        .bp-item-playing {
+          display: flex;
+          align-items: flex-end;
+          gap: 2px;
+          height: 16px;
+          flex-shrink: 0;
+        }
+        .bp-item-playing span {
+          display: block;
+          width: 3px;
+          background: #f5c257;
+          border-radius: 2px;
+          animation: barBounce 0.8s ease-in-out infinite;
+        }
+        .bp-item-playing span:nth-child(1) {
+          height: 8px;
+          animation-delay: 0s;
+        }
+        .bp-item-playing span:nth-child(2) {
+          height: 14px;
+          animation-delay: 0.2s;
+        }
+        .bp-item-playing span:nth-child(3) {
+          height: 10px;
+          animation-delay: 0.4s;
+        }
+        @keyframes barBounce {
+          0%,
+          100% {
+            transform: scaleY(1);
+          }
+          50% {
+            transform: scaleY(0.4);
+          }
+        }
+
+        /* ── footer ── */
+        .bp-footer {
+          margin-top: 2.5rem;
+          text-align: center;
+          color: rgba(255, 255, 255, 0.35);
+          font-size: 0.85rem;
+        }
+        .bp-footer-bold {
+          font-weight: 700;
+          color: rgba(255, 255, 255, 0.6);
+        }
+        .bp-footer-icons {
+          display: flex;
+          gap: 0.75rem;
+          justify-content: center;
+          margin-top: 0.65rem;
+          font-size: 1.3rem;
+        }
+
+        /* ── clouds (unchanged from original) ── */
         @keyframes float-slow {
           0%,
           100% {
@@ -361,7 +837,6 @@ export default function BiblePlaylistPage() {
             transform: translateX(20px) translateY(-10px);
           }
         }
-
         @keyframes float-medium {
           0%,
           100% {
@@ -371,7 +846,6 @@ export default function BiblePlaylistPage() {
             transform: translateX(-30px) translateY(-15px);
           }
         }
-
         @keyframes float-fast {
           0%,
           100% {
@@ -381,81 +855,40 @@ export default function BiblePlaylistPage() {
             transform: translateX(40px) translateY(-5px);
           }
         }
-
         .animate-float-slow {
           animation: float-slow 8s ease-in-out infinite;
         }
-
         .animate-float-medium {
           animation: float-medium 6s ease-in-out infinite;
         }
-
         .animate-float-fast {
           animation: float-fast 10s ease-in-out infinite;
-        }
-
-        .animate-bounce-slow {
-          animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-10px);
-          }
         }
 
         .cloud {
           position: absolute;
           background: white;
           border-radius: 50%;
-          opacity: 0.7;
+          opacity: 0.06;
+          box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.1);
         }
-
         .cloud-1 {
           width: 150px;
           height: 60px;
           top: 10%;
           left: 5%;
-          box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.1);
         }
-
         .cloud-2 {
           width: 120px;
           height: 50px;
           top: 20%;
           right: 10%;
-          box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.1);
         }
-
         .cloud-3 {
           width: 100px;
           height: 40px;
           top: 15%;
           left: 30%;
-          box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Custom scrollbar for playlist */
-        .overflow-y-auto::-webkit-scrollbar {
-          width: 8px;
-        }
-
-        .overflow-y-auto::-webkit-scrollbar-track {
-          background: rgba(255, 255, 255, 0.5);
-          border-radius: 10px;
-        }
-
-        .overflow-y-auto::-webkit-scrollbar-thumb {
-          background: rgba(147, 51, 234, 0.5);
-          border-radius: 10px;
-        }
-
-        .overflow-y-auto::-webkit-scrollbar-thumb:hover {
-          background: rgba(147, 51, 234, 0.8);
         }
       `}</style>
     </div>
