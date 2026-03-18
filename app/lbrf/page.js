@@ -462,7 +462,9 @@ const Page = () => {
             className="lbrf-logo"
           />
 
-          <h1 className="lbrf-heading">Create your account</h1>
+          <h1 className="lbrf-heading">
+            Register For Lovetoons Bible Reading Fiesta
+          </h1>
           <p className="lbrf-sub">Join thousands reading the Word together</p>
 
           {/* Quick CTAs */}
