@@ -465,9 +465,7 @@ const Page = () => {
             <h2 className="fiesta-event-title">
               Lovetoons Bible Reading Fiesta
             </h2>
-            <h3 className="fiesta-event-sub">
-              A 72-HR Bible Reading Rendezvous
-            </h3>
+            <h3 className="fiesta-event-sub">Topical Edition</h3>
 
             {/* Mobile swiper */}
             <div className="fiesta-mobile-media md:hidden">
@@ -485,32 +483,39 @@ const Page = () => {
             <div className="fiesta-prose">
               <p>
                 <span className="highlight">
-                  Don't just register, take up the mantle —
+                  This year, it's a Topical Edition —
                 </span>{" "}
-                Join millions of children around the world in a meaningful
-                journey to read the Bible.
+                and it's bigger and more exciting than ever! Join millions of
+                children around the world as we dive deep into the Word of God
+                through powerful, life-changing topics.
               </p>
               <p>
-                The Lovetoons Bible Reading Fiesta is an inspiring campaign
-                aimed at engaging children everywhere to read the Bible. This is
-                more than just reading; it's about instilling a consciousness of
-                the Bible while fostering a love for the Bible in their hearts.
+                The Lovetoons Bible Reading Fiesta: Topical Edition is designed
+                to help children explore key biblical themes —{" "}
+                <strong>Faith, Love, Wisdom</strong>, and so much more. Rather
+                than just reading through chapters, children will discover what
+                the Bible says about the topics that matter most in their
+                everyday lives.
               </p>
               <div className="fiesta-verse">
-                "Start children off on the way they should go, and even when
-                they are old, they will not turn from it." — Proverbs 22:6
+                "Now faith is the substance of things hoped for, the evidence of
+                things not seen." — Hebrews 11:1
               </div>
               <p>
-                Through this wonderful program, children can read a chapter of
-                the Old Testament, record themselves, and share their readings
-                with millions of other children — learning inspiring truths and
-                engaging with the profound messages of faith, hope, and love.
+                From learning how to walk in faith, to understanding God's
+                unconditional love, to growing in wisdom — every session is
+                packed with truth that will shape the hearts and minds of
+                children for a lifetime.
               </p>
+              <div className="fiesta-verse">
+                "For God so loved the world, that he gave his only begotten
+                Son..." — John 3:16
+              </div>
               <p>
-                Let's come together to guide our kids on this beautiful journey,
-                helping them to discover the love of our Lord Jesus Christ and
-                the amazing person of the Holy Spirit. Your involvement can make
-                a lasting difference in their lives!
+                Let's come together and give our kids an encounter with God's
+                Word that goes beyond reading — one that transforms how they
+                think, speak, and live. Your involvement today plants a seed
+                that will bear fruit for generations!
               </p>
             </div>
 
