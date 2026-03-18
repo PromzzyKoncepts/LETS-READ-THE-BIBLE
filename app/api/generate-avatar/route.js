@@ -32,7 +32,7 @@ export async function POST(req) {
     avatarFrame.resize({ w: 550, h: 550 });
 
     // Resize user image to fit the photo slot
-    userImage.resize({ w: 250, h: 450 });
+    userImage.resize({ w: 200, h: 350 });
 
     // Create blank transparent canvas
     const canvas = new Jimp({ width: 550, height: 550, color: 0x00000000 });
