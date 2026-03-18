@@ -38,13 +38,13 @@ export async function POST(req) {
     avatarFrame.resize({ w: 550, h: 550 });
 
     // Resize user image to fit the photo slot in the frame
-    userImage.resize({ w: 270, h: 400 });
+    userImage.resize({ w: 270, h: 450 });
 
     // Create a blank canvas the same size as the frame
     const canvas = new Jimp({ width: 550, height: 550, color: 0x00000000 });
 
     // 1. Place user image on canvas first (behind)
-    canvas.composite(userImage, 145.5, 130);
+    canvas.composite(userImage, 145.5, 125);
 
     // 2. Place avatar frame on top
     canvas.composite(avatarFrame, 0, 0);
