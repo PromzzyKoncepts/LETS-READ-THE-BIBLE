@@ -1,16 +1,22 @@
 import { Jimp, JimpMime } from "jimp";
 import { v2 as cloudinary } from "cloudinary";
 
+const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+const apiKey = process.env.CLOUDINARY_API_KEY;
+const apiSecret = process.env.CLOUDINARY_API_SECRET;
+
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+  cloud_name: cloudName,
+  api_key: apiKey,
+  api_secret: apiSecret,
 });
 
 export async function POST(req) {
   try {
     const formData = await req.formData();
     const image = formData.get("image");
+
+    console.log(image instanceof File);
 
     if (!image) {
       return new Response(JSON.stringify({ error: "No image provided" }), {
@@ -28,34 +34,28 @@ export async function POST(req) {
     const avatarFrame = await Jimp.read(avatarUrl);
     const userImage = await Jimp.read(userImageBuffer);
 
-    // Resize frame to final output size
+    // Resize the frame to final output size
     avatarFrame.resize({ w: 550, h: 550 });
 
-    // Resize user image to fit the photo slot
+    // Resize user image to fit the photo slot in the frame
     userImage.resize({ w: 350, h: 450 });
 
-    // Create blank transparent canvas
+    // Create a blank canvas the same size as the frame
     const canvas = new Jimp({ width: 550, height: 550, color: 0x00000000 });
 
-    // 1. User image behind
+    // 1. Place user image on canvas first (behind)
     canvas.composite(userImage, 145.5, 120);
 
-    // 2. Avatar frame on top
+    // 2. Place avatar frame on top
     canvas.composite(avatarFrame, 0, 0);
 
-    // Export as JPEG buffer (much smaller than PNG base64)
-    const outputBuffer = await canvas.getBuffer(JimpMime.jpeg, { quality: 80 });
+    // Export and upload
+    const mergedImageBase64 = await canvas.getBase64(JimpMime.png, {
+      quality: 50,
+    });
 
-    // Upload buffer directly to Cloudinary via upload_stream
-    const AvatarResult = await new Promise((resolve, reject) => {
-      const stream = cloudinary.uploader.upload_stream(
-        { folder: "avatar", resource_type: "image" },
-        (error, result) => {
-          if (error) reject(error);
-          else resolve(result);
-        }
-      );
-      stream.end(outputBuffer);
+    const AvatarResult = await cloudinary.uploader.upload(mergedImageBase64, {
+      folder: "avatar",
     });
 
     const finalAvatarUrl = cloudinary.url(AvatarResult.public_id, {
