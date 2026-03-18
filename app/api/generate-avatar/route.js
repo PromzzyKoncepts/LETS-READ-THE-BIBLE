@@ -38,7 +38,7 @@ export async function POST(req) {
     avatarFrame.resize({ w: 550, h: 550 });
 
     // Resize user image to fit the photo slot in the frame
-    userImage.resize({ w: 270, h: 450 });
+    userImage.resize({ w: 350, h: 450 });
 
     // Create a blank canvas the same size as the frame
     const canvas = new Jimp({ width: 550, height: 550, color: 0x00000000 });
