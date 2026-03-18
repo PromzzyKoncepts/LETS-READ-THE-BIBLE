@@ -13,11 +13,9 @@ cloudinary.config({
 
 export async function POST(req) {
   try {
-    // const body = await req.json();
-    // const { image } = body;
-
     const formData = await req.formData();
     const image = formData.get("image");
+
     console.log(image instanceof File);
 
     if (!image) {
@@ -30,48 +28,45 @@ export async function POST(req) {
     const arrayBuffer = await image.arrayBuffer();
     const userImageBuffer = Buffer.from(arrayBuffer);
 
-    // Load the avatar image from Cloudinary
-    ///const avatarUrl = "https://res.cloudinary.com/dgbeonqpw/image/upload/v1742230506/1000679214_thowre.png";
     const avatarUrl = "https://lovetoons.org/img/LBRF-AVATAR.png";
-    const avatar = await Jimp.read(avatarUrl);
 
-    // Load the user's image from the buffer
+    // Load both images
+    const avatarFrame = await Jimp.read(avatarUrl);
     const userImage = await Jimp.read(userImageBuffer);
 
-    // Resize images
-    avatar.resize({ w: 550, h: 550 }); // Resize avatar
-    userImage.resize({ w: 265, h: 265 }); // Resize user's image
+    // Resize the frame to final output size
+    avatarFrame.resize({ w: 550, h: 550 });
 
-    // Merge images (overlay user image on avatar)
-    avatar.composite(userImage, 145.5, 89.5);
+    // Resize user image to fit the photo slot in the frame
+    userImage.resize({ w: 265, h: 265 });
 
-    // avatar.composite(userImage,0, 0);
+    // Create a blank canvas the same size as the frame
+    const canvas = new Jimp({ width: 550, height: 550, color: 0x00000000 });
 
-    const mergedImageBase64 = await avatar.getBase64(JimpMime.png, {
+    // 1. Place user image on canvas first (behind)
+    canvas.composite(userImage, 145.5, 89.5);
+
+    // 2. Place avatar frame on top
+    canvas.composite(avatarFrame, 0, 0);
+
+    // Export and upload
+    const mergedImageBase64 = await canvas.getBase64(JimpMime.png, {
       quality: 50,
-    }); // Explicitly specify MIME type
+    });
 
-    // Upload the final merged image to Cloudinary
-    const AvatarResult = await cloudinary.uploader.upload(
-      mergedImageBase64, // Directly use the base64 string
-      { folder: "avatar" }
-    );
+    const AvatarResult = await cloudinary.uploader.upload(mergedImageBase64, {
+      folder: "avatar",
+    });
 
     const finalAvatarUrl = cloudinary.url(AvatarResult.public_id, {
       secure: true,
-      transformation: [
-        { flags: "attachment" }, // Add fl_attachment
-      ],
+      transformation: [{ flags: "attachment" }],
     });
 
-    // Return the Cloudinary URLs
-    return new Response(
-      JSON.stringify({
-        // userImageUrl: userImageResult.secure_url,
-        mergedImageUrl: finalAvatarUrl,
-      }),
-      { status: 200, headers: { "Content-Type": "application/json" } }
-    );
+    return new Response(JSON.stringify({ mergedImageUrl: finalAvatarUrl }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (error) {
     console.error("Error processing image:", error);
     return new Response(
