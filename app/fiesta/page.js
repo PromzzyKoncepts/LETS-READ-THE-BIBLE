@@ -19,10 +19,10 @@ const Page = () => {
   const [isDownloading, setIsDownloading] = useState(false);
 
   const card = [
-    { title: "fiesta 4", src: "/images/LBRF_4_0.png" },
-    { title: "fiesta 1", src: "/images/LBRF_3yy.png" },
-    { title: "fiesta 3", src: "/images/LBRF_3_1.png" },
-    { title: "fiesta 2", src: "/images/LBRF_3_0.png" },
+    { title: "fiesta 4", src: "/images/LBRF_APRIL_2026_1.jpg" },
+    { title: "fiesta 1", src: "/images/LBRF_APRIL_2026_4.jpg" },
+    { title: "fiesta 3", src: "/images/LBRF_APRIL_2026.jpg" },
+    // { title: "fiesta 2", src: "/images/LBRF_APRIL_2026_1.jpg" },
   ];
 
   const handleDownloadAll = async () => {
@@ -518,7 +518,7 @@ const Page = () => {
             <div className="fiesta-banner-cta">
               <Link href="/lbrf">
                 <Image
-                  src="/images/LBRF-SEPT-Banner-1.png"
+                  src="/images/LBRF_SLIDER.jpg"
                   alt="sponsor LBR"
                   width={1000}
                   height={300}
