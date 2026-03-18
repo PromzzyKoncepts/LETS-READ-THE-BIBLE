@@ -38,7 +38,7 @@ export async function POST(req) {
     const canvas = new Jimp({ width: 550, height: 550, color: 0x00000000 });
 
     // 1. User image behind
-    canvas.composite(userImage, 145, 120);
+    canvas.composite(userImage, 135, 120);
 
     // 2. Avatar frame on top
     canvas.composite(avatarFrame, 0, 0);
