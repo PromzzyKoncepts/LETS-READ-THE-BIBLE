@@ -249,6 +249,11 @@ export default function AvatarUploader() {
         }
         @media (min-width: 768px) { .av-crop-area { height: 420px; } }
 
+        /* Force rectangle — override react-easy-crop's circle mask */
+        .av-crop-area .reactEasyCrop_CropArea {
+          border-radius: 0 !important;
+        }
+
         .av-panel-footer {
           display: flex; align-items: center; justify-content: space-between;
           padding: .85rem 1.1rem;
