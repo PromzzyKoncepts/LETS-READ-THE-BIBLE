@@ -308,7 +308,7 @@ export default function AvatarUploader() {
         }
         .av-preview-cropped {
           width: 100%; max-width: 300px; height: auto;
-          border-radius: 12px;
+          border-radius: 0;
           box-shadow: 0 16px 48px rgba(0,0,0,.4);
           border: 2px solid rgba(255,255,255,.15);
         }

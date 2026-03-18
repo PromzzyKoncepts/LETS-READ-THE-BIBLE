@@ -518,7 +518,7 @@ const Page = () => {
             <div className="fiesta-banner-cta">
               <Link href="/lbrf">
                 <Image
-                  src="/images/LBRF_SLIDER.jpg"
+                  src="/images/LBRF_SLIDER-1.jpg"
                   alt="sponsor LBR"
                   width={1000}
                   height={300}
