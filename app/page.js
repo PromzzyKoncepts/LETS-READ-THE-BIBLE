@@ -31,6 +31,15 @@ export default function Home() {
 
   const card = [
     {
+      title: "Lovetoons Bible Reading Fiesta",
+      src: "https://letsreadthebible.club/_next/image?url=%2Fimages%2FLBRF_SLIDER-1.jpg&w=2048&q=75",
+      link: "https://letsreadthebible.club/lbrf",
+    },
+    {
+      title: "Communion service",
+      src: "https://cdn1.kingschat.online/uploads/media/5805c719f916b92f465c97b0/ME5Hd1VENTZRbi9wSXphNWZ1QXVnZz09/MAC_SIZE_COMMUNION_SERVICE.png",
+    },
+    {
       title: "Year of Manifestation",
       src: "https://lovetoons.org/img/YEAR_OF_MANIFESTATION_web2.png",
     },
