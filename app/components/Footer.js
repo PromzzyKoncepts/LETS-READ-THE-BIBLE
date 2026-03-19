@@ -29,7 +29,7 @@ const Footer = () => {
             <Link href="/record">Record your video</Link>
             <Link href="/upload">Upload a Video</Link>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col hidden">
             <h3 className="text-2xl text-orange font-bold  pb-3">Enquiry</h3>
             {/* <Link href="/about">About Us</Link> */}
             {/* <Link href="/contact">Contact Us</Link> */}
