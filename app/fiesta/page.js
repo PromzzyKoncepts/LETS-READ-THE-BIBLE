@@ -22,7 +22,7 @@ const Page = () => {
     { title: "fiesta 4", src: "/images/LBRF_APRIL_2026_1.jpg" },
     { title: "fiesta 1", src: "/images/LBRF_APRIL_2026_4.jpg" },
     { title: "fiesta 3", src: "/images/LBRF_APRIL_2026.jpg" },
-    // { title: "fiesta 2", src: "/images/LBRF_APRIL_2026_1.jpg" },
+    { title: "fiesta 2", src: "/images/LBRF SAVE THE DATE-.jpeg" },
   ];
 
   const handleDownloadAll = async () => {
