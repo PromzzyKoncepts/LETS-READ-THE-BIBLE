@@ -447,7 +447,7 @@ const Page = () => {
           <div className="lbrf-banner-badge">
             <p className="lbrf-banner-badge-title">LBRF 2026</p>
             <p className="lbrf-banner-badge-sub">
-              Loveworld Bible Reading Fiesta
+              Lovetoons Bible Reading Fiesta
             </p>
           </div>
         </div>
@@ -465,7 +465,7 @@ const Page = () => {
           <h1 className="lbrf-heading">
             Register For Lovetoons Bible Reading Fiesta
           </h1>
-          <p className="lbrf-sub">Join thousands reading the Word together</p>
+          <p className="lbrf-sub">Join thousands reading the Bible together</p>
 
           {/* Quick CTAs */}
           <div className="lbrf-ctas">
@@ -603,7 +603,7 @@ const Page = () => {
           </form>
 
           <p className="lbrf-footnote">
-            By registering you agree to participate in the Loveworld Bible
+            By registering you agree to participate in the Lovetoons Bible
             Reading Fiesta.
           </p>
         </div>

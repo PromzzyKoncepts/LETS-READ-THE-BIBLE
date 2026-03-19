@@ -38,7 +38,16 @@ const Footer = () => {
             {/* <Link href="/faqs">FAQS</Link> */}
           </div>
           <div className="flex flex-col">
-            <h3 className="text-2xl text-orange font-bold  pb-3">Support</h3>
+            <h3 className="text-2xl text-orange font-bold  pb-3">Sponsor</h3>
+            <p>Spend sponsorship to</p>
+            <p>Espees Merchant Code: KMP</p>
+            <div>
+              <p>Naira Account: </p>
+              <p>Bank: Parallex</p>
+              <p>Account Number: 1000235516</p>
+              <p>Accout Name: Lovetoons LTD</p>
+            </div>
+
             {/* <a href="mailto:lovetoons@gmail.com" className="flex items-center gap-1">
               <CiMail /> Email Support
             </a> */}
@@ -73,7 +82,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="pt-7 text-white">
+        <div className="pt-7 text-white hidden">
           <h3>GET DAILY/WEEKLY UPDATES</h3>
           <small>Receive emails on our newsletters</small>
           <form className="mt-4  flex items-center  sm:w-fit bg-white rounded-xl">
