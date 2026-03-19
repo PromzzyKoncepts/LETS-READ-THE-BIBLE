@@ -39,12 +39,12 @@ export default function Home() {
       title: "Communion service",
       src: "https://lovetoons.org/img/MAC_SIZE_COMMUNION_SERVICE.png",
     },
-    {
-      title: "Year of Manifestation",
-      src: "https://lovetoons.org/img/YEAR_OF_MANIFESTATION_web2.png",
-    },
-    { title: "Tick Talk", src: "/images/ticktalk.png" },
-    { title: "Comics 3", src: "/images/comics2.png" },
+    // {
+    //   title: "Year of Manifestation",
+    //   src: "https://lovetoons.org/img/YEAR_OF_MANIFESTATION_web2.png",
+    // },
+    // { title: "Tick Talk", src: "/images/ticktalk.png" },
+    // { title: "Comics 3", src: "/images/comics2.png" },
   ];
 
   const raceItems = [
