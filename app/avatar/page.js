@@ -515,6 +515,7 @@ export default function AvatarUploader() {
                   <button className="av-trash-btn" onClick={clearImage}>
                     <FaTrash size={12} /> Remove
                   </button>
+                  <br />
                   <button
                     className={`av-crop-btn ${croppedImage ? "done" : ""}`}
                     onClick={handleCrop}
