@@ -17,6 +17,7 @@ const Page = () => {
   const [viewAvatar, setViewAvatar] = useState(false);
   const [viewPicture, setViewPicture] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const card = [
     { title: "fiesta 4", src: "/images/LBRF_APRIL_2026_1.jpg" },
@@ -468,7 +469,7 @@ const Page = () => {
             <h3 className="fiesta-event-sub">Topical Edition</h3>
 
             {/* Mobile swiper */}
-            <div className="fiesta-mobile-media md:hidden">
+            {/* <div className="fiesta-mobile-media md:hidden">
               <Swiper carousels={card} />
             </div>
             <button
@@ -478,7 +479,7 @@ const Page = () => {
             >
               <IoMdCloudDownload size={18} />
               {isDownloading ? "Downloading…" : "Download all Publicity Cards"}
-            </button>
+            </button> */}
 
             <div className="fiesta-prose">
               <p>
@@ -489,34 +490,51 @@ const Page = () => {
                 children around the world as we dive deep into the Word of God
                 through powerful, life-changing topics.
               </p>
-              <p>
-                The Lovetoons Bible Reading Fiesta: Topical Edition is designed
-                to help children explore key biblical themes —{" "}
-                <strong>Faith, Love, Wisdom</strong>, and so much more. Rather
-                than just reading through chapters, children will discover what
-                the Bible says about the topics that matter most in their
-                everyday lives.
-              </p>
-              <div className="fiesta-verse">
-                "Now faith is the substance of things hoped for, the evidence of
-                things not seen." — Hebrews 11:1
-              </div>
-              <p>
-                From learning how to walk in faith, to understanding God's
-                unconditional love, to growing in wisdom — every session is
-                packed with truth that will shape the hearts and minds of
-                children for a lifetime.
-              </p>
-              <div className="fiesta-verse">
-                "For God so loved the world, that he gave his only begotten
-                Son..." — John 3:16
-              </div>
-              <p>
-                Let's come together and give our kids an encounter with God's
-                Word that goes beyond reading — one that transforms how they
-                think, speak, and live. Your involvement today plants a seed
-                that will bear fruit for generations!
-              </p>
+
+              {expanded && (
+                <>
+                  <p>
+                    The Lovetoons Bible Reading Fiesta: Topical Edition is
+                    designed to help children explore key biblical themes —{" "}
+                    <strong>Faith, Love, Wisdom</strong>, and so much more.
+                    Rather than just reading through chapters, children will
+                    discover what the Bible says about the topics that matter
+                    most in their everyday lives.
+                  </p>
+
+                  <div className="fiesta-verse">
+                    "Now faith is the substance of things hoped for, the
+                    evidence of things not seen." — Hebrews 11:1
+                  </div>
+
+                  <p>
+                    From learning how to walk in faith, to understanding God's
+                    unconditional love, to growing in wisdom — every session is
+                    packed with truth that will shape the hearts and minds of
+                    children for a lifetime.
+                  </p>
+
+                  <div className="fiesta-verse">
+                    "For God so loved the world, that he gave his only begotten
+                    Son..." — John 3:16
+                  </div>
+
+                  <p>
+                    Let's come together and give our kids an encounter with
+                    God's Word that goes beyond reading — one that transforms
+                    how they think, speak, and live. Your involvement today
+                    plants a seed that will bear fruit for generations!
+                  </p>
+                </>
+              )}
+
+              {/* Toggle Button */}
+              <button
+                onClick={() => setExpanded(!expanded)}
+                className="read-more-btn"
+              >
+                {expanded ? "Read Less" : "Read More"}
+              </button>
             </div>
 
             {/* Banner CTA */}
