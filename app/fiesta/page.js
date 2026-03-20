@@ -568,7 +568,7 @@ const Page = () => {
           {/* RIGHT: Sidebar actions */}
           <div className="fiesta-sidebar">
             <p className="fiesta-sidebar-title">Quick actions</p>
-            <div className="fiesta-actions">
+            <div className="fiesta-actions hidden md:block">
               {actions.map((a) => (
                 <Link
                   key={a.label}
