@@ -481,6 +481,20 @@ const Page = () => {
               {isDownloading ? "Downloading…" : "Download all Publicity Cards"}
             </button> */}
 
+            <div className="fiesta-actions md:hidden">
+              {actions.map((a) => (
+                <Link
+                  key={a.label}
+                  href={a.href}
+                  className="action-card"
+                  style={{ background: a.gradient, color: a.textColor }}
+                >
+                  <span className="action-card-icon">{a.icon}</span>
+                  {a.label}
+                </Link>
+              ))}
+            </div>
+
             <div className="fiesta-prose">
               <p>
                 <span className="highlight">
