@@ -480,7 +480,7 @@ const Page = () => {
               <IoMdCloudDownload size={18} />
               {isDownloading ? "Downloading…" : "Download all Publicity Cards"}
             </button> */}
-            <div className="fiesta-actions fiesta-mobile-media block lg:hidden">
+            {/* <div className="fiesta-actions fiesta-mobile-media block lg:hidden">
               {actions.map((a) => (
                 <Link
                   key={a.label}
@@ -492,7 +492,7 @@ const Page = () => {
                   {a.label}
                 </Link>
               ))}
-            </div>
+            </div> */}
 
             <div className="fiesta-prose">
               <p>
