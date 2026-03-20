@@ -1,149 +1,506 @@
-"use client"
-import Image from 'next/image'
-import React, { useState } from 'react'
-import kingsChatWebSdk from 'kingschat-web-sdk';
-import 'kingschat-web-sdk/dist/stylesheets/style.min.css';
-import { useParams, useRouter } from "next/navigation"
+"use client";
+import Image from "next/image";
+import React, { useState } from "react";
+import kingsChatWebSdk from "kingschat-web-sdk";
+import "kingschat-web-sdk/dist/stylesheets/style.min.css";
+import { useParams, useRouter } from "next/navigation";
 import { Toaster, toast } from "react-hot-toast";
 
-const clientId = "31414fbe-48d9-4806-9acf-4ed4bf58679b"
+const clientId = "31414fbe-48d9-4806-9acf-4ed4bf58679b";
 const loginOptions = {
-    scopes: ["send_chat_message"],
-    clientId: clientId
-}
+  scopes: ["send_chat_message"],
+  clientId: clientId,
+};
 
-const baseUrl = "https://letsreadthebible.club"
-// const baseUrl = "https://lets-read-the-bible.vercel.app"
+const baseUrl = "https://letsreadthebible.club";
 
 const Page = () => {
-    const router = useRouter()
-    const { influencerId } = useParams();
-    const [success, setSuccess] = useState(false);
-    const [email, setEmail] = useState('');
-    const [fullName, setFullName] = useState('');
-    const [kingsChatHandle, setKingsChatHandle] = useState(null);
+  const router = useRouter();
+  const { influencerId } = useParams();
+  const [email, setEmail] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [kingsChatHandle, setKingsChatHandle] = useState(null);
 
-    const handleRegister = async (e) => {
-        e.preventDefault();
-        await registerUser({ email, fullName, kingsChatHandle: influencerId + " " + kingsChatHandle, influencerId });
-    };
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    await registerUser({
+      email,
+      fullName,
+      kingsChatHandle: influencerId + " " + kingsChatHandle,
+      influencerId,
+    });
+  };
 
-    async function registerUser(userData) {
-        console.log(userData)
-        try {
-            const response = await fetch(`${baseUrl}/api/influencer-fiesta`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userData),
-            });
-            const result = await response.json();
-            if (result?.error) {
-                console.error("Registeration failed!", result.message)
-                toast.error(result.message);
-            }
-
-            else if (result?.result) {
-                localStorage.setItem("user", JSON.stringify(userData))
-                toast.success('You successfully registered!');
-                router.push("/fiesta")
-            }
-            else console.error(result)
-        } catch (error) {
-            console.error('Error registering user:', error);
+  async function registerUser(userData) {
+    try {
+      const response = await fetch(
+        `https://lovetoons.org/php/lbrf-unique.php`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(userData),
         }
+      );
+      const result = await response.json();
+      if (result?.error) {
+        toast.error(result.message);
+      } else if (result?.result) {
+        localStorage.setItem("user", JSON.stringify(userData));
+        toast.success("You successfully registered!");
+        router.push("/fiesta");
+      } else console.error(result);
+    } catch (error) {
+      console.error("Error registering user:", error);
     }
-    async function registerKCUser(userData) {
-        console.log(userData)
-        try {
-            const response = await fetch(`${baseUrl}/api/influencerKC-fiesta`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userData),
-            });
-            const result = await response.json();
-            if (result?.error) {
-                console.error("Registeration failed!", result.message)
-                toast.error(result.message);
-            }
+  }
 
-            else if (result?.result) {
-                localStorage.setItem("user", JSON.stringify(userData))
-                toast.success('You successfully registered!');
-                router.push("/fiesta")
-
-            }
-            else console.error(result)
-        } catch (error) {
-            console.error('Error registering user:', error);
+  async function registerKCUser(userData) {
+    try {
+      const response = await fetch(
+        `https://lovetoons.org/php/lbrf-unique.php`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(userData),
         }
+      );
+      const result = await response.json();
+      if (result?.error) {
+        toast.error(result.message);
+      } else if (result?.result) {
+        localStorage.setItem("user", JSON.stringify(userData));
+        toast.success("You successfully registered!");
+        router.push("/fiesta");
+      } else console.error(result);
+    } catch (error) {
+      console.error("Error registering user:", error);
     }
-    function loginWithKingsChat() {
-        kingsChatWebSdk.login(loginOptions)
-            .then(authenticationTokenResponse => {
-                console.log(authenticationTokenResponse.accessToken);
-                fetchUserProfile(authenticationTokenResponse.accessToken);
-            })
-            .catch(error => console.error(error));
+  }
+
+  function loginWithKingsChat() {
+    kingsChatWebSdk
+      .login(loginOptions)
+      .then((authenticationTokenResponse) => {
+        fetchUserProfile(authenticationTokenResponse.accessToken);
+      })
+      .catch((error) => console.error(error));
+  }
+
+  async function fetchUserProfile(accessToken) {
+    try {
+      const response = await fetch(
+        "https://connect.kingsch.at/developer/api/profile",
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      );
+      const data = await response.json();
+      const { username, name, email } = data?.profile;
+      await registerKCUser({
+        email,
+        fullName: name,
+        kingsChatHandle: username,
+        influencer: influencerId,
+      });
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
     }
+  }
 
-    async function fetchUserProfile(accessToken) {
-        console.log(accessToken)
-        try {
-            const response = await fetch('https://connect.kingsch.at/developer/api/profile', {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`
-                }
-            });
-            const data = await response.json();
-            console.log(data.profile)
-            const { username, name, email } = data?.profile;
+  return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap');
 
-            // Send data to MongoDB
-            await registerKCUser({ email, fullName: name, kingsChatHandle: username, influencer: influencerId });
-        } catch (error) {
-            console.error('Error fetching user profile:', error);
+        .lbrf-root {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          min-height: 100vh;
+          font-family: 'DM Sans', sans-serif;
+          background: #0c0c1a;
         }
-    }
+        @media (max-width: 768px) {
+          .lbrf-root { grid-template-columns: 1fr; }
+          .lbrf-banner { height: 200px !important; }
+        }
 
-    return (
-        <div className="grid md:grid-cols-2 items-start max-h-screen font-sniglet">
-            <Toaster position="top-right" />
-            <div className=" col-span-1">
-                <Image src="/images/banner2.png" className="md:w-full h-[10rem] md:h-screen object-cover" alt="banner" width={500} height={500} />
+        /* ── BANNER ── */
+        .lbrf-banner {
+          position: relative;
+          overflow: hidden;
+          height: 100vh;
+        }
+        .lbrf-banner-overlay {
+          position: absolute; inset: 0;
+          background: linear-gradient(to right, rgba(12,12,26,.5) 0%, rgba(12,12,26,.1) 100%);
+          pointer-events: none;
+        }
+        .lbrf-banner-badge {
+          position: absolute; bottom: 2rem; left: 2rem;
+          background: rgba(12,12,26,.78);
+          border: 1px solid rgba(245,194,87,.35);
+          border-radius: 12px;
+          padding: .7rem 1.1rem;
+          backdrop-filter: blur(4px);
+        }
+        .lbrf-banner-badge-title {
+          font-family: 'Bebas Neue', sans-serif;
+          color: #f5c257; font-size: 1.05rem;
+          letter-spacing: 1.5px; margin: 0;
+        }
+        .lbrf-banner-badge-sub {
+          color: rgba(255,255,255,.65);
+          font-size: .75rem; font-weight: 300; margin: 2px 0 0;
+        }
+
+        /* ── FLOATING SCRIPTURE BADGES ── */
+        .scripture-badge {
+          position: absolute;
+          display: flex; align-items: center; gap: .65rem;
+          background: rgba(255,255,255,0.92);
+          backdrop-filter: blur(8px);
+          border-radius: 14px;
+          padding: .55rem .85rem .55rem .55rem;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 1px 0 rgba(255,255,255,0.6) inset;
+          border: 1px solid rgba(255,255,255,0.7);
+          min-width: 190px;
+          animation: floatBadge 4s ease-in-out infinite;
+          z-index: 10;
+          user-select: none;
+        }
+        .scripture-badge:first-of-type { top: 2rem; right: 1.5rem; animation-delay: 0s; }
+        @keyframes floatBadge {
+          0%, 100% { transform: translateY(0px); }
+          50%       { transform: translateY(-6px); }
+        }
+        .scripture-badge-icon {
+          width: 40px; height: 40px;
+          border-radius: 10px;
+          display: flex; align-items: center; justify-content: center;
+          font-size: 1.3rem; flex-shrink: 0;
+        }
+        .scripture-badge-icon.faith {
+          background: linear-gradient(135deg, #f0b93a 0%, #c8851f 100%);
+        }
+        .scripture-badge-icon.love {
+          background: linear-gradient(135deg, #e05c7a 0%, #a0244e 100%);
+        }
+        .scripture-badge-text { display: flex; flex-direction: column; gap: 1px; }
+        .scripture-badge-title {
+          font-size: .82rem; font-weight: 600;
+          color: #1a1a2e; line-height: 1.2;
+        }
+        .scripture-badge-verse {
+          font-size: .72rem; color: #888;
+          font-weight: 300; line-height: 1.2;
+        }
+        .scripture-badge-love {
+          position: absolute; top: 6rem; right: 1.5rem;
+          display: flex; align-items: center; gap: .65rem;
+          background: rgba(255,255,255,0.92);
+          backdrop-filter: blur(8px);
+          border-radius: 14px;
+          padding: .55rem .85rem .55rem .55rem;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 1px 0 rgba(255,255,255,0.6) inset;
+          border: 1px solid rgba(255,255,255,0.7);
+          min-width: 190px;
+          animation: floatBadge 4s ease-in-out infinite;
+          animation-delay: 1.8s;
+          z-index: 10;
+          user-select: none;
+        }
+
+        /* ── FORM PANEL ── */
+        .lbrf-panel {
+          background: #f7f5f0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 2.5rem 2rem;
+          overflow-y: auto;
+          position: relative;
+          min-height: 100vh;
+        }
+        .lbrf-panel::before {
+          content: '';
+          position: absolute; top: 0; left: 0; right: 0; height: 4px;
+          background: linear-gradient(90deg, #c8851f 0%, #f5c257 50%, #c8851f 100%);
+        }
+
+        .lbrf-logo { width: 84px; margin-bottom: 1.25rem; }
+
+        .lbrf-heading {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(1.7rem, 3vw, 2.2rem);
+          color: #0c0c1a;
+          letter-spacing: 2px;
+          margin: 0 0 .2rem;
+          text-align: center;
+        }
+        .lbrf-sub {
+          color: #999; font-size: .82rem;
+          text-align: center; margin: 0 0 1.75rem;
+          font-weight: 300; letter-spacing: .02em;
+        }
+
+        /* ── KINGSCHAT BUTTON ── */
+        .lbrf-ctas {
+          width: 100%; max-width: 360px;
+          margin-bottom: 1.5rem;
+        }
+        .btn-kingschat {
+          display: flex; align-items: center; justify-content: center; gap: .55rem;
+          background: #1565c0; color: #fff;
+          border-radius: 11px; padding: .8rem 1.25rem;
+          font-weight: 600; font-size: .875rem;
+          border: none; cursor: pointer; width: 100%;
+          font-family: 'DM Sans', sans-serif;
+          transition: background .18s, transform .14s;
+          box-shadow: 0 4px 16px rgba(21,101,192,.22);
+        }
+        .btn-kingschat:hover { background: #0d47a1; transform: translateY(-1px); }
+
+        /* ── DIVIDER ── */
+        .lbrf-divider {
+          display: flex; align-items: center; gap: .7rem;
+          width: 100%; max-width: 360px;
+          margin-bottom: 1.4rem;
+          color: #bbb; font-size: .78rem; font-weight: 300;
+        }
+        .lbrf-divider::before, .lbrf-divider::after {
+          content: ''; flex: 1; height: 1px; background: #e0ddd8;
+        }
+
+        /* ── FORM ── */
+        .lbrf-form { width: 100%; max-width: 360px; display: flex; flex-direction: column; gap: .9rem; }
+
+        .lbrf-field { display: flex; flex-direction: column; gap: .3rem; }
+        .lbrf-label {
+          font-size: .72rem; font-weight: 500; color: #666;
+          text-transform: uppercase; letter-spacing: .07em;
+          display: flex; align-items: center; gap: .4rem;
+        }
+        .lbrf-input-wrap {
+          display: flex; align-items: center;
+          background: #fff;
+          border: 1.5px solid #e0ddd8;
+          border-radius: 10px;
+          padding: .62rem .85rem; gap: .5rem;
+          transition: border-color .18s, box-shadow .18s;
+        }
+        .lbrf-input-wrap:focus-within {
+          border-color: #c8851f;
+          box-shadow: 0 0 0 3px rgba(200,133,31,.11);
+        }
+        .lbrf-input-wrap input {
+          border: none; outline: none; background: transparent;
+          font-size: .92rem; color: #1a1a2e; width: 100%;
+          font-family: 'DM Sans', sans-serif;
+        }
+        .lbrf-input-wrap input::placeholder { color: #c0bdb8; }
+        .lbrf-prefix { color: #bbb; font-size: .92rem; user-select: none; }
+        .lbrf-icon { flex-shrink: 0; color: #ccc; }
+
+        .btn-register {
+          margin-top: .3rem;
+          background: linear-gradient(135deg, #c8851f 0%, #f0b93a 100%);
+          color: #1a0e00;
+          border: none; border-radius: 11px; padding: .88rem;
+          font-size: .95rem; font-weight: 700;
+          cursor: pointer; letter-spacing: .04em;
+          font-family: 'DM Sans', sans-serif;
+          transition: opacity .18s, transform .14s, box-shadow .18s;
+          box-shadow: 0 4px 18px rgba(200,133,31,.32);
+        }
+        .btn-register:hover {
+          opacity: .93; transform: translateY(-1px);
+          box-shadow: 0 8px 26px rgba(200,133,31,.38);
+        }
+        .btn-register:active { transform: translateY(0); }
+
+        .lbrf-footnote {
+          margin-top: 1.25rem;
+          font-size: .72rem; color: #bbb;
+          text-align: center; line-height: 1.65;
+          max-width: 300px; font-weight: 300;
+        }
+      `}</style>
+
+      <div className="lbrf-root">
+        <Toaster position="top-right" />
+
+        {/* ── LEFT: BANNER ── */}
+        <div className="lbrf-banner">
+          <Image
+            src="/images/banner2.png"
+            alt="LBRF banner"
+            fill
+            style={{ objectFit: "cover" }}
+            priority
+          />
+          <div className="lbrf-banner-overlay" />
+
+          {/* Floating scripture badges */}
+          <div className="scripture-badge">
+            <div className="scripture-badge-icon faith">✦</div>
+            <div className="scripture-badge-text">
+              <span className="scripture-badge-title">Faith</span>
+              <span className="scripture-badge-verse">Hebrews 11:1</span>
             </div>
-            <div className="flex flex-col items-center  md:pt-14 bg-[#dddcef] h-screen">
-                <Image src="/images/logo_fiesta.png" className="w-36 md:w-52" alt="banner" width={500} height={500} />
-                <div className="">
-                    <a onClick={loginWithKingsChat} className="bg-gradient-to-t from-blue-800 to-[#2F92E5] font-lucky tracking-wider cursor-pointer px-7 py-4 rounded-xl text-white mt-8 border-2 border-white hover:shadow-md hover:shadow-slate-400" target="_blank"> Register with KingsChat</a>
-
-                </div>
-                <div className="flex items-center py-5  gap-3 opacity-60 mx-auto"><div className="h-0.5 w-36 md:w-44 rounded-xl bg-darkbg" /> or <div className="h-0.5 w-36 md:w-44 rounded-xl bg-darkbg" /></div>
-                <div className="flex  flex-col gap-5 w-full px-8 md:px-20 lg:px-36">
-                    <div className="flex flex-col gap-2 w-full">
-                        <label>Email address</label>
-                        <input name="email" className="border-0 outline-0 py-2 focus:border-b-2 border-b focus:border-darkbg border-slate-500 bg-transparent  text-darkbg" required type="email" placeholder="Enter Email address" value={email} onChange={(e) => setEmail(e.target.value)} />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <label>Full name</label>
-                        <input name="name" className="border-0 outline-0 focus:border-b-2 border-b py-2 focus:border-darkbg border-slate-500 bg-transparent  text-darkbg" required type="text" placeholder="Enter your full-name" value={fullName} onChange={(e) => setFullName(e.target.value)} />
-                    </div>
-
-                    <div className="flex flex-col gap-2 w-full">
-                        <label>KingsChat(Optional)</label>
-                        <div className="flex items-center gap-3 py-2 border-b border-slate-500">@<input name="name" type="text" className="border-0 outline-0  bg-transparent text-darkbg w-full" placeholder="Enter your kingsChat username" value={kingsChatHandle} onChange={(e) => setKingsChatHandle(e.target.value)} /></div>
-                    </div>
-                    <button onClick={handleRegister} className="bg-gradient-to-t from-[#F82F00] to-[#F89108] hover:border-white hover:border-2 hover:shadow-lg hover:shadow-slate-400 px-5 py-2 rounded-lg text-white " >Register Now!</button>
-
-                   
-                </div>
-
+          </div>
+          <div className="scripture-badge-love">
+            <div className="scripture-badge-icon love">♥</div>
+            <div className="scripture-badge-text">
+              <span className="scripture-badge-title">Love</span>
+              <span className="scripture-badge-verse">John 3:16</span>
             </div>
+          </div>
+
+          <div className="lbrf-banner-badge">
+            <p className="lbrf-banner-badge-title">LBRF 2025</p>
+            <p className="lbrf-banner-badge-sub">
+              Loveworld Bible Reading Festival
+            </p>
+          </div>
         </div>
-    )
-}
 
-export default Page
+        {/* ── RIGHT: FORM PANEL ── */}
+        <div className="lbrf-panel">
+          <Image
+            src="/images/logo_fiesta.png"
+            alt="LBRF Logo"
+            width={84}
+            height={84}
+            className="lbrf-logo"
+          />
+
+          <h1 className="lbrf-heading">Create your account</h1>
+          <p className="lbrf-sub">Join thousands reading the Word together</p>
+
+          {/* KingsChat CTA */}
+          <div className="lbrf-ctas">
+            <button className="btn-kingschat" onClick={loginWithKingsChat}>
+              <svg
+                className="lbrf-icon"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+              Register with KingsChat
+            </button>
+          </div>
+
+          <div className="lbrf-divider">or register manually</div>
+
+          {/* Manual form */}
+          <form className="lbrf-form" onSubmit={handleRegister}>
+            <div className="lbrf-field">
+              <label className="lbrf-label">Email address</label>
+              <div className="lbrf-input-wrap">
+                <svg
+                  className="lbrf-icon"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="lbrf-field">
+              <label className="lbrf-label">Full name</label>
+              <div className="lbrf-input-wrap">
+                <svg
+                  className="lbrf-icon"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Enter your full name"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="lbrf-field">
+              <label className="lbrf-label">
+                <Image
+                  src="/images/kingschat.webp"
+                  alt="KingsChat"
+                  width={14}
+                  height={14}
+                  style={{ borderRadius: 2 }}
+                />
+                KingsChat username
+                <span
+                  style={{
+                    color: "#bbb",
+                    fontWeight: 300,
+                    textTransform: "none",
+                    letterSpacing: 0,
+                  }}
+                >
+                  (optional)
+                </span>
+              </label>
+              <div className="lbrf-input-wrap">
+                <span className="lbrf-prefix">@</span>
+                <input
+                  type="text"
+                  placeholder="your_username"
+                  value={kingsChatHandle ?? ""}
+                  onChange={(e) => setKingsChatHandle(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <button type="submit" className="btn-register">
+              Register Now →
+            </button>
+          </form>
+
+          <p className="lbrf-footnote">
+            By registering you agree to participate in the Loveworld Bible
+            Reading Festival.
+          </p>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Page;
