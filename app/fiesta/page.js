@@ -480,8 +480,7 @@ const Page = () => {
               <IoMdCloudDownload size={18} />
               {isDownloading ? "Downloading…" : "Download all Publicity Cards"}
             </button> */}
-
-            <div className="fiesta-actions fiesta-mobile-media md:hidden">
+            <div className="fiesta-actions fiesta-mobile-media block lg:hidden">
               {actions.map((a) => (
                 <Link
                   key={a.label}
