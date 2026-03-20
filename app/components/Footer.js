@@ -45,7 +45,7 @@ const Footer = () => {
               <p>Naira Account: </p>
               <p>Bank: Parallex</p>
               <p>Account Number: 1000235516</p>
-              <p>Accout Name: Lovetoons LTD</p>
+              <p>Account Name: Lovetoons LTD</p>
             </div>
 
             {/* <a href="mailto:lovetoons@gmail.com" className="flex items-center gap-1">
