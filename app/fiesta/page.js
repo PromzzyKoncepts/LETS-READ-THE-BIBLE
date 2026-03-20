@@ -481,7 +481,7 @@ const Page = () => {
               {isDownloading ? "Downloading…" : "Download all Publicity Cards"}
             </button> */}
 
-            <div className="fiesta-actions md:hidden">
+            <div className="fiesta-actions fiesta-mobile-media md:hidden">
               {actions.map((a) => (
                 <Link
                   key={a.label}
