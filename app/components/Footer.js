@@ -37,7 +37,7 @@ const Footer = () => {
             {/* <Link href="/t&c">Terms and Conditions</Link> */}
             {/* <Link href="/faqs">FAQS</Link> */}
           </div>
-          <div className="flex flex-col">
+        {/*  <div className="flex flex-col">
             <h3 className="text-2xl text-orange font-bold  pb-3">Partner</h3>
             <p>To partner with us, use the details below:</p>
             <p>Espees Merchant Code: KMP</p>
