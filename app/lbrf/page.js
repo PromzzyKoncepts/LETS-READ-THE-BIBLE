@@ -493,6 +493,23 @@ const Page = () => {
               </svg>
               Upload Bible reading picture
             </Link>
+            <Link href="/avatar" className="btn-bible">
+              <svg
+                className="lbrf-icon"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+              </svg>
+              Create your avatar
+            </Link>
             <button className="btn-kingschat" onClick={loginWithKingsChat}>
               <svg
                 className="lbrf-icon"
