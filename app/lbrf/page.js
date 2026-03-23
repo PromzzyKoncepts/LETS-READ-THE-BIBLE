@@ -21,6 +21,7 @@ const Page = () => {
   const [fullName, setFullName] = useState("");
   const [kingsChatHandle, setKingsChatHandle] = useState(null);
   const [viewAvatar, setViewAvatar] = useState(false);
+  const [gender, setGender] = useState("");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -34,7 +35,13 @@ const Page = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    await registerUser({ email, fullName, kingsChatHandle, type: "lbrf" });
+    await registerUser({
+      email,
+      fullName,
+      kingsChatHandle,
+      type: "lbrf",
+      gender,
+    });
   };
 
   async function registerUser(userData) {
@@ -566,6 +573,36 @@ const Page = () => {
                   value={kingsChatHandle ?? ""}
                   onChange={(e) => setKingsChatHandle(e.target.value)}
                 />
+              </div>
+            </div>
+
+            <div className="lbrf-field">
+              <label className="lbrf-label">Gender</label>
+              <div className="lbrf-input-wrap">
+                <svg
+                  className="lbrf-icon"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                <select
+                  name="gender"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  required
+                >
+                  <option value="">Select gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
               </div>
             </div>
 
