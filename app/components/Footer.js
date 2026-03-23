@@ -37,7 +37,7 @@ const Footer = () => {
             {/* <Link href="/t&c">Terms and Conditions</Link> */}
             {/* <Link href="/faqs">FAQS</Link> */}
           </div>
-        {/*  <div className="flex flex-col">
+          {/* <div className="flex flex-col">
             <h3 className="text-2xl text-orange font-bold  pb-3">Partner</h3>
             <p>To partner with us, use the details below:</p>
             <p>Espees Merchant Code: KMP</p>
@@ -45,20 +45,20 @@ const Footer = () => {
               <p>Naira Account: </p>
               <p>Bank: Parallex</p>
               <p>Account Number: 1000235516</p>
-              <p>Account Name: Lovetoons LTD</p>
+              <p>Accout Name: Lovetoons LTD</p>
             </div>
 
-            {/* <a href="mailto:lovetoons@gmail.com" className="flex items-center gap-1">
+             <a href="mailto:lovetoons@gmail.com" className="flex items-center gap-1">
               <CiMail /> Email Support
             </a> */}
-            {/* <a href="tel:07012897856" className="flex items-center gap-1">
+          {/* <a href="tel:07012897856" className="flex items-center gap-1">
               <CiPhone /> Phone Support
             </a>
             <a href="https://kingschat.online" className="flex items-center gap-1">
               <Image src="/images/kingschat.webp" alt="Kingschat logo icon" width={20} height={20}/>
                KingsChat Support
-            </a> */}
-          </div>
+            </a> 
+          </div>*/}
           <div className="">
             <h3 className="text-xl text-orange pb-3 font-bold ">
               Connect with Us
