@@ -514,6 +514,12 @@ export default function Home() {
 
               <hr className="lb-divider" />
 
+              <div className="lb-race-pill">
+                <Link href="/lbrf" className="view-all-btn">
+                  Register for Lovetoons Bible Reading Fiesta →
+                </Link>
+              </div>
+
               <div className="lb-race-pill">📖 Read A Chapter Everyday</div>
             </div>
 
