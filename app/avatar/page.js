@@ -514,6 +514,8 @@ export default function AvatarUploader() {
                       onChange={(e) => setZoom(Number(e.target.value))}
                     />
                   </div>
+                </div>
+                <div className="av-panel-footer">
                   <button className="av-trash-btn" onClick={clearImage}>
                     <FaTrash size={12} /> Remove
                   </button>
