@@ -511,7 +511,6 @@ export default function Home() {
                   </div>
                 ))}
               </div>
-
               <hr className="lb-divider" />
 
               <Link href="/lbrf" className="view-all-btn">
