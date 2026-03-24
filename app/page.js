@@ -37,7 +37,7 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get("https://lovetoons.org/php/leadersboard.php")
+      .get(" https://lovetoons.org/php/leadersboard.php")
       .then((res) => setLeaderboard({ ...res.data, loading: false }))
       .catch(() => setLeaderboard((prev) => ({ ...prev, loading: false })));
   }, []);
