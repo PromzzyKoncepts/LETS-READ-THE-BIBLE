@@ -13,6 +13,12 @@ const baseUrl = "https://lets-read-the-bible.vercel.app";
 
 export default function Home() {
   const [videos, setVideos] = useState([]);
+  const [leaderboard, setLeaderboard] = useState({
+    male: 0,
+    female: 0,
+    total: 0,
+    loading: true,
+  });
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -29,6 +35,13 @@ export default function Home() {
     fetchVideos();
   }, []);
 
+  useEffect(() => {
+    axios
+      .get("https://lovetoons.org/api/leaderboard.php")
+      .then((res) => setLeaderboard({ ...res.data, loading: false }))
+      .catch(() => setLeaderboard((prev) => ({ ...prev, loading: false })));
+  }, []);
+
   const card = [
     {
       title: "Lovetoons Bible Reading Fiesta",
@@ -38,27 +51,6 @@ export default function Home() {
     {
       title: "Communion service",
       src: "https://lovetoons.org/img/MAC_SIZE_COMMUNION_SERVICE.png",
-    },
-    // {
-    //   title: "Year of Manifestation",
-    //   src: "https://lovetoons.org/img/YEAR_OF_MANIFESTATION_web2.png",
-    // },
-    // { title: "Tick Talk", src: "/images/ticktalk.png" },
-    // { title: "Comics 3", src: "/images/comics2.png" },
-  ];
-
-  const raceItems = [
-    {
-      letter: "R",
-      color: ["#4ade80", "#16a34a"],
-      label: "Read a verse everyday",
-    },
-    { letter: "A", color: ["#60a5fa", "#2563eb"], label: "Apply the Word" },
-    { letter: "C", color: ["#fb923c", "#ea580c"], label: "Confess the Word" },
-    {
-      letter: "E",
-      color: ["#c084fc", "#9333ea"],
-      label: "Excel & Manifest Truth",
     },
   ];
 
@@ -73,16 +65,6 @@ export default function Home() {
       ctaBg: "#e2faff",
       ctaColor: "#0f4a57",
     },
-    // {
-    //   href: "/daily-bible",
-    //   img: "/images/bible-daily.png",
-    //   bg: "#c8620e",
-    //   title: "Daily Bible Reading",
-    //   desc: "Complete the reading of the Bible by following our daily plan.",
-    //   cta: "Watch today's reading",
-    //   ctaBg: "#ffe7d1",
-    //   ctaColor: "#5a3500",
-    // },
     {
       href: "/videos",
       img: "/images/campaign.png",
@@ -99,9 +81,7 @@ export default function Home() {
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap');
-
         * { box-sizing: border-box; }
-
         .home-root {
           font-family: 'DM Sans', sans-serif;
           background: #f5f2ec;
@@ -142,93 +122,170 @@ export default function Home() {
           .hero-verse-col { order: -1; }
         }
 
-        /* RACE card */
-        .race-card {
-          background: rgba(90,16,86,.88);
+        /* ─── LEADERBOARD CARD ─────────────────────── */
+        .leaderboard-card {
+          background: rgba(10, 6, 28, 0.92);
           border-radius: 28px;
-          padding: 2rem 1.75rem 0;
-          box-shadow: 0 30px 70px rgba(0,0,0,.4);
+          padding: 2rem 1.75rem 2rem;
+          box-shadow: 0 30px 70px rgba(0,0,0,.5);
+          border: 1px solid rgba(255,255,255,.08);
           position: relative;
           overflow: hidden;
-          border: 1px solid rgba(255,255,255,.1);
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
         }
-        .race-card-bg {
-          position: absolute; inset: 0;
-          width: 100%; height: 100%;
-          object-fit: cover;
-          border-radius: 28px;
-          opacity: .12;
+        .lb-bg-glow {
+          position: absolute;
+          width: 320px; height: 320px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(168,85,247,.25) 0%, transparent 70%);
+          top: -80px; right: -80px;
+          pointer-events: none;
         }
-        .race-title-row {
-          display: flex; justify-content: center; gap: .35rem;
-          margin-bottom: .75rem;
+        .lb-bg-glow2 {
+          position: absolute;
+          width: 200px; height: 200px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(245,158,11,.15) 0%, transparent 70%);
+          bottom: -40px; left: -40px;
+          pointer-events: none;
+        }
+        .lb-title {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 1.9rem;
+          letter-spacing: 3px;
+          color: #fff;
+          text-align: center;
+          margin: 0;
+          line-height: 1;
+        }
+        .lb-title span { color: #f59e0b; }
+        .lb-subtitle {
+          text-align: center;
+          font-size: .72rem;
+          text-transform: uppercase;
+          letter-spacing: .14em;
+          color: rgba(255,255,255,.4);
+          margin-top: .2rem;
+        }
+        .lb-total-badge {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, #7c3aed, #4f46e5);
+          border-radius: 20px;
+          padding: 1.4rem 1rem;
+          box-shadow: 0 8px 28px rgba(124,58,237,.4);
           position: relative;
+          overflow: hidden;
         }
-        .race-letter {
+        .lb-total-badge::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(255,255,255,.08) 0%, transparent 60%);
+          pointer-events: none;
+        }
+        .lb-total-num {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 4.5rem;
           line-height: 1;
-          filter: drop-shadow(0 6px 0 rgba(0,0,0,.25));
-        }
-        .race-pill {
-          position: relative; display: inline-block; margin-bottom: 1.5rem;
-          text-align: center;
-        }
-        .race-pill-shadow {
-          position: absolute; inset: 0;
-          border-radius: 999px;
-          background: #92400e;
-          transform: translateY(3px);
-        }
-        .race-pill-face {
-          position: relative;
-          border-radius: 999px;
-          background: linear-gradient(to bottom, #f97316, #ea580c);
-          padding: .5rem 2rem;
           color: #fff;
-          font-weight: 700;
-          font-size: .9rem;
-          letter-spacing: .04em;
+          letter-spacing: 2px;
         }
-        .race-row {
-          display: flex; align-items: center;
-          margin-bottom: .9rem;
-          position: relative;
+        .lb-total-label {
+          font-size: .75rem;
+          text-transform: uppercase;
+          letter-spacing: .14em;
+          color: rgba(255,255,255,.6);
+          margin-top: .3rem;
         }
-        .race-row-circle {
-          width: 52px; height: 52px;
-          border-radius: 50%;
-          display: flex; align-items: center; justify-content: center;
+        .lb-bar-section { display: flex; flex-direction: column; gap: 1rem; }
+        .lb-bar-row { display: flex; flex-direction: column; gap: .4rem; }
+        .lb-bar-meta {
+          display: flex; justify-content: space-between; align-items: center;
+        }
+        .lb-bar-name {
+          display: flex; align-items: center; gap: .5rem;
+          font-weight: 600; font-size: .9rem; color: #e5e7eb;
+        }
+        .lb-bar-pct {
+          font-size: .75rem;
+          color: rgba(255,255,255,.4);
+          margin-left: .25rem;
+        }
+        .lb-bar-count {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 2rem;
+          font-size: 1.25rem;
           color: #fff;
-          flex-shrink: 0;
-          z-index: 1;
-          box-shadow: 0 6px 0 rgba(0,0,0,.3);
+          letter-spacing: 1px;
         }
-        .race-row-bar {
-          flex: 1;
-          margin-left: -14px;
+        .lb-bar-track {
+          height: 14px;
+          background: rgba(255,255,255,.07);
           border-radius: 999px;
-          padding: .75rem 1rem .75rem 1.5rem;
-          color: #fff;
+          overflow: hidden;
+          position: relative;
+        }
+        .lb-bar-fill {
+          height: 100%;
+          border-radius: 999px;
+          transition: width 1.4s cubic-bezier(.22,1,.36,1);
+          position: relative;
+        }
+        .lb-bar-fill::after {
+          content: '';
+          position: absolute;
+          top: 0; left: 0; right: 0;
+          height: 50%;
+          background: rgba(255,255,255,.2);
+          border-radius: 999px 999px 0 0;
+        }
+        .lb-divider {
+          border: none;
+          border-top: 1px solid rgba(255,255,255,.07);
+          margin: 0;
+        }
+        .lb-race-pill {
+          display: flex;
+          align-items: center; justify-content: center; gap: .5rem;
+          background: rgba(245,158,11,.1);
+          border: 1px solid rgba(245,158,11,.22);
+          border-radius: 999px;
+          padding: .55rem 1.25rem;
+          font-size: .8rem;
           font-weight: 600;
-          font-size: .88rem;
-          box-shadow: 0 8px 0 rgba(0,0,0,.2);
+          color: #f59e0b;
+          letter-spacing: .08em;
+          text-transform: uppercase;
         }
-        .race-bible-img {
-          width: 80%;
-          margin: 1.5rem auto -3.5rem;
+        .lb-shimmer {
+          background: linear-gradient(90deg,
+            rgba(255,255,255,.04) 0%,
+            rgba(255,255,255,.12) 50%,
+            rgba(255,255,255,.04) 100%);
+          background-size: 200% 100%;
+          animation: shimmer 1.6s ease-in-out infinite;
+          border-radius: 8px;
+          color: transparent !important;
+          min-width: 80px;
+          display: inline-block;
+        }
+        @keyframes shimmer {
+          0%   { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+        .lb-crown {
+          font-size: 1.6rem;
+          line-height: 1;
           display: block;
-          filter: drop-shadow(0 16px 24px rgba(0,0,0,.4));
-          animation: slowBounce 3s ease-in-out infinite;
-        }
-        @keyframes slowBounce {
-          0%,100% { transform: translateY(0); }
-          50%      { transform: translateY(-10px); }
+          text-align: center;
+          margin-bottom: -.25rem;
         }
 
-        /* Memory verse col */
+        /* ─── VERSE CARD ──────────────────────────── */
         .verse-card {
           background: #fff;
           border-radius: 20px;
@@ -246,12 +303,6 @@ export default function Home() {
           letter-spacing: 2px;
           color: #fff;
           margin: 0;
-        }
-
-        /* ─── SWIPER BAND ──────────────────────────── */
-        .swiper-band {
-          background: linear-gradient(to bottom, #ede9ff, #fff);
-          padding: 2rem 0 3rem;
         }
 
         /* ─── CHANNELS SECTION ─────────────────────── */
@@ -347,7 +398,6 @@ export default function Home() {
           color: #fff;
           font-size: .78rem; font-weight: 500;
         }
-
         .view-all-btn {
           display: flex;
           align-items: center; justify-content: center;
@@ -375,76 +425,99 @@ export default function Home() {
             aria-hidden="true"
           />
           <div className="hero-bg-overlay" />
-
           <div className="hero-inner">
-            {/* RACE card */}
-            <div className="race-card">
-              <img
-                src="/images/kidsbible.png"
-                alt=""
-                className="race-card-bg"
-                aria-hidden="true"
-              />
+            {/* ─── LEADERBOARD CARD ─── */}
+            <div className="leaderboard-card">
+              <div className="lb-bg-glow" />
+              <div className="lb-bg-glow2" />
 
-              <div className="race-title-row">
-                {["R", "A", "C", "E"].map((l, i) => {
-                  const colors = [
-                    ["#4ade80", "#16a34a"],
-                    ["#60a5fa", "#2563eb"],
-                    ["#fb923c", "#ea580c"],
-                    ["#c084fc", "#9333ea"],
-                  ];
-                  return (
-                    <span
-                      key={l}
-                      className="race-letter"
-                      style={{
-                        color: colors[i][0],
-                        WebkitTextStroke: `2px ${colors[i][1]}`,
-                      }}
-                    >
-                      {l}
-                    </span>
-                  );
-                })}
+              <div>
+                <span className="lb-crown">🏆</span>
+                <h2 className="lb-title">
+                  LBRF <span>Leaderboard</span>
+                </h2>
+                <p className="lb-subtitle">Lovetoons Bible Reading Fiesta</p>
               </div>
 
-              <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
-                <div className="race-pill">
-                  <div className="race-pill-shadow" />
-                  <div className="race-pill-face">Read A Chapter Everyday</div>
+              {/* Total participants */}
+              <div className="lb-total-badge">
+                <div
+                  className={`lb-total-num${
+                    leaderboard.loading ? " lb-shimmer" : ""
+                  }`}
+                >
+                  {leaderboard.loading
+                    ? "\u00A0\u00A0\u00A0\u00A0\u00A0"
+                    : leaderboard.total.toLocaleString()}
                 </div>
+                <div className="lb-total-label">Total Participants</div>
               </div>
 
-              {raceItems.map(({ letter, color, label }) => (
-                <div className="race-row" key={letter}>
-                  <div
-                    className="race-row-circle"
-                    style={{
-                      background: `linear-gradient(to bottom, ${color[0]}, ${color[1]})`,
-                    }}
-                  >
-                    {letter}
-                  </div>
-                  <div
-                    className="race-row-bar"
-                    style={{
-                      background: `linear-gradient(to bottom, ${color[0]}, ${color[1]})`,
-                    }}
-                  >
-                    {label}
-                  </div>
-                </div>
-              ))}
+              <hr className="lb-divider" />
 
-              <img
-                src="https://letsreadthebible.club/_next/image?url=%2Fimages%2Freadbible.png&w=1080&q=75"
-                alt="Read the Bible"
-                className="race-bible-img"
-              />
+              {/* Gender bars */}
+              <div className="lb-bar-section">
+                {[
+                  {
+                    label: "Boys",
+                    emoji: "👦",
+                    count: leaderboard.male,
+                    color: ["#60a5fa", "#2563eb"],
+                    pct:
+                      leaderboard.total > 0
+                        ? (leaderboard.male / leaderboard.total) * 100
+                        : 0,
+                  },
+                  {
+                    label: "Girls",
+                    emoji: "👧",
+                    count: leaderboard.female,
+                    color: ["#f472b6", "#db2777"],
+                    pct:
+                      leaderboard.total > 0
+                        ? (leaderboard.female / leaderboard.total) * 100
+                        : 0,
+                  },
+                ].map(({ label, emoji, count, color, pct }) => (
+                  <div className="lb-bar-row" key={label}>
+                    <div className="lb-bar-meta">
+                      <span className="lb-bar-name">
+                        {emoji} {label}
+                        {!leaderboard.loading && leaderboard.total > 0 && (
+                          <span className="lb-bar-pct">
+                            ({pct.toFixed(1)}%)
+                          </span>
+                        )}
+                      </span>
+                      <span
+                        className={`lb-bar-count${
+                          leaderboard.loading ? " lb-shimmer" : ""
+                        }`}
+                      >
+                        {leaderboard.loading
+                          ? "\u00A0\u00A0\u00A0\u00A0"
+                          : count.toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="lb-bar-track">
+                      <div
+                        className="lb-bar-fill"
+                        style={{
+                          width: leaderboard.loading ? "0%" : `${pct}%`,
+                          background: `linear-gradient(to right, ${color[0]}, ${color[1]})`,
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <hr className="lb-divider" />
+
+              <div className="lb-race-pill">📖 Read A Chapter Everyday</div>
             </div>
 
-            {/* Memory verse */}
+            {/* ─── Memory Verse ─── */}
             <div className="verse-card">
               <div className="verse-card-header">
                 <h2>Kids Memory Verse</h2>
@@ -465,9 +538,7 @@ export default function Home() {
         <Tab />
 
         {/* ─── SWIPER BAND ─── */}
-        {/* <div className="swiper-band"> */}
         <Swiper carousels={card} />
-        {/* </div> */}
 
         {/* ─── CHANNELS ─── */}
         <section className="channels-section">
@@ -511,7 +582,6 @@ export default function Home() {
           <section className="videos-section">
             <p className="section-eyebrow">Community</p>
             <h2 className="section-title">Featured Readings</h2>
-
             <div className="videos-grid">
               {videos.map((item) => (
                 <Link
@@ -546,7 +616,6 @@ export default function Home() {
                 </Link>
               ))}
             </div>
-
             <Link href="/videos" className="view-all-btn">
               View all Videos →
             </Link>
