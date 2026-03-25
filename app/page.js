@@ -45,7 +45,7 @@ export default function Home() {
   const card = [
     {
       title: "Lovetoons Bible Reading Fiesta",
-      src: "/images/LBRF_SLIDER-1.jpg",
+      src: "https://lovetoons.org/img/LBRF_SLIDER_2.jpg",
       link: "https://letsreadthebible.club/lbrf",
     },
     {
