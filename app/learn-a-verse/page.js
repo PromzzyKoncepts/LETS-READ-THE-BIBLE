@@ -73,7 +73,7 @@ export default function MemoryVersePage() {
     setDownloadState("loading");
     try {
       const res = await fetch(
-        "https://lovetoons.org/api/download-memory-verse.php",
+        "https://lovetoons.org/php/download-memory-verse.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -133,7 +133,7 @@ export default function MemoryVersePage() {
     setLearningState("loading");
     try {
       const res = await fetch(
-        "https://lovetoons.org/api/learning-memory-verse.php",
+        "https://lovetoons.org/php/learning-memory-verse.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
