@@ -526,7 +526,7 @@ export default function Home() {
                 <h2>Kids Memory Verse</h2>
               </div>
               <video
-                src="https://cdn1.kingschat.online/uploads/media/53d9893773312e341fb91400/OCtqSTc1dVZBOXk1Yk14Vk1TYmpqQT09/Leo_14Th_March_Main_1.m4v"
+                src="https://cdn1.kingschat.online/uploads/media/53a9b55073312e7f0c012900/Y2RqaWJLVWlrbTJTMzhRaFJmT2Q3UT09/MATHEW_1_12.mp4"
                 width={400}
                 height={400}
                 style={{ width: "100%", display: "block" }}
