@@ -280,7 +280,7 @@ export default function MemoryVersePage() {
         .mvp-main-image-wrap img {
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          object-fit: contain;
           transition: transform 0.4s ease;
         }
         .mvp-main-image-wrap:hover img { transform: scale(1.03); }
@@ -607,7 +607,8 @@ export default function MemoryVersePage() {
                     style={{ border: "none", padding: 0, background: "none" }}
                   >
                     <div className="mvp-thumb-placeholder">
-                      <span>{img.title.split("–")[1]?.trim() || img.id}</span>
+                      {/* <span>{img.title.split("–")[1]?.trim() || img.id}</span> */}
+                      <img src={img.src} alt={img.alt} />
                     </div>
                   </button>
                 ))}
