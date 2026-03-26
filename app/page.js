@@ -427,7 +427,7 @@ export default function Home() {
           <div className="hero-bg-overlay" />
           <div className="hero-inner">
             {/* ─── LEADERBOARD CARD ─── */}
-            <div className="leaderboard-card">
+            <div className="leaderboard-card hidden">
               <div className="lb-bg-glow" />
               <div className="lb-bg-glow2" />
 
