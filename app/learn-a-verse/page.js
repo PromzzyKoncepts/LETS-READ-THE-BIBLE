@@ -3,8 +3,8 @@ import { useState } from "react";
 const images = [
   {
     id: 1,
-    src: "/imgages/pics/0.png",
-    link: "/imgages/pics/Memory_Verse_sheet_for_LBRF_page_0.png", // optional
+    src: "/images/pics/0.png",
+    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_0.png", // optional
     alt: "Memory Verse 1",
     title: "Rejoice in the Lord Always",
     description:
@@ -12,17 +12,16 @@ const images = [
   },
   {
     id: 2,
-    src: "/imgages/pics/1.png", // thumbnail
-    link: "/imgages/pics/Memory_Verse_sheet_for_LBRF_page_1.png", // download file
+    src: "/images/pics/1.png", // thumbnail
+    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_1.png", // download file
     alt: "Memory Verse 2",
     title: "Shepherd",
-    description:
-      "A vibrant verse card designed to inspire young hearts and minds.",
+    description: "",
   },
   {
     id: 3,
-    src: "/imgages/pics/2.png", // thumbnail
-    link: "/imgages/pics/Memory_Verse_sheet_for_LBRF_page_2.png", // download file
+    src: "/images/pics/2.png", // thumbnail
+    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_2.png", // download file
     alt: "Memory Verse 2",
     title: "Obedience",
     description:
@@ -30,8 +29,8 @@ const images = [
   },
   {
     id: 4,
-    src: "/imgages/pics/3.png", // thumbnail
-    link: "/imgages/pics/Memory_Verse_sheet_for_LBRF_page_3.png", // download file
+    src: "/images/pics/3.png", // thumbnail
+    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_3.png", // download file
     alt: "Memory Verse",
     title: "I can do all things",
     description:
@@ -39,8 +38,8 @@ const images = [
   },
   {
     id: 5,
-    src: "/imgages/pics/4.png", // thumbnail
-    link: "/imgages/pics/Memory_Verse_sheet_for_LBRF_page_4.png", // download file
+    src: "/images/pics/4.png", // thumbnail
+    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_4.png", // download file
     alt: "Memory Verse 2",
     title: "Be Kind",
     description:
@@ -48,8 +47,8 @@ const images = [
   },
   {
     id: 5,
-    src: "/imgages/pics/5.png", // thumbnail
-    link: "/imgages/pics/Memory_Verse_sheet_for_LBRF_page_5.png", // download file
+    src: "/images/pics/5.png", // thumbnail
+    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_5.png", // download file
     alt: "Memory Verse 2",
     title: "Light",
     description:
