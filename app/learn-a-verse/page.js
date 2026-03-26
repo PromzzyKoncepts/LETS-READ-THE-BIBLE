@@ -1,38 +1,59 @@
 "use client";
 import { useState } from "react";
-
 const images = [
   {
     id: 1,
-    src: "/memory-verse-1.jpg",
+    src: "/imgages/pics/0.png",
+    link: "/imgages/pics/Memory_Verse_sheet_for_LBRF_page_0.png", // optional
     alt: "Memory Verse 1",
-    title: "Memory Verse – Week 1",
+    title: "Rejoice in the Lord Always",
     description:
-      "Beautifully illustrated scripture card for kids to memorize and cherish.",
+      "A vibrant verse card designed to inspire young hearts and minds.",
   },
   {
     id: 2,
-    src: "/memory-verse-2.jpg",
+    src: "/imgages/pics/1.png", // thumbnail
+    link: "/imgages/pics/Memory_Verse_sheet_for_LBRF_page_1.png", // download file
     alt: "Memory Verse 2",
-    title: "Memory Verse – Week 2",
+    title: "Shepherd",
     description:
       "A vibrant verse card designed to inspire young hearts and minds.",
   },
   {
     id: 3,
-    src: "/memory-verse-3.jpg",
-    alt: "Memory Verse 3",
-    title: "Memory Verse – Week 3",
+    src: "/imgages/pics/2.png", // thumbnail
+    link: "/imgages/pics/Memory_Verse_sheet_for_LBRF_page_2.png", // download file
+    alt: "Memory Verse 2",
+    title: "Obedience",
     description:
-      "Full-color illustrated card — perfect for printing and sharing.",
+      "A vibrant verse card designed to inspire young hearts and minds.",
   },
   {
     id: 4,
-    src: "/memory-verse-4.jpg",
-    alt: "Memory Verse 4",
-    title: "Memory Verse – Week 4",
+    src: "/imgages/pics/3.png", // thumbnail
+    link: "/imgages/pics/Memory_Verse_sheet_for_LBRF_page_3.png", // download file
+    alt: "Memory Verse",
+    title: "I can do all things",
     description:
-      "Collect all cards and build a beautiful scripture gallery at home.",
+      "A vibrant verse card designed to inspire young hearts and minds.",
+  },
+  {
+    id: 5,
+    src: "/imgages/pics/4.png", // thumbnail
+    link: "/imgages/pics/Memory_Verse_sheet_for_LBRF_page_4.png", // download file
+    alt: "Memory Verse 2",
+    title: "Be Kind",
+    description:
+      "A vibrant verse card designed to inspire young hearts and minds.",
+  },
+  {
+    id: 5,
+    src: "/imgages/pics/5.png", // thumbnail
+    link: "/imgages/pics/Memory_Verse_sheet_for_LBRF_page_5.png", // download file
+    alt: "Memory Verse 2",
+    title: "Light",
+    description:
+      "A vibrant verse card designed to inspire young hearts and minds.",
   },
 ];
 
@@ -63,15 +84,37 @@ export default function MemoryVersePage() {
           }),
         }
       );
+      // if (res.ok) {
+      //   setDownloadState("success");
+      //   // trigger actual download of all images
+      //   images.forEach((img) => {
+      //     const a = document.createElement("a");
+      //     a.href = img.src;
+      //     a.download = img.alt;
+      //     a.click();
+      //   });
+      //   setTimeout(() => {
+      //     setShowDownloadModal(false);
+      //     setDownloadState("idle");
+      //     setDownloadForm({ name: "", email: "" });
+      //   }, 2000);
+      // } else {
+      //   setDownloadState("error");
+      // }
+
       if (res.ok) {
         setDownloadState("success");
+
         // trigger actual download of all images
         images.forEach((img) => {
           const a = document.createElement("a");
-          a.href = img.src;
+          a.href = img.link || img.src; // use download link, fallback to src
           a.download = img.alt;
+          document.body.appendChild(a);
           a.click();
+          document.body.removeChild(a);
         });
+
         setTimeout(() => {
           setShowDownloadModal(false);
           setDownloadState("idle");
