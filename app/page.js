@@ -428,7 +428,7 @@ export default function Home() {
           <div className="hero-inner">
             <div className="leaderboard">
               <Image
-                src={"https://lovetoons.org/img/samaritan.png"}
+                src={"images/KINGS.png"}
                 alt={"lovetoons bible reading fiesta"}
                 width={600}
                 height={450}
@@ -536,7 +536,7 @@ export default function Home() {
                 <h2>Kids Memory Verse</h2>
               </div>
               <video
-                src="https://cdn1.kingschat.online/uploads/media/53a9b55073312e7f0c012900/Y2RqaWJLVWlrbTJTMzhRaFJmT2Q3UT09/MATHEW_1_12.mp4"
+                src="https://cdn1.kingschat.online/uploads/media/65b10a8b083c1dc039524de9/L3ZkUUl2bUVjbklTdFRlSmQzdUpCdz09/managed7565805361002681676.temp"
                 width={400}
                 height={400}
                 style={{ width: "100%", display: "block" }}
