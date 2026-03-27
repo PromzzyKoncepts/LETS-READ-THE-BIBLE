@@ -426,6 +426,16 @@ export default function Home() {
           />
           <div className="hero-bg-overlay" />
           <div className="hero-inner">
+            <div className="leaderboard">
+              <Image
+                src={"https://lovetoons.org/img/samaritan.png"}
+                alt={"lovetoons bible reading fiesta"}
+                width={600}
+                height={450}
+                className="channel-card-im"
+              />
+            </div>
+
             {/* ─── LEADERBOARD CARD ─── */}
             {/* <div className="leaderboard-card hidden">
               <div className="lb-bg-glow" />
