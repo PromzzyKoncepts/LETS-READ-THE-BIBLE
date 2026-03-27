@@ -427,7 +427,7 @@ export default function Home() {
           <div className="hero-bg-overlay" />
           <div className="hero-inner">
             {/* ─── LEADERBOARD CARD ─── */}
-            <div className="leaderboard-card hidden">
+            {/* <div className="leaderboard-card hidden">
               <div className="lb-bg-glow" />
               <div className="lb-bg-glow2" />
 
@@ -437,10 +437,10 @@ export default function Home() {
                   LBRF <span>Leaderboard</span>
                 </h2>
                 <p className="lb-subtitle">Lovetoons Bible Reading Fiesta</p>
-              </div>
+              </div> */}
 
-              {/* Total participants */}
-              <div className="lb-total-badge">
+            {/* Total participants */}
+            {/* <div className="lb-total-badge">
                 <div
                   className={`lb-total-num${
                     leaderboard.loading ? " lb-shimmer" : ""
@@ -453,10 +453,10 @@ export default function Home() {
                 <div className="lb-total-label">Total Participants</div>
               </div>
 
-              <hr className="lb-divider" />
+              <hr className="lb-divider" /> */}
 
-              {/* Gender bars */}
-              <div className="lb-bar-section">
+            {/* Gender bars */}
+            {/* <div className="lb-bar-section">
                 {[
                   {
                     label: "Boys",
@@ -517,8 +517,8 @@ export default function Home() {
                 Register for Lovetoons Bible Reading Fiesta →
               </Link>
 
-              <div className="lb-race-pill">📖 Read A Chapter Everyday</div>
-            </div>
+              <div className="lb-race-pill">📖 Read A Chapter Everyday</div> */}
+            {/* </div> */}
 
             {/* ─── Memory Verse ─── */}
             <div className="verse-card">

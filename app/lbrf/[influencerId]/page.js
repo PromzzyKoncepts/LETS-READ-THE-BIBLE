@@ -400,36 +400,6 @@ const Page = () => {
 
           <div className="lbrf-divider">or register manually</div>
 
-          <div className="lbrf-field">
-            <label className="lbrf-label">Gender</label>
-            <div className="lbrf-input-wrap">
-              <svg
-                className="lbrf-icon"
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-              <select
-                name="gender"
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
-                required
-              >
-                <option value="">Select gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
-            </div>
-          </div>
-
           {/* Manual form */}
           <form className="lbrf-form" onSubmit={handleRegister}>
             <div className="lbrf-field">
@@ -485,6 +455,36 @@ const Page = () => {
                   onChange={(e) => setFullName(e.target.value)}
                   required
                 />
+              </div>
+            </div>
+
+            <div className="lbrf-field">
+              <label className="lbrf-label">Gender</label>
+              <div className="lbrf-input-wrap">
+                <svg
+                  className="lbrf-icon"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                <select
+                  name="gender"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  required
+                >
+                  <option value="">Select gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
               </div>
             </div>
 
