@@ -4,7 +4,7 @@ const images = [
   {
     id: 1,
     src: "/images/pics/0.png",
-    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_0.png", // optional
+    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_0.jpg", // optional
     alt: "Memory Verse 1",
     title: "Rejoice in the Lord Always",
     description:
@@ -13,7 +13,7 @@ const images = [
   {
     id: 2,
     src: "/images/pics/1.png", // thumbnail
-    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_1.png", // download file
+    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_1.jpg", // download file
     alt: "Memory Verse 2",
     title: "Shepherd",
     description: "",
@@ -21,7 +21,7 @@ const images = [
   {
     id: 3,
     src: "/images/pics/2.png", // thumbnail
-    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_2.png", // download file
+    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_2.jpg", // download file
     alt: "Memory Verse 2",
     title: "Obedience",
     description:
@@ -30,7 +30,7 @@ const images = [
   {
     id: 4,
     src: "/images/pics/3.png", // thumbnail
-    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_3.png", // download file
+    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_3.jpg", // download file
     alt: "Memory Verse",
     title: "I can do all things",
     description:
@@ -39,7 +39,7 @@ const images = [
   {
     id: 5,
     src: "/images/pics/4.png", // thumbnail
-    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_4.png", // download file
+    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_4.jpg", // download file
     alt: "Memory Verse 2",
     title: "Be Kind",
     description:
@@ -48,7 +48,7 @@ const images = [
   {
     id: 5,
     src: "/images/pics/5.png", // thumbnail
-    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_5.png", // download file
+    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_5.jpg", // download file
     alt: "Memory Verse 2",
     title: "Light",
     description:
@@ -105,13 +105,23 @@ export default function MemoryVersePage() {
         setDownloadState("success");
 
         // trigger actual download of all images
-        images.forEach((img) => {
-          const a = document.createElement("a");
-          a.href = img.link || img.src; // use download link, fallback to src
-          a.download = img.alt;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
+        // images.forEach((img) => {
+        //   const a = document.createElement("a");
+        //   a.href = img.link || img.src; // use download link, fallback to src
+        //   a.download = img.alt;
+        //   document.body.appendChild(a);
+        //   a.click();
+        //   document.body.removeChild(a);
+        // });
+        images.forEach((img, index) => {
+          setTimeout(() => {
+            const a = document.createElement("a");
+            a.href = img.link || img.src;
+            a.download = img.alt || `image-${index + 1}`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          }, index * 500); // 500ms delay between downloads
         });
 
         setTimeout(() => {
