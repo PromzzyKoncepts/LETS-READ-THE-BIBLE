@@ -787,7 +787,6 @@ export default function Home() {
                 <Link
                   href="https://letsreadthebible.club/learn-a-verse"
                   className="mv-btn-primary"
-                  target="_blank"
                   rel="noopener noreferrer"
                 >
                   <span className="mv-btn-icon">🚀</span>
