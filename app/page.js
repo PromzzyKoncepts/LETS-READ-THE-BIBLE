@@ -756,7 +756,7 @@ export default function Home() {
             <div className="mv-cover-wrap">
               <div className="mv-cover-glow" />
               <Image
-                src="/images/learn-a-memory-verse-cover.jpg"
+                src="/images/pics/Cover_Page.jpg"
                 alt="Learn a Memory Verse"
                 width={420}
                 height={560}
@@ -793,7 +793,7 @@ export default function Home() {
                   <span className="mv-btn-icon">🚀</span>
                   Start Learning
                 </Link>
-                <a
+                {/* <a
                   href="https://letsreadthebible.club/learn-a-verse"
                   download
                   className="mv-btn-secondary"
@@ -802,7 +802,7 @@ export default function Home() {
                 >
                   <span className="mv-btn-icon">⬇️</span>
                   Download
-                </a>
+                </a> */}
               </div>
             </div>
           </div>
