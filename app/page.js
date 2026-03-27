@@ -413,6 +413,202 @@ export default function Home() {
           box-shadow: 0 4px 18px rgba(0,0,0,.2);
         }
         .view-all-btn:hover { background: #1e1e3a; transform: translateY(-2px); }
+
+        /* ─── LEARN A MEMORY VERSE SECTION ─────────── */
+        .memory-verse-section {
+          position: relative;
+          background: linear-gradient(135deg, #0a3d8f 0%, #1565c0 40%, #0d47a1 70%, #051e4f 100%);
+          padding: 5rem 1.25rem;
+          overflow: hidden;
+        }
+        .memory-verse-section::before {
+          content: '';
+          position: absolute; inset: 0;
+          background-image:
+            radial-gradient(circle at 15% 50%, rgba(255, 215, 0, 0.12) 0%, transparent 50%),
+            radial-gradient(circle at 85% 20%, rgba(0, 200, 255, 0.1) 0%, transparent 45%),
+            radial-gradient(circle at 60% 80%, rgba(255, 100, 50, 0.08) 0%, transparent 40%);
+          pointer-events: none;
+          z-index: 0;
+        }
+        /* floating star decorations */
+        .memory-verse-section::after {
+          content: '✦ ✦ ✦ ✦ ✦';
+          position: absolute;
+          top: 1.5rem; left: 50%; transform: translateX(-50%);
+          font-size: .65rem;
+          letter-spacing: 1.5rem;
+          color: rgba(255, 215, 0, 0.35);
+          pointer-events: none;
+          z-index: 0;
+        }
+        .mv-inner {
+          position: relative; z-index: 1;
+          max-width: 1100px;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 3.5rem;
+          align-items: center;
+        }
+        @media (max-width: 768px) {
+          .mv-inner {
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+            text-align: center;
+          }
+          .mv-actions { justify-content: center; }
+          .mv-badge-row { justify-content: center; }
+        }
+
+        /* Cover image */
+        .mv-cover-wrap {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .mv-cover-glow {
+          position: absolute;
+          width: 85%; height: 85%;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(255,215,0,.28) 0%, transparent 70%);
+          filter: blur(32px);
+          pointer-events: none;
+        }
+        .mv-cover-img {
+          position: relative;
+          width: 100%;
+          max-width: 420px;
+          border-radius: 24px;
+          box-shadow:
+            0 30px 80px rgba(0,0,0,.5),
+            0 0 0 3px rgba(255,215,0,.25),
+            0 0 0 8px rgba(255,215,0,.06);
+          display: block;
+          transition: transform .3s ease, box-shadow .3s ease;
+        }
+        .mv-cover-img:hover {
+          transform: translateY(-6px) scale(1.01);
+          box-shadow:
+            0 40px 100px rgba(0,0,0,.55),
+            0 0 0 3px rgba(255,215,0,.4),
+            0 0 0 10px rgba(255,215,0,.1);
+        }
+        .mv-cover-badge {
+          position: absolute;
+          top: -12px; right: -10px;
+          background: linear-gradient(135deg, #f59e0b, #ef4444);
+          color: #fff;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: .85rem;
+          letter-spacing: 1.5px;
+          padding: .4rem .85rem;
+          border-radius: 999px;
+          box-shadow: 0 4px 14px rgba(239,68,68,.5);
+          white-space: nowrap;
+        }
+
+        /* Text side */
+        .mv-text-col { display: flex; flex-direction: column; gap: 1.5rem; }
+        .mv-eyebrow {
+          display: inline-flex;
+          align-items: center;
+          gap: .5rem;
+          background: rgba(255,215,0,.12);
+          border: 1px solid rgba(255,215,0,.25);
+          border-radius: 999px;
+          padding: .35rem 1rem;
+          font-size: .72rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: .15em;
+          color: #fcd34d;
+          width: fit-content;
+        }
+        .mv-heading {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(2.6rem, 5vw, 4rem);
+          line-height: .95;
+          color: #fff;
+          margin: 0;
+          letter-spacing: 2px;
+        }
+        .mv-heading em {
+          font-style: normal;
+          color: #fcd34d;
+          display: block;
+        }
+        .mv-desc {
+          font-size: 1rem;
+          line-height: 1.7;
+          color: rgba(255,255,255,.75);
+          margin: 0;
+          max-width: 440px;
+        }
+        .mv-badge-row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: .6rem;
+        }
+        .mv-pill {
+          display: flex;
+          align-items: center;
+          gap: .35rem;
+          background: rgba(255,255,255,.08);
+          border: 1px solid rgba(255,255,255,.12);
+          border-radius: 999px;
+          padding: .35rem .9rem;
+          font-size: .78rem;
+          font-weight: 500;
+          color: rgba(255,255,255,.8);
+        }
+        .mv-actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1rem;
+          margin-top: .25rem;
+        }
+        .mv-btn-primary {
+          display: inline-flex;
+          align-items: center;
+          gap: .5rem;
+          background: linear-gradient(135deg, #f59e0b, #f97316);
+          color: #fff;
+          padding: .85rem 2rem;
+          border-radius: 999px;
+          font-weight: 700;
+          font-size: .95rem;
+          text-decoration: none;
+          letter-spacing: .03em;
+          box-shadow: 0 8px 28px rgba(249,115,22,.45);
+          transition: transform .18s, box-shadow .18s;
+        }
+        .mv-btn-primary:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 14px 36px rgba(249,115,22,.55);
+        }
+        .mv-btn-secondary {
+          display: inline-flex;
+          align-items: center;
+          gap: .5rem;
+          background: rgba(255,255,255,.1);
+          border: 1.5px solid rgba(255,255,255,.25);
+          color: #fff;
+          padding: .85rem 1.75rem;
+          border-radius: 999px;
+          font-weight: 600;
+          font-size: .95rem;
+          text-decoration: none;
+          letter-spacing: .03em;
+          backdrop-filter: blur(8px);
+          transition: background .18s, transform .18s;
+        }
+        .mv-btn-secondary:hover {
+          background: rgba(255,255,255,.18);
+          transform: translateY(-3px);
+        }
+        .mv-btn-icon { font-size: 1.1em; }
       `}</style>
 
       <div className="home-root">
@@ -552,6 +748,65 @@ export default function Home() {
 
         {/* ─── SWIPER BAND ─── */}
         <Swiper carousels={card} />
+
+        {/* ─── LEARN A MEMORY VERSE FEATURE SECTION ─── */}
+        <section className="memory-verse-section">
+          <div className="mv-inner">
+            {/* Cover image */}
+            <div className="mv-cover-wrap">
+              <div className="mv-cover-glow" />
+              <Image
+                src="/images/learn-a-memory-verse-cover.jpg"
+                alt="Learn a Memory Verse"
+                width={420}
+                height={560}
+                className="mv-cover-img"
+              />
+              <span className="mv-cover-badge">✨ NEW FEATURE</span>
+            </div>
+
+            {/* Text content */}
+            <div className="mv-text-col">
+              <span className="mv-eyebrow">📖 Featured</span>
+              <h2 className="mv-heading">
+                Learn A<em>Memory Verse</em>
+              </h2>
+              <p className="mv-desc">
+                Learn and keep God’s Word in your hearts! Our interactive memory
+                verse feature makes scripture memorization fun, engaging, and
+                rewarding for children of all ages.
+              </p>
+
+              <div className="mv-badge-row">
+                <span className="mv-pill">🎯 Interactive</span>
+                <span className="mv-pill">🧒 Kids Friendly</span>
+                <span className="mv-pill">📱 Mobile Ready</span>
+              </div>
+
+              <div className="mv-actions">
+                <Link
+                  href="https://letsreadthebible.club/learn-a-verse"
+                  className="mv-btn-primary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="mv-btn-icon">🚀</span>
+                  Start Learning
+                </Link>
+                <a
+                  href="https://letsreadthebible.club/learn-a-verse"
+                  download
+                  className="mv-btn-secondary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="mv-btn-icon">⬇️</span>
+                  Download
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* ─── CHANNELS ─── */}
         <section className="channels-section">
