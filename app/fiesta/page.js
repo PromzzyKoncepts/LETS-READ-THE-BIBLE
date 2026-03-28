@@ -560,7 +560,7 @@ const Page = () => {
                   height={300}
                   style={{ width: "100%", height: "auto", display: "block" }}
                 />
-                <p>CLick to download a free Memory Verse card </p>
+                <p>CLick to download a free Memory Verse card.</p>
               </Link>
             </div>
           </div>
