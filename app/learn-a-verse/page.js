@@ -1,10 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { supabaseServer } from "../../lib/supabase-server";
+
 const images = [
   {
     id: 1,
     src: "/images/pics/0.png",
-    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_0.jpg", // optional
+    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_0.jpg",
     alt: "Memory Verse 1",
     title: "Rejoice in the Lord Always",
     description:
@@ -12,16 +14,16 @@ const images = [
   },
   {
     id: 2,
-    src: "/images/pics/1.png", // thumbnail
-    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_1.jpg", // download file
+    src: "/images/pics/1.png",
+    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_1.jpg",
     alt: "Memory Verse 2",
     title: "Shepherd",
     description: "",
   },
   {
     id: 3,
-    src: "/images/pics/2.png", // thumbnail
-    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_2.jpg", // download file
+    src: "/images/pics/2.png",
+    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_2.jpg",
     alt: "Memory Verse 2",
     title: "Obedience",
     description:
@@ -29,8 +31,8 @@ const images = [
   },
   {
     id: 4,
-    src: "/images/pics/3.png", // thumbnail
-    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_3.jpg", // download file
+    src: "/images/pics/3.png",
+    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_3.jpg",
     alt: "Memory Verse",
     title: "I can do all things",
     description:
@@ -38,23 +40,26 @@ const images = [
   },
   {
     id: 5,
-    src: "/images/pics/4.png", // thumbnail
-    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_4.jpg", // download file
+    src: "/images/pics/4.png",
+    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_4.jpg",
     alt: "Memory Verse 2",
     title: "Be Kind",
     description:
       "A vibrant verse card designed to inspire young hearts and minds.",
   },
   {
-    id: 5,
-    src: "/images/pics/5.png", // thumbnail
-    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_5.jpg", // download file
+    id: 6,
+    src: "/images/pics/5.png",
+    link: "/images/pics/Memory_Verse_sheet_for_LBRF_page_5.jpg",
     alt: "Memory Verse 2",
     title: "Light",
     description:
       "A vibrant verse card designed to inspire young hearts and minds.",
   },
 ];
+
+const DEFAULT_THUMBNAIL =
+  "https://lovetoons.org/img/kids-memory-verse-main.png";
 
 export default function MemoryVersePage() {
   const [activeImage, setActiveImage] = useState(images[0]);
@@ -64,9 +69,42 @@ export default function MemoryVersePage() {
     email: "",
     learning: "",
   });
-  const [downloadState, setDownloadState] = useState("idle"); // idle | loading | success | error
+  const [downloadState, setDownloadState] = useState("idle");
   const [learningState, setLearningState] = useState("idle");
   const [showDownloadModal, setShowDownloadModal] = useState(false);
+
+  // ── Supabase video state
+  const [videos, setVideos] = useState([]);
+  const [videosLoading, setVideosLoading] = useState(true);
+  const [activeVideo, setActiveVideo] = useState(null);
+  const videoRef = useRef(null);
+
+  // ── Fetch videos from Supabase
+  useEffect(() => {
+    async function fetchVideos() {
+      try {
+        const { data, error } = await supabaseServer
+          .from("kidsmemoryverse")
+          .select("video_link, thumbnail");
+
+        if (error) throw error;
+
+        const normalized = (data || []).map((row, i) => ({
+          id: i,
+          video_link: row.video_link,
+          thumbnail: row.thumbnail || DEFAULT_THUMBNAIL,
+        }));
+
+        setVideos(normalized);
+        if (normalized.length > 0) setActiveVideo(normalized[0]);
+      } catch (err) {
+        console.error("Failed to fetch memory verse videos:", err.message);
+      } finally {
+        setVideosLoading(false);
+      }
+    }
+    fetchVideos();
+  }, []);
 
   const handleDownloadSubmit = async () => {
     if (!downloadForm.name || !downloadForm.email) return;
@@ -83,36 +121,10 @@ export default function MemoryVersePage() {
           }),
         }
       );
-      // if (res.ok) {
-      //   setDownloadState("success");
-      //   // trigger actual download of all images
-      //   images.forEach((img) => {
-      //     const a = document.createElement("a");
-      //     a.href = img.src;
-      //     a.download = img.alt;
-      //     a.click();
-      //   });
-      //   setTimeout(() => {
-      //     setShowDownloadModal(false);
-      //     setDownloadState("idle");
-      //     setDownloadForm({ name: "", email: "" });
-      //   }, 2000);
-      // } else {
-      //   setDownloadState("error");
-      // }
 
       if (res.ok) {
         setDownloadState("success");
 
-        // trigger actual download of all images
-        // images.forEach((img) => {
-        //   const a = document.createElement("a");
-        //   a.href = img.link || img.src; // use download link, fallback to src
-        //   a.download = img.alt;
-        //   document.body.appendChild(a);
-        //   a.click();
-        //   document.body.removeChild(a);
-        // });
         images.forEach((img, index) => {
           setTimeout(() => {
             const a = document.createElement("a");
@@ -121,7 +133,7 @@ export default function MemoryVersePage() {
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-          }, index * 500); // 500ms delay between downloads
+          }, index * 500);
         });
 
         setTimeout(() => {
@@ -259,6 +271,160 @@ export default function MemoryVersePage() {
           line-height: 1.6;
         }
 
+        /* ── VIDEO SECTION ── */
+        .mvp-video-section {
+          background: linear-gradient(180deg, #0d2b5e 0%, #1B4F8A 100%);
+          padding: 4rem 1.5rem;
+          position: relative;
+          overflow: hidden;
+        }
+        .mvp-video-section::before {
+          content: '';
+          position: absolute; inset: 0;
+          background:
+            radial-gradient(ellipse at 10% 50%, rgba(255,217,61,0.08) 0%, transparent 55%),
+            radial-gradient(ellipse at 90% 30%, rgba(255,107,53,0.07) 0%, transparent 50%);
+          pointer-events: none;
+        }
+        .mvp-video-inner {
+          max-width: 1100px;
+          margin: 0 auto;
+          position: relative; z-index: 1;
+        }
+        .mvp-section-eyebrow {
+          font-family: 'Sniglet', cursive;
+          font-size: 0.75rem;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--sun);
+          text-align: center;
+          margin: 0 0 0.4rem;
+        }
+        .mvp-section-title {
+          font-family: 'Luckiest Guy', cursive;
+          font-size: clamp(1.8rem, 4vw, 2.8rem);
+          color: #fff;
+          text-align: center;
+          letter-spacing: 0.02em;
+          margin: 0 0 2.5rem;
+        }
+        .mvp-section-title span { color: var(--sun); }
+
+        /* Active video player */
+        .mvp-video-player-wrap {
+          background: rgba(0,0,0,0.5);
+          border-radius: 22px;
+          overflow: hidden;
+          border: 2px solid rgba(255,215,0,0.2);
+          box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+          margin-bottom: 1.75rem;
+          position: relative;
+          aspect-ratio: 16/9;
+        }
+        .mvp-video-player-wrap video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .mvp-video-player-empty {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 0.75rem;
+          color: rgba(255,255,255,0.5);
+        }
+        .mvp-video-player-empty span:first-child { font-size: 3rem; }
+        .mvp-video-player-empty span:last-child {
+          font-family: 'Sniglet', cursive;
+          font-size: 0.95rem;
+        }
+
+        /* Thumbnail strip */
+        .mvp-video-thumbs {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+          gap: 0.85rem;
+        }
+        @media (max-width: 500px) {
+          .mvp-video-thumbs { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+        }
+        .mvp-video-thumb-btn {
+          background: none;
+          border: 3px solid transparent;
+          border-radius: 14px;
+          overflow: hidden;
+          cursor: pointer;
+          padding: 0;
+          transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+          aspect-ratio: 9/12;
+          position: relative;
+          display: block;
+          width: 100%;
+        }
+        .mvp-video-thumb-btn.active {
+          border-color: var(--sun);
+          transform: scale(1.05);
+          box-shadow: 0 6px 24px rgba(255,215,0,0.3);
+        }
+        .mvp-video-thumb-btn:hover:not(.active) {
+          border-color: rgba(255,255,255,0.4);
+          transform: scale(1.03);
+        }
+        .mvp-video-thumb-btn img {
+          width: 100%; height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .mvp-video-thumb-play {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(0,0,0,0.3);
+          transition: background 0.2s;
+        }
+        .mvp-video-thumb-btn:hover .mvp-video-thumb-play,
+        .mvp-video-thumb-btn.active .mvp-video-thumb-play {
+          background: rgba(0,0,0,0.15);
+        }
+        .mvp-play-icon {
+          width: 36px; height: 36px;
+          background: rgba(255,255,255,0.92);
+          border-radius: 50%;
+          display: flex; align-items: center; justify-content: center;
+          font-size: 0.9rem;
+          box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+          transition: transform 0.15s;
+        }
+        .mvp-video-thumb-btn:hover .mvp-play-icon { transform: scale(1.12); }
+
+        /* Skeleton loader */
+        .mvp-skeleton {
+          background: linear-gradient(90deg,
+            rgba(255,255,255,0.05) 0%,
+            rgba(255,255,255,0.12) 50%,
+            rgba(255,255,255,0.05) 100%);
+          background-size: 200% 100%;
+          animation: skelshimmer 1.5s ease-in-out infinite;
+          border-radius: 14px;
+        }
+        @keyframes skelshimmer {
+          0%   { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+        .mvp-no-videos {
+          text-align: center;
+          color: rgba(255,255,255,0.5);
+          font-family: 'Sniglet', cursive;
+          font-size: 1rem;
+          padding: 2rem 0;
+        }
+
         /* ── MAIN CONTENT ── */
         .mvp-content {
           max-width: 1200px;
@@ -273,8 +439,6 @@ export default function MemoryVersePage() {
           .mvp-content { grid-template-columns: 1fr; gap: 2rem; }
         }
 
-        /* ── LEFT COLUMN ── */
-        .mvp-left {}
         .mvp-card {
           background: var(--card-bg);
           border-radius: var(--radius);
@@ -306,10 +470,7 @@ export default function MemoryVersePage() {
           border-radius: 999px;
           backdrop-filter: blur(4px);
         }
-
-        .mvp-image-info {
-          padding: 1.25rem 1.5rem 1rem;
-        }
+        .mvp-image-info { padding: 1.25rem 1.5rem 1rem; }
         .mvp-image-info h3 {
           font-family: 'Sniglet', cursive;
           font-size: 1.1rem;
@@ -322,8 +483,6 @@ export default function MemoryVersePage() {
           margin: 0;
           line-height: 1.5;
         }
-
-        /* thumbnails */
         .mvp-thumbs {
           display: flex;
           gap: 0.6rem;
@@ -331,8 +490,7 @@ export default function MemoryVersePage() {
           flex-wrap: wrap;
         }
         .mvp-thumb {
-          width: 62px;
-          height: 62px;
+          width: 62px; height: 62px;
           border-radius: 10px;
           overflow: hidden;
           cursor: pointer;
@@ -343,26 +501,18 @@ export default function MemoryVersePage() {
         .mvp-thumb.active { border-color: var(--warm); transform: scale(1.08); }
         .mvp-thumb:hover:not(.active) { border-color: var(--sky-light); }
         .mvp-thumb img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* thumb placeholder (no image) */
         .mvp-thumb-placeholder {
-          width: 100%;
-          height: 100%;
+          width: 100%; height: 100%;
           background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          display: flex; align-items: center; justify-content: center;
           font-family: 'Sniglet', cursive;
           font-size: 0.7rem;
           color: var(--sky);
           text-align: center;
         }
-
-        /* download button */
         .mvp-download-btn {
           display: flex;
-          align-items: center;
-          justify-content: center;
+          align-items: center; justify-content: center;
           gap: 0.5rem;
           margin: 0 1.5rem 1.5rem;
           background: linear-gradient(135deg, var(--warm) 0%, #e8501f 100%);
@@ -377,14 +527,9 @@ export default function MemoryVersePage() {
           box-shadow: 0 4px 18px rgba(255,107,53,0.35);
           transition: transform 0.15s, box-shadow 0.15s;
         }
-        .mvp-download-btn:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 28px rgba(255,107,53,0.45);
-        }
+        .mvp-download-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,107,53,0.45); }
         .mvp-download-btn:active { transform: translateY(0); }
 
-        /* ── RIGHT COLUMN ── */
-        .mvp-right {}
         .mvp-form-card {
           background: var(--card-bg);
           border-radius: var(--radius);
@@ -404,12 +549,9 @@ export default function MemoryVersePage() {
           margin: 0 0 1.5rem;
           line-height: 1.5;
         }
-
         .mvp-field {
-          display: flex;
-          flex-direction: column;
-          gap: 0.4rem;
-          margin-bottom: 1.1rem;
+          display: flex; flex-direction: column;
+          gap: 0.4rem; margin-bottom: 1.1rem;
         }
         .mvp-field label {
           font-family: 'Sniglet', cursive;
@@ -436,7 +578,6 @@ export default function MemoryVersePage() {
           box-shadow: 0 0 0 3px rgba(42,110,197,0.12);
         }
         .mvp-field textarea { min-height: 130px; }
-
         .mvp-submit-btn {
           width: 100%;
           background: linear-gradient(135deg, var(--sky) 0%, var(--sky-light) 100%);
@@ -450,14 +591,11 @@ export default function MemoryVersePage() {
           margin-top: 0.5rem;
           box-shadow: 0 4px 18px rgba(27,79,138,0.25);
           transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          display: flex; align-items: center; justify-content: center;
           gap: 0.5rem;
         }
         .mvp-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(27,79,138,0.35); }
         .mvp-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
         .mvp-status {
           text-align: center;
           font-family: 'Sniglet', cursive;
@@ -471,13 +609,10 @@ export default function MemoryVersePage() {
 
         /* ── MODAL ── */
         .mvp-modal-overlay {
-          position: fixed;
-          inset: 0;
+          position: fixed; inset: 0;
           background: rgba(10,20,50,0.65);
           backdrop-filter: blur(6px);
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          display: flex; align-items: center; justify-content: center;
           z-index: 9999;
           padding: 1.5rem;
           animation: fadeIn 0.2s ease;
@@ -493,11 +628,7 @@ export default function MemoryVersePage() {
           animation: slideUp 0.25s ease;
         }
         @keyframes slideUp { from { transform: translateY(24px); opacity:0 } to { transform:none; opacity:1 } }
-        .mvp-modal-icon {
-          font-size: 2.5rem;
-          text-align: center;
-          margin-bottom: 0.75rem;
-        }
+        .mvp-modal-icon { font-size: 2.5rem; text-align: center; margin-bottom: 0.75rem; }
         .mvp-modal h2 {
           font-family: 'Luckiest Guy', cursive;
           color: var(--sky);
@@ -512,11 +643,7 @@ export default function MemoryVersePage() {
           margin: 0 0 1.5rem;
           line-height: 1.5;
         }
-        .mvp-modal-actions {
-          display: flex;
-          gap: 0.75rem;
-          flex-direction: column;
-        }
+        .mvp-modal-actions { display: flex; gap: 0.75rem; flex-direction: column; }
         .mvp-modal-cancel {
           background: none;
           border: 2px solid #d1d5db;
@@ -529,7 +656,6 @@ export default function MemoryVersePage() {
         }
         .mvp-modal-cancel:hover { background: #f3f4f6; }
 
-        /* spinner */
         .spinner {
           width: 18px; height: 18px;
           border: 2.5px solid rgba(255,255,255,0.4);
@@ -540,14 +666,11 @@ export default function MemoryVersePage() {
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* placeholder image fallback */
         .mvp-img-fallback {
           width: 100%; height: 100%;
           background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
+          display: flex; flex-direction: column;
+          align-items: center; justify-content: center;
           gap: 0.5rem;
           color: var(--sky);
         }
@@ -584,12 +707,87 @@ export default function MemoryVersePage() {
           </div>
         </section>
 
-        {/* MAIN CONTENT */}
+        {/* ── KIDS MEMORY VERSE VIDEOS ── */}
+        <section className="mvp-video-section">
+          <div className="mvp-video-inner">
+            <p className="mvp-section-eyebrow">🎬 Watch & Learn</p>
+            <h2 className="mvp-section-title">
+              Kids <span>Memory Verse</span> Videos
+            </h2>
+
+            {/* Active video player */}
+            <div className="mvp-video-player-wrap">
+              {videosLoading ? (
+                <div
+                  className="mvp-skeleton"
+                  style={{ width: "100%", height: "100%" }}
+                />
+              ) : activeVideo ? (
+                <video
+                  ref={videoRef}
+                  key={activeVideo.video_link}
+                  src={activeVideo.video_link}
+                  controls
+                  autoPlay
+                  playsInline
+                  poster={activeVideo.thumbnail}
+                />
+              ) : (
+                <div className="mvp-video-player-empty">
+                  <span>📹</span>
+                  <span>No videos available yet</span>
+                </div>
+              )}
+            </div>
+
+            {/* Thumbnail grid */}
+            {videosLoading ? (
+              <div className="mvp-video-thumbs">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="mvp-skeleton"
+                    style={{ aspectRatio: "9/12", borderRadius: 14 }}
+                  />
+                ))}
+              </div>
+            ) : videos.length === 0 ? (
+              <p className="mvp-no-videos">
+                📭 No videos found. Check back soon!
+              </p>
+            ) : (
+              <div className="mvp-video-thumbs">
+                {videos.map((vid) => (
+                  <button
+                    key={vid.id}
+                    className={`mvp-video-thumb-btn${
+                      activeVideo?.id === vid.id ? " active" : ""
+                    }`}
+                    onClick={() => setActiveVideo(vid)}
+                    title={`Memory Verse Video ${vid.id + 1}`}
+                  >
+                    <img
+                      src={vid.thumbnail}
+                      alt={`Memory Verse ${vid.id + 1}`}
+                      onError={(e) => {
+                        e.currentTarget.src = DEFAULT_THUMBNAIL;
+                      }}
+                    />
+                    <div className="mvp-video-thumb-play">
+                      <div className="mvp-play-icon">▶</div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* MAIN CONTENT: Image Viewer + Learning Form */}
         <div className="mvp-content">
           {/* LEFT: Image Viewer */}
           <div className="mvp-left">
             <div className="mvp-card">
-              {/* Main image */}
               <div className="mvp-main-image-wrap">
                 <ImageWithFallback
                   src={activeImage.src}
@@ -598,13 +796,11 @@ export default function MemoryVersePage() {
                 <div className="mvp-image-label">📌 {activeImage.title}</div>
               </div>
 
-              {/* Info */}
               <div className="mvp-image-info">
                 <h3>{activeImage.title}</h3>
                 <p>{activeImage.description}</p>
               </div>
 
-              {/* Thumbnails */}
               <div className="mvp-thumbs">
                 {images.map((img) => (
                   <button
@@ -617,14 +813,12 @@ export default function MemoryVersePage() {
                     style={{ border: "none", padding: 0, background: "none" }}
                   >
                     <div className="mvp-thumb-placeholder">
-                      {/* <span>{img.title.split("–")[1]?.trim() || img.id}</span> */}
                       <img src={img.src} alt={img.alt} />
                     </div>
                   </button>
                 ))}
               </div>
 
-              {/* Download button */}
               <button
                 className="mvp-download-btn"
                 onClick={() => setShowDownloadModal(true)}
@@ -671,7 +865,10 @@ export default function MemoryVersePage() {
                   placeholder="Share what this verse means to you, how it changed your day, or what God spoke to your heart..."
                   value={learningForm.learning}
                   onChange={(e) =>
-                    setLearningForm((p) => ({ ...p, learning: e.target.value }))
+                    setLearningForm((p) => ({
+                      ...p,
+                      learning: e.target.value,
+                    }))
                   }
                 />
               </div>

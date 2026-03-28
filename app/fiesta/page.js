@@ -552,14 +552,15 @@ const Page = () => {
 
             {/* Banner CTA */}
             <div className="fiesta-banner-cta">
-              <Link href="/lbrf">
+              <Link href="/learn-a-verse">
                 <Image
-                  src="https://lovetoons.org/img/LBRF_SLIDER_2.jpg"
+                  src="https://cdn1.kingschat.online/uploads/media/55c7c53173322e78957b0d00/U3BIdlZwYUNkelVKTlZhUHdPbGtDUT09/LEARN_A_MEMORY_VERSE_SLIDDER.png"
                   alt="sponsor LBR"
                   width={1000}
                   height={300}
                   style={{ width: "100%", height: "auto", display: "block" }}
                 />
+                <p>CLick to download a free Memory Verse card </p>
               </Link>
             </div>
           </div>
