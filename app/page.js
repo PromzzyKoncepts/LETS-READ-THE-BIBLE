@@ -624,7 +624,7 @@ export default function Home() {
           <div className="hero-inner">
             <div className="leaderboard">
               <Image
-                src={"images/KINGS.png"}
+                src={"/images/KINGS.png"}
                 alt={"lovetoons bible reading fiesta"}
                 width={600}
                 height={450}
