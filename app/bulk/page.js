@@ -420,6 +420,18 @@ const Page = () => {
             <p>Upload a CSV file to register multiple participants at once</p>
           </div>
 
+          <div>
+            <a
+              href="/sample-bulk-template.csv"
+              style={{ color: "#f5c257", textDecoration: "underline" }}
+              download
+            >
+              sample CSV template
+            </a>{" "}
+            to get started. Make sure to follow the formatting guidelines for
+            each column.
+          </div>
+
           {/* Drop Zone */}
           <div
             className={`upload-zone${dragOver ? " drag-over" : ""}`}
