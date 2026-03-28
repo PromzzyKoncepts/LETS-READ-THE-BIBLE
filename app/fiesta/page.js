@@ -554,7 +554,7 @@ const Page = () => {
             <div className="fiesta-banner-cta">
               <Link href="/learn-a-verse">
                 <Image
-                  src="https://cdn1.kingschat.online/uploads/media/55c7c53173322e78957b0d00/U3BIdlZwYUNkelVKTlZhUHdPbGtDUT09/LEARN_A_MEMORY_VERSE_SLIDDER.png"
+                  src="https://lovetoons.org/img/LEARN_A_MEMORY_VERSE_SLIDDER.png"
                   alt="sponsor LBR"
                   width={1000}
                   height={300}
