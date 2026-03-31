@@ -666,6 +666,15 @@ export default function MemoryVersePage() {
                 />
               </div>
               <div className="mvp-field">
+                <label>Submit File</label>
+                <input
+                  type="file"
+                  onChange={(e) =>
+                    setLearningForm((p) => ({ ...p, file: e.target.files[0] }))
+                  }
+                />
+              </div>
+              <div className="mvp-field">
                 <label>What did you learn? ✍️</label>
                 <textarea
                   placeholder="Share what this verse means to you, how it changed your day, or what God spoke to your heart..."
