@@ -622,7 +622,7 @@ export default function Home() {
           />
           <div className="hero-bg-overlay" />
           <div className="hero-inner">
-            <div className="leaderboard">
+            {/* <div className="leaderboard">
               <Image
                 src={"/images/KINGS.png"}
                 alt={"lovetoons bible reading fiesta"}
@@ -630,23 +630,21 @@ export default function Home() {
                 height={450}
                 className="channel-card-im"
               />
-            </div>
+            </div> */}
 
             {/* ─── LEADERBOARD CARD ─── */}
-            {/* <div className="leaderboard-card hidden">
+            <div className="leaderboard-card hidden">
               <div className="lb-bg-glow" />
               <div className="lb-bg-glow2" />
-
               <div>
                 <span className="lb-crown">🏆</span>
                 <h2 className="lb-title">
                   LBRF <span>Leaderboard</span>
                 </h2>
                 <p className="lb-subtitle">Lovetoons Bible Reading Fiesta</p>
-              </div> */}
-
-            {/* Total participants */}
-            {/* <div className="lb-total-badge">
+              </div>
+              {/* Total participants */}
+              <div className="lb-total-badge">
                 <div
                   className={`lb-total-num${
                     leaderboard.loading ? " lb-shimmer" : ""
@@ -658,11 +656,9 @@ export default function Home() {
                 </div>
                 <div className="lb-total-label">Total Participants</div>
               </div>
-
-              <hr className="lb-divider" /> */}
-
-            {/* Gender bars */}
-            {/* <div className="lb-bar-section">
+              <hr className="lb-divider" />
+              {/* Gender bars */}
+              <div className="lb-bar-section">
                 {[
                   {
                     label: "Boys",
@@ -718,13 +714,11 @@ export default function Home() {
                 ))}
               </div>
               <hr className="lb-divider" />
-
               <Link href="/lbrf" className="view-all-btn">
                 Register for Lovetoons Bible Reading Fiesta →
               </Link>
-
-              <div className="lb-race-pill">📖 Read A Chapter Everyday</div> */}
-            {/* </div> */}
+              <div className="lb-race-pill">📖 Read A Chapter Everyday</div>
+            </div>
 
             {/* ─── Memory Verse ─── */}
             <div className="verse-card">
