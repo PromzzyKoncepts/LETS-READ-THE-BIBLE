@@ -55,6 +55,11 @@ const nextConfig = {
       //   destination: "/",
       //   permanent: false,
       // },
+      {
+        source: "/lrbf",
+        destination: "/lbrf",
+        permanent: true,
+      },
     ];
   },
 };
