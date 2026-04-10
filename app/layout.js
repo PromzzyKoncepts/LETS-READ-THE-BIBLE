@@ -2,6 +2,7 @@ import "./globals.css";
 import Header from "./components/Header";
 import BottomBar from "./components/MobileNav";
 import { Suspense } from "react";
+import HitTracker from "./components/HitTracker";
 
 export const metadata = {
   title: "Lets Read the Bible Campaign",
@@ -40,6 +41,8 @@ export default function RootLayout({ children }) {
         <div className="fixed z-[999] block md:hidden bottom-0">
           <BottomBar />
         </div>
+
+        <HitTracker />
       </body>
     </html>
   );
