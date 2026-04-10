@@ -48,10 +48,10 @@ export default function Home() {
       src: "https://lovetoons.org/img/LBRF_SLIDER_2.jpg",
       link: "https://letsreadthebible.club/lbrf",
     },
-    {
-      title: "Communion service",
-      src: "https://lovetoons.org/img/MAC_SIZE_COMMUNION_SERVICE.png",
-    },
+    // {
+    //   title: "Communion service",
+    //   src: "https://lovetoons.org/img/MAC_SIZE_COMMUNION_SERVICE.png",
+    // },
   ];
 
   const channels = [
