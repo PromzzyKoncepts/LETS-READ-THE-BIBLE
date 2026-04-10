@@ -793,7 +793,7 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span className="mv-btn-icon">⬇️</span>
+                  <span className="mv-btn-icon">⬇</span>
                   Download
                 </a> */}
               </div>

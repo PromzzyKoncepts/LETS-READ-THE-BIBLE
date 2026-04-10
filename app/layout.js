@@ -35,14 +35,13 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={`antialiased`}>
+        <HitTracker />
         <canvas id="world" width="0" height="0"></canvas>
         <Header />
         <Suspense>{children}</Suspense>
         <div className="fixed z-[999] block md:hidden bottom-0">
           <BottomBar />
         </div>
-
-        <HitTracker />
       </body>
     </html>
   );
