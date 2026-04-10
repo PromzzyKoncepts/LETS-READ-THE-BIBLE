@@ -34,11 +34,6 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={`antialiased`}>
-        <img
-          src="https://parentforum.lovetoons.org/php/hit.php"
-          style="display:none"
-          alt="lbrf"
-        />
         <canvas id="world" width="0" height="0"></canvas>
         <Header />
         <Suspense>{children}</Suspense>
