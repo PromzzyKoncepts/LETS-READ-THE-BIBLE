@@ -726,7 +726,7 @@ export default function Home() {
                 <h2>Kids Memory Verse</h2>
               </div>
               <video
-                src="https://d1ent1.loveworldcloud.com/~kiddiesmedia/LOVETOONS_TV/daily/video/mnark%204-41.mp4"
+                src="https://d1ent1.loveworldcloud.com/~kiddiesmedia/LOVETOONS_TV/bible/YOU%20HAVE%20ALL%20YOU%20NEED%20FULL%20VIDEO%203%20-%20SAT%2011.mov"
                 width={400}
                 height={400}
                 style={{ width: "100%", display: "block" }}
