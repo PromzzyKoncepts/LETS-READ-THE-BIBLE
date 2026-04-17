@@ -317,7 +317,7 @@ export default function MemoryVerseVideoPage() {
             </div>
 
             <div className="thumb-strip">
-              {videos.map((video) => (
+              {currentVideos.map((video) => (
                 <button
                   key={video.id}
                   onClick={() => {
@@ -329,11 +329,11 @@ export default function MemoryVerseVideoPage() {
                   className={`thumb-btn${
                     activeVideo?.id === video.id ? " thumb-btn--active" : ""
                   }`}
-                  title={`Verse ${video.id}`}
+                  title={video.title || `Verse ${video.id}`}
                 >
                   <img
                     src={video.thumbnail}
-                    alt={`Verse ${video.id}`}
+                    alt={video.title || `Verse ${video.id}`}
                     className="thumb-img"
                     onError={(e) => {
                       e.target.src =
@@ -346,6 +346,29 @@ export default function MemoryVerseVideoPage() {
                 </button>
               ))}
             </div>
+
+            {/* Optional: Add mini pagination for thumb strip if needed */}
+            {totalPages > 1 && (
+              <div className="thumb-pagination">
+                <button
+                  onClick={goToPrevPage}
+                  disabled={currentPage === 1}
+                  className="thumb-page-btn"
+                >
+                  ←
+                </button>
+                <span className="thumb-page-info">
+                  Page {currentPage} of {totalPages}
+                </span>
+                <button
+                  onClick={goToNextPage}
+                  disabled={currentPage === totalPages}
+                  className="thumb-page-btn"
+                >
+                  →
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Tab panel */}
@@ -882,4 +905,47 @@ const globalStyles = `
       font-size: 0.8rem;
     }
   }
+
+  .thumb-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem 1rem;
+  border-top: 1px solid var(--border);
+  margin-top: 0.5rem;
+}
+
+.thumb-page-btn {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 0.3rem 0.8rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--navy);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.thumb-page-btn:hover:not(:disabled) {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: white;
+}
+
+.thumb-page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.thumb-page-info {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy);
+  background: var(--bg);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+}
 `;
