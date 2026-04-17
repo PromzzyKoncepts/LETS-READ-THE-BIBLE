@@ -19,6 +19,7 @@ const nextConfig = {
       "d1ent1.loveworldcloud.com",
       "lovetoons.org",
       "lovetoons.tv",
+      "parentforum.lovetoons.org",
     ],
   },
 
