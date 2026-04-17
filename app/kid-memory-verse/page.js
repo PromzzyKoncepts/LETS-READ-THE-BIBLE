@@ -1,7 +1,5 @@
 "use client";
-
 import { useState, useEffect, useRef } from "react";
-
 export default function MemoryVerseVideoPage() {
   const [videos, setVideos] = useState([]);
   const [activeVideo, setActiveVideo] = useState(null);
