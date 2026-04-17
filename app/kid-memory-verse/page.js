@@ -7,6 +7,7 @@ export default function MemoryVerseVideoPage() {
   const [activeVideo, setActiveVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState({ name: "", text: "" });
   const [learning, setLearning] = useState({
@@ -19,6 +20,10 @@ export default function MemoryVerseVideoPage() {
   const [activeTab, setActiveTab] = useState("comments");
   const videoRef = useRef(null);
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const videosPerPage = 8;
+
   useEffect(() => {
     fetchVideos();
     loadComments();
@@ -26,27 +31,77 @@ export default function MemoryVerseVideoPage() {
 
   const fetchVideos = async () => {
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+
       const res = await fetch(
-        "https://parentforum.lovetoons.org/php/kid-video.php"
+        "https://parentforum.lovetoons.org/php/kid-video.php",
+        {
+          signal: controller.signal,
+          mode: "cors",
+          headers: {
+            Accept: "application/json",
+          },
+        }
       );
+
+      clearTimeout(timeoutId);
+
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+      }
+
       const data = await res.json();
+
+      if (!Array.isArray(data)) {
+        throw new Error("Invalid data format received");
+      }
+
       const videoList = data.map((item, i) => ({
         id: i + 1,
-        thumbnail: item.thumbnail,
-        video_link: item.video_link,
+        thumbnail: item.thumbnail || "/placeholder-thumb.jpg",
+        video_link: item.video_link || "",
+        title: item.title || `Verse ${i + 1}`,
+        verse_text: item.verse_text || "",
       }));
+
       setVideos(videoList);
-      setActiveVideo(videoList[0]);
-    } catch {
+      if (videoList.length > 0) {
+        setActiveVideo(videoList[0]);
+      } else {
+        setError(true);
+        setErrorMessage("No videos found.");
+      }
+    } catch (err) {
+      console.error("Video fetch error:", err);
       setError(true);
+
+      if (err.name === "AbortError") {
+        setErrorMessage("Request timed out. Please check your connection.");
+      } else if (err.message.includes("fetch")) {
+        setErrorMessage(
+          "Network error. Please check your internet connection."
+        );
+      } else if (err.message.includes("CORS")) {
+        setErrorMessage(
+          "CORS policy blocked the request. The server needs to allow cross-origin requests."
+        );
+      } else {
+        setErrorMessage(err.message || "Failed to load videos.");
+      }
     } finally {
       setLoading(false);
     }
   };
 
   const loadComments = () => {
-    const saved = localStorage.getItem("kidsMemoryComments");
-    if (saved) setComments(JSON.parse(saved));
+    try {
+      const saved = localStorage.getItem("kidsMemoryComments");
+      if (saved) setComments(JSON.parse(saved));
+    } catch (err) {
+      console.error("Error loading comments:", err);
+      setComments([]);
+    }
   };
 
   const saveComments = (updated) => {
@@ -75,27 +130,79 @@ export default function MemoryVerseVideoPage() {
       alert("Please fill all fields");
       return;
     }
+
     setStatus({ learning: "loading" });
+
     try {
       const formData = new FormData();
       Object.keys(learning).forEach((key) => {
         if (learning[key]) formData.append(key, learning[key]);
       });
-      await fetch("https://lovetoons.org/php/learning-memory-verse.php", {
-        method: "POST",
-        body: formData,
-      });
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+      const response = await fetch(
+        "https://lovetoons.org/php/learning-memory-verse.php",
+        {
+          method: "POST",
+          body: formData,
+          signal: controller.signal,
+          mode: "cors",
+        }
+      );
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
       setStatus({ learning: "success" });
       setTimeout(() => {
         setLearning({ name: "", email: "", text: "", file: null });
         setStatus({ learning: "" });
       }, 3000);
-    } catch {
+    } catch (err) {
+      console.error("Share learning error:", err);
       setStatus({ learning: "error" });
+
+      setTimeout(() => {
+        if (status.learning === "error") {
+          setStatus({ learning: "" });
+        }
+      }, 5000);
     }
   };
 
   const currentComments = comments.filter((c) => c.videoId === activeVideo?.id);
+
+  // Pagination logic
+  const indexOfLastVideo = currentPage * videosPerPage;
+  const indexOfFirstVideo = indexOfLastVideo - videosPerPage;
+  const currentVideos = videos.slice(indexOfFirstVideo, indexOfLastVideo);
+  const totalPages = Math.ceil(videos.length / videosPerPage);
+
+  const goToPage = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    // Scroll to verses section smoothly
+    const versesSection = document.querySelector(".verses-card");
+    if (versesSection) {
+      versesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const goToPrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   if (loading) {
     return (
@@ -112,7 +219,34 @@ export default function MemoryVerseVideoPage() {
       <div className="loader-wrap">
         <style>{globalStyles}</style>
         <span style={{ fontSize: "2.5rem" }}>😔</span>
-        <p>Couldn`t load videos. Please try again later.</p>
+        <p>Couldn`t load videos.</p>
+        {errorMessage && (
+          <p style={{ fontSize: "0.9rem", color: "#666", marginTop: "0.5rem" }}>
+            Error: {errorMessage}
+          </p>
+        )}
+        <button
+          onClick={() => {
+            setLoading(true);
+            setError(false);
+            fetchVideos();
+          }}
+          style={{
+            marginTop: "1rem",
+            padding: "0.5rem 1rem",
+            background: "#2563EB",
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+          }}
+        >
+          🔄 Try Again
+        </button>
+        <p style={{ fontSize: "0.85rem", color: "#999", marginTop: "1rem" }}>
+          Tip: This might be a CORS issue. Contact the website administrator to
+          add your domain to allowed origins.
+        </p>
       </div>
     );
   }
@@ -121,11 +255,8 @@ export default function MemoryVerseVideoPage() {
     <div className="page-wrap">
       <style>{globalStyles}</style>
 
-      {/* ── Hero ── */}
+      {/* ── Hero (without gradient animation) ── */}
       <header className="hero">
-        <div className="hero-orb orb-1" />
-        <div className="hero-orb orb-2" />
-        <div className="hero-orb orb-3" />
         <div className="hero-inner">
           <span className="hero-badge">📖 Let`s Read the Bible Campaign</span>
           <h1 className="hero-title">
@@ -143,13 +274,46 @@ export default function MemoryVerseVideoPage() {
         <section className="col-left">
           <div className="card player-card">
             <div className="video-wrap">
-              <video
-                ref={videoRef}
-                className="video-el"
-                controls
-                key={activeVideo?.video_link}
-                src={activeVideo?.video_link}
-              />
+              {activeVideo?.video_link ? (
+                <video
+                  ref={videoRef}
+                  className="video-el"
+                  controls
+                  key={activeVideo?.video_link}
+                  src={activeVideo?.video_link}
+                  onError={(e) => {
+                    console.error(
+                      "Video failed to load:",
+                      activeVideo?.video_link
+                    );
+                    e.target.style.display = "none";
+                    const parent = e.target.parentElement;
+                    const fallback = document.createElement("div");
+                    fallback.className = "video-fallback";
+                    fallback.innerHTML =
+                      "⚠️ Video failed to load. Please try another verse.";
+                    fallback.style.cssText =
+                      "display:flex;align-items:center;justify-content:center;height:100%;background:#f0f0f0;color:#666;";
+                    if (parent && !parent.querySelector(".video-fallback")) {
+                      parent.appendChild(fallback);
+                    }
+                  }}
+                />
+              ) : (
+                <div
+                  className="video-fallback"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: "340px",
+                    background: "#f0f0f0",
+                    color: "#666",
+                  }}
+                >
+                  ⚠️ Video unavailable
+                </div>
+              )}
             </div>
 
             <div className="thumb-strip">
@@ -158,7 +322,9 @@ export default function MemoryVerseVideoPage() {
                   key={video.id}
                   onClick={() => {
                     setActiveVideo(video);
-                    videoRef.current?.load();
+                    if (videoRef.current) {
+                      videoRef.current.load();
+                    }
                   }}
                   className={`thumb-btn${
                     activeVideo?.id === video.id ? " thumb-btn--active" : ""
@@ -169,6 +335,10 @@ export default function MemoryVerseVideoPage() {
                     src={video.thumbnail}
                     alt={`Verse ${video.id}`}
                     className="thumb-img"
+                    onError={(e) => {
+                      e.target.src =
+                        "https://via.placeholder.com/120x80?text=No+Image";
+                    }}
                   />
                   {activeVideo?.id === video.id && (
                     <span className="thumb-badge">▶</span>
@@ -282,6 +452,7 @@ export default function MemoryVerseVideoPage() {
                     <input
                       type="file"
                       className="file-input"
+                      accept="image/*"
                       onChange={(e) =>
                         setLearning({ ...learning, file: e.target.files?.[0] })
                       }
@@ -311,7 +482,7 @@ export default function MemoryVerseVideoPage() {
                   )}
                   {status.learning === "error" && (
                     <div className="toast toast--error">
-                      😢 Something went wrong, please try again.
+                      😢 Something went wrong. Please try again.
                     </div>
                   )}
                 </div>
@@ -320,13 +491,17 @@ export default function MemoryVerseVideoPage() {
           </div>
         </section>
 
-        {/* Right – Verse grid */}
+        {/* Right – Verse grid with pagination */}
         <section className="col-right">
           <div className="card verses-card">
             <h2 className="card-title">📜 All Verses</h2>
-            <p className="card-sub">Tap a card to switch the video</p>
+            <p className="card-sub">
+              Showing {indexOfFirstVideo + 1}–
+              {Math.min(indexOfLastVideo, videos.length)} of {videos.length}{" "}
+              verses
+            </p>
             <div className="verse-grid">
-              {videos.map((video, i) => (
+              {currentVideos.map((video, i) => (
                 <button
                   key={video.id}
                   className={`verse-tile${
@@ -334,22 +509,83 @@ export default function MemoryVerseVideoPage() {
                   }`}
                   onClick={() => {
                     setActiveVideo(video);
-                    videoRef.current?.load();
+                    if (videoRef.current) {
+                      videoRef.current.load();
+                    }
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
                 >
                   <img
                     src={video.thumbnail}
-                    alt={`Verse ${i + 1}`}
+                    alt={`Verse ${video.id}`}
                     className="verse-img"
+                    onError={(e) => {
+                      e.target.src =
+                        "https://via.placeholder.com/300x200?text=No+Image";
+                    }}
                   />
-                  <div className="verse-label">Verse {i + 1}</div>
+                  <div className="verse-label">
+                    {video.title || `Verse ${video.id}`}
+                  </div>
                   {activeVideo?.id === video.id && (
                     <div className="verse-playing">▶ Playing</div>
                   )}
                 </button>
               ))}
             </div>
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="pagination">
+                <button
+                  onClick={goToPrevPage}
+                  disabled={currentPage === 1}
+                  className="pagination-btn pagination-prev"
+                >
+                  ← Prev
+                </button>
+                <div className="pagination-pages">
+                  {[...Array(totalPages)].map((_, index) => {
+                    const pageNum = index + 1;
+                    // Show first, last, current, and neighbors
+                    if (
+                      pageNum === 1 ||
+                      pageNum === totalPages ||
+                      (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)
+                    ) {
+                      return (
+                        <button
+                          key={pageNum}
+                          onClick={() => goToPage(pageNum)}
+                          className={`pagination-number ${
+                            currentPage === pageNum ? "active" : ""
+                          }`}
+                        >
+                          {pageNum}
+                        </button>
+                      );
+                    } else if (
+                      pageNum === currentPage - 2 ||
+                      pageNum === currentPage + 2
+                    ) {
+                      return (
+                        <span key={pageNum} className="pagination-dots">
+                          …
+                        </span>
+                      );
+                    }
+                    return null;
+                  })}
+                </div>
+                <button
+                  onClick={goToNextPage}
+                  disabled={currentPage === totalPages}
+                  className="pagination-btn pagination-next"
+                >
+                  Next →
+                </button>
+              </div>
+            )}
           </div>
         </section>
       </main>
@@ -393,20 +629,11 @@ const globalStyles = `
   @keyframes spin { to { transform: rotate(360deg); } }
 
   .hero {
-    position: relative; overflow: hidden;
+    position: relative;
     background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
-    padding: 4rem 1.5rem 3.5rem; text-align: center; color: #fff;
-  }
-  .hero-orb {
-    position: absolute; border-radius: 50%;
-    opacity: .12; animation: float 8s ease-in-out infinite;
-  }
-  .orb-1 { width: 320px; height: 320px; background: var(--sky);    top: -80px;  left: -80px; animation-delay: 0s; }
-  .orb-2 { width: 200px; height: 200px; background: var(--yellow); bottom: -60px; right: 10%; animation-delay: 2s; }
-  .orb-3 { width: 140px; height: 140px; background: var(--orange); top: 20%;  right: -40px; animation-delay: 4s; }
-  @keyframes float {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50%       { transform: translateY(-18px) scale(1.04); }
+    padding: 4rem 1.5rem 3.5rem;
+    text-align: center;
+    color: #fff;
   }
   .hero-inner { position: relative; z-index: 1; }
   .hero-badge {
@@ -437,7 +664,7 @@ const globalStyles = `
   .card { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
 
   .player-card { padding: 0; }
-  .video-wrap { background: #000; line-height: 0; }
+  .video-wrap { background: #000; line-height: 0; min-height: 200px; }
   .video-el { width: 100%; max-height: 340px; object-fit: contain; display: block; }
 
   .thumb-strip {
@@ -566,4 +793,93 @@ const globalStyles = `
   }
 
   .learn-hint { font-size: .9rem; color: var(--muted); margin-bottom: .5rem; }
+
+  /* Pagination Styles */
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .pagination-btn {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 40px;
+    padding: 0.5rem 1rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--navy);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .pagination-btn:hover:not(:disabled) {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: white;
+    transform: translateY(-1px);
+  }
+  .pagination-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .pagination-pages {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .pagination-number {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 0.5rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--navy);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pagination-number:hover {
+    background: var(--sky);
+    border-color: var(--sky);
+    color: white;
+  }
+  .pagination-number.active {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: white;
+  }
+  .pagination-dots {
+    color: var(--muted);
+    font-weight: 700;
+    padding: 0 0.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .verse-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .pagination {
+      gap: 0.3rem;
+    }
+    .pagination-btn {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.75rem;
+    }
+    .pagination-number {
+      min-width: 32px;
+      height: 32px;
+      font-size: 0.8rem;
+    }
+  }
 `;
