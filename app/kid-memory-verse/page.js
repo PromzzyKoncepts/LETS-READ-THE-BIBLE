@@ -143,7 +143,7 @@ export default function MemoryVerseVideoPage() {
       const timeoutId = setTimeout(() => controller.abort(), 15000);
 
       const response = await fetch(
-        "https://lovetoons.org/php/learning-memory-verse.php",
+        "https://parentforum.lovetoons.org/php/kid-video.php",
         {
           method: "POST",
           body: formData,
