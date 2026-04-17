@@ -40,7 +40,7 @@ export default function MemoryVerseVideoPage() {
       const fallback = [1, 2, 3, 4, 5, 6].map((i) => ({
         id: i,
         thumbnail: `/images/pics/${i - 1}.png`,
-        video_link: `https://parentforum.lovetoons.org/php/video.php?id=${i}`,
+        video_link: `https://parentforum.lovetoons.org/php/kid-video.php?id=${i}`,
       }));
       setVideos(fallback);
       setActiveVideo(fallback[0]);
