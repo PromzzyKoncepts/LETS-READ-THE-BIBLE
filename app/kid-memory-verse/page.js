@@ -1427,5 +1427,7 @@ const globalStyles = `
     .video-wrap {
       break-inside: avoid;
     }
+      .card::after, .card::before{
+      background: none;}
   }
 `;
