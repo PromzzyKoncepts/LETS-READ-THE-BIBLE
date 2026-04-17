@@ -20,6 +20,10 @@ export default function MemoryVerseVideoPage() {
   const [activeTab, setActiveTab] = useState("comments");
   const videoRef = useRef(null);
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const videosPerPage = 8;
+
   useEffect(() => {
     fetchVideos();
     loadComments();
@@ -27,7 +31,6 @@ export default function MemoryVerseVideoPage() {
 
   const fetchVideos = async () => {
     try {
-      // Add timeout to prevent hanging requests
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 10000);
 
@@ -35,7 +38,7 @@ export default function MemoryVerseVideoPage() {
         "https://parentforum.lovetoons.org/php/kid-video.php",
         {
           signal: controller.signal,
-          mode: "cors", // Explicitly request CORS
+          mode: "cors",
           headers: {
             Accept: "application/json",
           },
@@ -58,6 +61,8 @@ export default function MemoryVerseVideoPage() {
         id: i + 1,
         thumbnail: item.thumbnail || "/placeholder-thumb.jpg",
         video_link: item.video_link || "",
+        title: item.title || `Verse ${i + 1}`,
+        verse_text: item.verse_text || "",
       }));
 
       setVideos(videoList);
@@ -134,7 +139,6 @@ export default function MemoryVerseVideoPage() {
         if (learning[key]) formData.append(key, learning[key]);
       });
 
-      // Add timeout for this request too
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000);
 
@@ -163,7 +167,6 @@ export default function MemoryVerseVideoPage() {
       console.error("Share learning error:", err);
       setStatus({ learning: "error" });
 
-      // Auto-clear error after 5 seconds
       setTimeout(() => {
         if (status.learning === "error") {
           setStatus({ learning: "" });
@@ -174,20 +177,31 @@ export default function MemoryVerseVideoPage() {
 
   const currentComments = comments.filter((c) => c.videoId === activeVideo?.id);
 
-  // Development mode fallback data
-  const getFallbackVideos = () => {
-    return [
-      {
-        id: 1,
-        thumbnail: "https://via.placeholder.com/120x80?text=Verse+1",
-        video_link: "",
-      },
-      {
-        id: 2,
-        thumbnail: "https://via.placeholder.com/120x80?text=Verse+2",
-        video_link: "",
-      },
-    ];
+  // Pagination logic
+  const indexOfLastVideo = currentPage * videosPerPage;
+  const indexOfFirstVideo = indexOfLastVideo - videosPerPage;
+  const currentVideos = videos.slice(indexOfFirstVideo, indexOfLastVideo);
+  const totalPages = Math.ceil(videos.length / videosPerPage);
+
+  const goToPage = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    // Scroll to verses section smoothly
+    const versesSection = document.querySelector(".verses-card");
+    if (versesSection) {
+      versesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const goToPrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
   };
 
   if (loading) {
@@ -241,11 +255,8 @@ export default function MemoryVerseVideoPage() {
     <div className="page-wrap">
       <style>{globalStyles}</style>
 
-      {/* ── Hero ── */}
+      {/* ── Hero (without gradient animation) ── */}
       <header className="hero">
-        <div className="hero-orb orb-1" />
-        <div className="hero-orb orb-2" />
-        <div className="hero-orb orb-3" />
         <div className="hero-inner">
           <span className="hero-badge">📖 Let`s Read the Bible Campaign</span>
           <h1 className="hero-title">
@@ -276,7 +287,6 @@ export default function MemoryVerseVideoPage() {
                       activeVideo?.video_link
                     );
                     e.target.style.display = "none";
-                    // Show fallback message
                     const parent = e.target.parentElement;
                     const fallback = document.createElement("div");
                     fallback.className = "video-fallback";
@@ -481,13 +491,17 @@ export default function MemoryVerseVideoPage() {
           </div>
         </section>
 
-        {/* Right – Verse grid */}
+        {/* Right – Verse grid with pagination */}
         <section className="col-right">
           <div className="card verses-card">
             <h2 className="card-title">📜 All Verses</h2>
-            <p className="card-sub">Tap a card to switch the video</p>
+            <p className="card-sub">
+              Showing {indexOfFirstVideo + 1}–
+              {Math.min(indexOfLastVideo, videos.length)} of {videos.length}{" "}
+              verses
+            </p>
             <div className="verse-grid">
-              {videos.map((video, i) => (
+              {currentVideos.map((video, i) => (
                 <button
                   key={video.id}
                   className={`verse-tile${
@@ -503,20 +517,75 @@ export default function MemoryVerseVideoPage() {
                 >
                   <img
                     src={video.thumbnail}
-                    alt={`Verse ${i + 1}`}
+                    alt={`Verse ${video.id}`}
                     className="verse-img"
                     onError={(e) => {
                       e.target.src =
                         "https://via.placeholder.com/300x200?text=No+Image";
                     }}
                   />
-                  <div className="verse-label">Verse {i + 1}</div>
+                  <div className="verse-label">
+                    {video.title || `Verse ${video.id}`}
+                  </div>
                   {activeVideo?.id === video.id && (
                     <div className="verse-playing">▶ Playing</div>
                   )}
                 </button>
               ))}
             </div>
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="pagination">
+                <button
+                  onClick={goToPrevPage}
+                  disabled={currentPage === 1}
+                  className="pagination-btn pagination-prev"
+                >
+                  ← Prev
+                </button>
+                <div className="pagination-pages">
+                  {[...Array(totalPages)].map((_, index) => {
+                    const pageNum = index + 1;
+                    // Show first, last, current, and neighbors
+                    if (
+                      pageNum === 1 ||
+                      pageNum === totalPages ||
+                      (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)
+                    ) {
+                      return (
+                        <button
+                          key={pageNum}
+                          onClick={() => goToPage(pageNum)}
+                          className={`pagination-number ${
+                            currentPage === pageNum ? "active" : ""
+                          }`}
+                        >
+                          {pageNum}
+                        </button>
+                      );
+                    } else if (
+                      pageNum === currentPage - 2 ||
+                      pageNum === currentPage + 2
+                    ) {
+                      return (
+                        <span key={pageNum} className="pagination-dots">
+                          …
+                        </span>
+                      );
+                    }
+                    return null;
+                  })}
+                </div>
+                <button
+                  onClick={goToNextPage}
+                  disabled={currentPage === totalPages}
+                  className="pagination-btn pagination-next"
+                >
+                  Next →
+                </button>
+              </div>
+            )}
           </div>
         </section>
       </main>
@@ -560,20 +629,11 @@ const globalStyles = `
   @keyframes spin { to { transform: rotate(360deg); } }
 
   .hero {
-    position: relative; overflow: hidden;
+    position: relative;
     background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
-    padding: 4rem 1.5rem 3.5rem; text-align: center; color: #fff;
-  }
-  .hero-orb {
-    position: absolute; border-radius: 50%;
-    opacity: .12; animation: float 8s ease-in-out infinite;
-  }
-  .orb-1 { width: 320px; height: 320px; background: var(--sky);    top: -80px;  left: -80px; animation-delay: 0s; }
-  .orb-2 { width: 200px; height: 200px; background: var(--yellow); bottom: -60px; right: 10%; animation-delay: 2s; }
-  .orb-3 { width: 140px; height: 140px; background: var(--orange); top: 20%;  right: -40px; animation-delay: 4s; }
-  @keyframes float {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50%       { transform: translateY(-18px) scale(1.04); }
+    padding: 4rem 1.5rem 3.5rem;
+    text-align: center;
+    color: #fff;
   }
   .hero-inner { position: relative; z-index: 1; }
   .hero-badge {
@@ -733,4 +793,93 @@ const globalStyles = `
   }
 
   .learn-hint { font-size: .9rem; color: var(--muted); margin-bottom: .5rem; }
+
+  /* Pagination Styles */
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .pagination-btn {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 40px;
+    padding: 0.5rem 1rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--navy);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .pagination-btn:hover:not(:disabled) {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: white;
+    transform: translateY(-1px);
+  }
+  .pagination-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .pagination-pages {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .pagination-number {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 0.5rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--navy);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pagination-number:hover {
+    background: var(--sky);
+    border-color: var(--sky);
+    color: white;
+  }
+  .pagination-number.active {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: white;
+  }
+  .pagination-dots {
+    color: var(--muted);
+    font-weight: 700;
+    padding: 0 0.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .verse-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .pagination {
+      gap: 0.3rem;
+    }
+    .pagination-btn {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.75rem;
+    }
+    .pagination-number {
+      min-width: 32px;
+      height: 32px;
+      font-size: 0.8rem;
+    }
+  }
 `;
