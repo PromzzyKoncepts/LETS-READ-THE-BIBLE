@@ -112,7 +112,7 @@ export default function MemoryVerseVideoPage() {
       <div className="loader-wrap">
         <style>{globalStyles}</style>
         <span style={{ fontSize: "2.5rem" }}>😔</span>
-        <p>Couldn't load videos. Please try again later.</p>
+        <p>Couldn`t load videos. Please try again later.</p>
       </div>
     );
   }
@@ -127,7 +127,7 @@ export default function MemoryVerseVideoPage() {
         <div className="hero-orb orb-2" />
         <div className="hero-orb orb-3" />
         <div className="hero-inner">
-          <span className="hero-badge">📖 Let's Read the Bible Campaign</span>
+          <span className="hero-badge">📖 Let`s Read the Bible Campaign</span>
           <h1 className="hero-title">
             Memory <em>Verse</em> Videos
           </h1>
