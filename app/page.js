@@ -726,7 +726,7 @@ export default function Home() {
                 <h2>Kids Memory Verse</h2>
               </div>
               <video
-                src="https://d1ent1.loveworldcloud.com/~kiddiesmedia/LOVETOONS_TV/bible/GOD%20S%20WORD%20IS%20A%20CLEANSER%20FULL%20VIDEO%207%20SUN%2012.mov"
+                src="https://cdn1.kingschat.online/uploads/media/53d9893773312e341fb91400/Y2tPT012YWt3RERQSG9Pc1hMZ0JOQT09/I_Know_Who_I_Am_Full_Video_3-1.m4v"
                 width={400}
                 height={400}
                 style={{ width: "100%", display: "block" }}
