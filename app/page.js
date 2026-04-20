@@ -726,7 +726,7 @@ export default function Home() {
                 <h2>Kids Memory Verse</h2>
               </div>
               <video
-                src="https://cdn1.kingschat.online/uploads/media/53d9893773312e341fb91400/Y2tPT012YWt3RERQSG9Pc1hMZ0JOQT09/I_Know_Who_I_Am_Full_Video_3-1.m4v"
+                src="https://cdn1.kingschat.online/uploads/media/53d9893773312e341fb91400/aHpqeUFiNVVpSUltWUY2cGJMVUpudz09/You_Are_Called_To_Lead_Full_Video_-1.m4v"
                 width={400}
                 height={400}
                 style={{ width: "100%", display: "block" }}
