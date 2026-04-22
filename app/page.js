@@ -622,7 +622,7 @@ export default function Home() {
           />
           <div className="hero-bg-overlay" />
           <div className="hero-inner">
-            {/* <div className="leaderboard">
+            <div className="leaderboard">
               <Image
                 src={"/images/KINGS.png"}
                 alt={"lovetoons bible reading fiesta"}
@@ -630,91 +630,9 @@ export default function Home() {
                 height={450}
                 className="channel-card-im"
               />
-            </div> */}
+            </div>
 
             {/* ─── LEADERBOARD CARD ─── */}
-            <div className="leaderboard-card hidden hd">
-              <div className="lb-bg-glow" />
-              <div className="lb-bg-glow2" />
-              <div>
-                <span className="lb-crown">🏆</span>
-                <h2 className="lb-title">
-                  LBRF <span>Leaderboard</span>
-                </h2>
-                <p className="lb-subtitle">Lovetoons Bible Reading Fiesta</p>
-              </div>
-              {/* Total participants */}
-              <div className="lb-total-badge">
-                {/* <div
-                  className={`lb-total-num${
-                    leaderboard.loading ? " lb-shimmer" : ""
-                  }`}
-                >
-                  {leaderboard.loading
-                    ? "\u00A0\u00A0\u00A0\u00A0\u00A0"
-                    : leaderboard.total.toLocaleString()}
-                </div> */}
-                {/* <div className="lb-total-label">Total Participants</div> */}
-              </div>
-              <hr className="lb-divider" />
-              {/* Gender bars */}
-              <div className="lb-bar-section">
-                {[
-                  {
-                    label: "Boys",
-                    emoji: "👦",
-                    count: leaderboard.male,
-                    color: ["#60a5fa", "#2563eb"],
-                    pct:
-                      leaderboard.total > 0
-                        ? (leaderboard.male / leaderboard.total) * 100
-                        : 0,
-                  },
-                  {
-                    label: "Girls",
-                    emoji: "👧",
-                    count: leaderboard.female,
-                    color: ["#f472b6", "#db2777"],
-                    pct:
-                      leaderboard.total > 0
-                        ? (leaderboard.female / leaderboard.total) * 100
-                        : 0,
-                  },
-                ].map(({ label, emoji, count, color, pct }) => (
-                  <div className="lb-bar-row" key={label}>
-                    <div className="lb-bar-meta">
-                      <span className="lb-bar-name">
-                        {emoji} {label}
-                        {!leaderboard.loading && leaderboard.total > 0 && (
-                          <span className="lb-bar-pct">
-                            ({pct.toFixed(1)}%)
-                          </span>
-                        )}
-                      </span>
-                      <span
-                        className={`lb-bar-count${
-                          leaderboard.loading ? " lb-shimmer" : ""
-                        }`}
-                      ></span>
-                    </div>
-                    <div className="lb-bar-track">
-                      <div
-                        className="lb-bar-fill"
-                        style={{
-                          width: leaderboard.loading ? "0%" : `${pct}%`,
-                          background: `linear-gradient(to right, ${color[0]}, ${color[1]})`,
-                        }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <hr className="lb-divider" />
-              <Link href="/lbrf" className="view-all-btn">
-                Register for Lovetoons Bible Reading Fiesta →
-              </Link>
-              <div className="lb-race-pill">📖 Read A Chapter Everyday</div>
-            </div>
 
             {/* ─── Memory Verse ─── */}
             <div className="verse-card">
