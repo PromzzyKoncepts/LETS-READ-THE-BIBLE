@@ -647,7 +647,7 @@ export default function MemoryVersePage() {
                 <label>Your Name</label>
                 <input
                   type="text"
-                  placeholder="Enter your name"
+                  placeholder="Enter your n"
                   value={learningForm.name}
                   onChange={(e) =>
                     setLearningForm((p) => ({ ...p, name: e.target.value }))
