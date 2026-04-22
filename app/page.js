@@ -691,11 +691,11 @@ export default function Home() {
                           </span>
                         )}
                       </span>
-                      <span className={`lb-bar-count${""}`}>
-                        {leaderboard.loading
-                          ? "\u00A0\u00A0\u00A0\u00A0"
-                          : count.toLocaleString()}
-                      </span>
+                      <span
+                        className={`lb-bar-count${
+                          leaderboard.loading ? " lb-shimmer" : ""
+                        }`}
+                      ></span>
                     </div>
                     <div className="lb-bar-track">
                       <div
