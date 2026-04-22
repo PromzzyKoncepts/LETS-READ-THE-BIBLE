@@ -622,7 +622,7 @@ export default function Home() {
           />
           <div className="hero-bg-overlay" />
           <div className="hero-inner">
-            {/* <div className="leaderboard">
+            <div className="leaderboard">
               <Image
                 src={"/images/KINGS.png"}
                 alt={"lovetoons bible reading fiesta"}
@@ -630,7 +630,7 @@ export default function Home() {
                 height={450}
                 className="channel-card-im"
               />
-            </div> */}
+            </div>
 
             {/* ─── LEADERBOARD CARD ─── */}
 
