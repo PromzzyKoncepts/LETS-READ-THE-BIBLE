@@ -654,7 +654,7 @@ export default function Home() {
                     ? "\u00A0\u00A0\u00A0\u00A0\u00A0"
                     : leaderboard.total.toLocaleString()}
                 </div> */}
-                <div className="lb-total-label">Total Participants</div>
+                {/* <div className="lb-total-label">Total Participants</div> */}
               </div>
               <hr className="lb-divider" />
               {/* Gender bars */}
