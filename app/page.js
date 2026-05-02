@@ -43,11 +43,11 @@ export default function Home() {
   }, []);
 
   const card = [
-    {
-      title: "Lovetoons Bible Reading Fiesta",
-      src: "https://lovetoons.org/img/LBRF_SLIDER_2.jpg",
-      link: "https://letsreadthebible.club/lbrf",
-    },
+    // {
+    //   title: "Lovetoons Bible Reading Fiesta",
+    //   src: "https://lovetoons.org/img/LBRF_SLIDER_2.jpg",
+    //   link: "https://letsreadthebible.club/lbrf",
+    // },
     // {
     //   title: "Communion service",
     //   src: "https://lovetoons.org/img/MAC_SIZE_COMMUNION_SERVICE.png",
@@ -622,7 +622,7 @@ export default function Home() {
           />
           <div className="hero-bg-overlay" />
           <div className="hero-inner">
-            <div className="leaderboard">
+            {/* <div className="leaderboard">
               <Image
                 src={"/images/KINGS.png"}
                 alt={"lovetoons bible reading fiesta"}
@@ -630,7 +630,7 @@ export default function Home() {
                 height={450}
                 className="channel-card-im"
               />
-            </div>
+            </div> */}
 
             {/* ─── LEADERBOARD CARD ─── */}
 

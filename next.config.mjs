@@ -46,19 +46,24 @@ const nextConfig = {
 
   async redirects() {
     return [
-      {
-        source: "/:path*", // matches everything
-        destination: "https://lovetoons.org/fiesta.php",
-        permanent: false,
-      },
       // {
-      //   source: "/avatar",
-      //   destination: "/",
+      //   source: "/:path*", // matches everything
+      //   destination: "https://lovetoons.org/fiesta.php",
       //   permanent: false,
       // },
       {
+        source: "/avatar",
+        destination: "/",
+        permanent: false,
+      },
+      {
+        source: "/fiesta",
+        destination: "/",
+        permanent: false,
+      },
+      {
         source: "/lrbf",
-        destination: "/lbrf",
+        destination: "/",
         permanent: true,
       },
     ];
