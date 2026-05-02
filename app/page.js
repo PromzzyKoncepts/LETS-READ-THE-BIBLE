@@ -623,6 +623,7 @@ export default function Home() {
           <div className="hero-bg-overlay" />
           <div className="hero-inner">
             <div className="leaderboard">
+              <p>Download your Certificate & Commemorative Badge </p>
               <Link
                 href="https://lovetoons.org/certificate.php"
                 className="mv-btn-primary"
@@ -637,7 +638,6 @@ export default function Home() {
                   height={450}
                   className="channel-card-im"
                 />
-                <p>Download your Certificate & Commemorative Badge </p>
               </Link>
             </div>
 
