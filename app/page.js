@@ -624,7 +624,7 @@ export default function Home() {
           <div className="hero-inner">
             <div className="leaderboard">
               <Link
-                href="https://letsreadthebible.club/learn-a-verse"
+                href="https://lovetoons.org/certificate.php"
                 className="mv-btn-primary"
                 rel="noopener noreferrer"
               >
