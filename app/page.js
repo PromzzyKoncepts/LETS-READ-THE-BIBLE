@@ -622,15 +622,24 @@ export default function Home() {
           />
           <div className="hero-bg-overlay" />
           <div className="hero-inner">
-            {/* <div className="leaderboard">
-              <Image
-                src={"/images/KINGS.png"}
-                alt={"lovetoons bible reading fiesta"}
-                width={600}
-                height={450}
-                className="channel-card-im"
-              />
-            </div> */}
+            <div className="leaderboard">
+              <Link
+                href="https://letsreadthebible.club/learn-a-verse"
+                className="mv-btn-primary"
+                rel="noopener noreferrer"
+              >
+                <Image
+                  src={
+                    "https://lovetoons.org/img/LBRF_Certificate_LBRF%20Participation(1).png"
+                  }
+                  alt={"lovetoons bible reading fiesta"}
+                  width={600}
+                  height={450}
+                  className="channel-card-im"
+                />
+                <p>Download your Certificate & Commemorative Badge </p>
+              </Link>
+            </div>
 
             {/* ─── LEADERBOARD CARD ─── */}
 
