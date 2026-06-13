@@ -841,7 +841,7 @@ export default function Home() {
         </section>
 
         {/* ─── CHANNELS ─── */}
-        <section className="channels-section">
+        <section className="channels-section hidden" style={{ display: "none" }}>
           <div className="section-header">
             <span className="section-label">Explore Content</span>
             <h2 className="section-title">Our Video Channels</h2>
