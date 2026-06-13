@@ -738,7 +738,7 @@ export default function Home() {
           </div>
 
           {/* Certificate download — preserved */}
-          <div className="hero-cert hidden">
+          {/* <div className="hero-cert hidden">
             <span className="hero-cert-label">
               Download your certificate &amp; badge
             </span>
@@ -755,7 +755,7 @@ export default function Home() {
                 style={{ borderRadius: 14 }}
               />
             </Link>
-          </div>
+          </div> */}
 
           <div className="hero-scroll" aria-hidden="true">
             <div className="hero-scroll-line" />
