@@ -55,6 +55,18 @@ const Header = () => {
           >
             Games
           </Link>
+          <Link
+            href={`/topical`}
+            className="text-white hover:text-slate-800 hover:border  transition-all duration-500 ease hover:font-bold hover:bg-gradient-to-tr from-[#EE7822] to-[#EFB741] active:bg-gradient-to-bl hover:rounded-full hover:px-5 hover:py-2"
+          >
+            Topical
+          </Link>
+          <Link
+            href={`/reading-plan`}
+            className="text-white hover:text-slate-800 hover:border  transition-all duration-500 ease hover:font-bold hover:bg-gradient-to-tr from-[#EE7822] to-[#EFB741] active:bg-gradient-to-bl hover:rounded-full hover:px-5 hover:py-2"
+          >
+            Reading Plan
+          </Link>
           {/* <Link href={`/fiesta`} className="text-white hover:text-slate-800 hover:border  transition-all duration-500 ease hover:font-bold hover:bg-gradient-to-tr from-[#EE7822] to-[#EFB741] active:bg-gradient-to-bl hover:rounded-full hover:px-5 hover:py-2">
             View Fiesta
           </Link>

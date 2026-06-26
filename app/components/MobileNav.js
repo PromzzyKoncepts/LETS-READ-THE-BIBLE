@@ -12,6 +12,7 @@ import Share from './Share';
 import ShareMobile from './ShareMobile';
 import Link from 'next/link';
 import { FaRecordVinyl } from "react-icons/fa6";
+import { FaBookBookmark, FaListCheck } from "react-icons/fa6";
 
 const menuItems = [
   { path: "/read", icon: <FaBookOpenReader color="#9e4264" size={26} />, label: "Read" },
@@ -53,6 +54,22 @@ const Popup = ({ onClose }) => {
         >
           <BiSolidVideos color="#9D4141" size={24} />
           <span>BIBLE READING FIESTA</span>
+        </Link>
+        <Link
+        href="/topical"
+          className="flex items-center gap-2 p-2 text-[#631260] hover:bg-gray-100 rounded-md cursor-pointer"
+          onClick={onClose}
+        >
+          <FaBookBookmark color="#631260" size={24} />
+          <span>Topical</span>
+        </Link>
+        <Link
+        href="/reading-plan"
+          className="flex items-center gap-2 p-2 text-[#EE7822] hover:bg-gray-100 rounded-md cursor-pointer"
+          onClick={onClose}
+        >
+          <FaListCheck color="#EE7822" size={24} />
+          <span>Reading Plan</span>
         </Link>
         {/* <div
           className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md cursor-pointer"
